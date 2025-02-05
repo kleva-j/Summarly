@@ -2,13 +2,14 @@ import { MobileMenu } from "@/layout/mobile-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { NavMenu } from "@/layout/nav-menu";
+import { Logo } from "@/components/logo";
 
 export const Header = () => {
 	return (
 		<header>
 			<nav className="h-16 bg-background border-b">
 				<div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-					<h1 className="text-xl font-medium">Summarly<small className="text-muted-foreground">.AI</small></h1>
+					<Logo />
 					{/* Desktop Menu */}
 					<NavMenu className="hidden md:block" />
 					<div className="flex items-center gap-3">

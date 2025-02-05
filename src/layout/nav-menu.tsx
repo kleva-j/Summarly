@@ -36,7 +36,6 @@ export const NavMenu = (props: NavigationMenuProps) => (
                   key={navItem.title}
                   title={navItem.label}
                   href={`${href}/${navItem.title}`}
-                  // @ts-expect-error // Property 'icon' does not exist on type 'Product'.
                   icon={navItem?.icon}
                 >
                   {navItem.description}

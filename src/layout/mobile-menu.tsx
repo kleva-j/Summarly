@@ -31,7 +31,6 @@ export const MobileMenu = () => {
                       className="flex items-center gap-2"
                     >
                       {item.icon && (
-                        // @ts-expect-error // Property 'icon' does not exist on type 'Product'.
                         <item.icon className="h-5 w-5 mr-2 text-muted-foreground" />
                       )}
                       {item.label}
