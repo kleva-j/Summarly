@@ -70,7 +70,7 @@ const ListItem = forwardRef<
           )}
           {...props}
         >
-          {props.icon && <props.icon className="mb-4 h-6 w-6" />}
+          {props.icon && <props.icon className="mb-4 h-6 w-6 text-blue-700" />}
           <div className="text-sm font-semibold leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
