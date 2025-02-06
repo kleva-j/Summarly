@@ -1,4 +1,5 @@
 import { ContactUs } from "@/layout/contact";
+import { Features } from "@/layout/features";
 import { Footer } from "@/layout/footer";
 import { Header } from "@/layout/header";
 import { Hero } from "@/layout/hero";
@@ -9,6 +10,7 @@ export default function Home() {
 		<div>
 			<Header />
 			<Hero />
+			<Features />
 			<FAQ />
 			<ContactUs />
 			<Footer />
