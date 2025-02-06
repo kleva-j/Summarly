@@ -2,7 +2,12 @@ import { MobileMenu } from "@/layout/mobile-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { NavMenu } from "@/layout/nav-menu";
+import { siteConfig } from "@/lib/config";
 import { Logo } from "@/components/logo";
+
+import Link from "next/link";
+
+const signInLink = siteConfig.navigations.links["sign-in"];
 
 export const Header = () => {
 	return (
@@ -18,10 +23,13 @@ export const Header = () => {
 							variant="outline"
 							className="hidden sm:inline-flex rounded-full cursor-pointer"
 						>
-							Sign In
+							<Link href={signInLink.href}>Sign In</Link>
 						</Button>
-						<Button className="rounded-full gap-3 cursor-pointer" size="sm">
-							Get Started
+						<Button
+							size="sm"
+							className="rounded-full gap-3 cursor-pointer"
+						>
+							<Link href={signInLink.href}>Get Started</Link>
 							<ArrowUpRight />
 						</Button>
 						{/* Mobile Menu */}
