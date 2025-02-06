@@ -9,7 +9,28 @@ export const siteConfig = {
   navItems: NAV_ITEMS,
   mainNav: [],
   links: {
-    twitter: "https://twitter.com/vercel",
-    github: "https://github.com/vercel/next.js",
+    x: "https://twitter.com/summarly",
+    github: "https://github.com/kleva-j/Summarly",
+    discord: "/"
+  },
+  navigations: {
+    links: {
+      home: {
+        name: "Home",
+        href: "/",
+      },
+      "sign-in": {
+        name: "Sign in",
+        href: "/sign-in",
+      },
+      "sign-up": {
+        name: "Sign up",
+        href: "/sign-up",
+      },
+      dashboard: {
+        name: "Dashboard",
+        href: "/dashboard",
+      },
+    },
   },
 };

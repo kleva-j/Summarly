@@ -1,5 +1,13 @@
 import { siteConfig } from "@/lib/config";
+import { cn } from "@/lib/utils";
 
-export const Logo = () => (
-  <h1 className="text-xl font-medium">{siteConfig.title}<small className="text-blue-700">.AI</small></h1>
+export interface LogoProps {
+  className?: string;
+}
+
+export const Logo = ({ className }: LogoProps) => (
+  <h1 className={cn("text-xl font-medium", className)}>
+    {siteConfig.title}
+    <small className="text-blue-700">.AI</small>
+  </h1>
 );
