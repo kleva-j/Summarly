@@ -8,6 +8,7 @@ import { Logo } from "@/components/logo";
 import Link from "next/link";
 
 const signInLink = siteConfig.navigations.links["sign-in"];
+const signUpLink = siteConfig.navigations.links["sign-up"];
 
 export const Header = () => {
 	return (
@@ -29,7 +30,7 @@ export const Header = () => {
 							size="sm"
 							className="rounded-full gap-3 cursor-pointer"
 						>
-							<Link href={signInLink.href}>Get Started</Link>
+							<Link href={signUpLink.href}>Get Started</Link>
 							<ArrowUpRight />
 						</Button>
 						{/* Mobile Menu */}

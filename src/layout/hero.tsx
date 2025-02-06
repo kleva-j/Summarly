@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
+import Link from "next/link";
+
+const signUpLink = siteConfig.navigations.links["sign-up"];
+
 export const Hero = () => {
   return (
     <div className="relative min-h-[calc(100vh_-_theme(spacing.16))] flex items-center justify-center px-6 overflow-hidden">
@@ -28,8 +32,11 @@ export const Hero = () => {
           {siteConfig.longDescription}
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-full text-base cursor-pointer">
-            Get Started <ArrowUpRight className="!size-5" />
+          <Button size="lg" className="rounded-full text-base cursor-pointer" asChild>
+            <Link href={signUpLink.href}>
+              Get Started
+              <ArrowUpRight className="!size-5" />
+            </Link>
           </Button>
           <Button
             size="lg"
