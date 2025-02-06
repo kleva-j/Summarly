@@ -2,6 +2,7 @@ import { AnimatedGridPattern } from "@/components/animated-grid-pattern";
 import { ArrowUpRight, CirclePlay } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
 export const Hero = () => {
@@ -13,7 +14,7 @@ export const Hero = () => {
         duration={3}
         className={cn(
           "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-          "inset-x-0 h-full skew-y-12"
+          "inset-x-0 h-full skew-y-12",
         )}
       />
       <div className="relative z-10 text-center max-w-2xl">
@@ -24,21 +25,18 @@ export const Hero = () => {
           Get perfect notes and transcriptions with AI.
         </h1>
         <p className="mt-6 text-[17px] md:text-lg">
-          Summarly is a powerful tool that helps you summarize and transcribe
-          audio files into text. With our AI-powered platform, you can easily
-          upload your audio files, select the language, and receive a summary
-          and transcription in just a few clicks.
+          {siteConfig.longDescription}
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-full text-base">
-            Get Started <ArrowUpRight className="!h-5 !w-5" />
+          <Button size="lg" className="rounded-full text-base cursor-pointer">
+            Get Started <ArrowUpRight className="!size-5" />
           </Button>
           <Button
-            variant="outline"
             size="lg"
-            className="rounded-full text-base shadow-none"
+            variant="outline"
+            className="rounded-full text-base shadow-none cursor-pointer"
           >
-            <CirclePlay className="!h-5 !w-5" /> Watch Demo
+            <CirclePlay className="!size-5" /> Watch Demo
           </Button>
         </div>
       </div>
