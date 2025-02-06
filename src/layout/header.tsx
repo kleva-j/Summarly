@@ -16,11 +16,11 @@ export const Header = () => {
 						<Button
 							size="sm"
 							variant="outline"
-							className="hidden sm:inline-flex rounded-full"
+							className="hidden sm:inline-flex rounded-full cursor-pointer"
 						>
 							Sign In
 						</Button>
-						<Button className="rounded-full gap-3" size="sm">
+						<Button className="rounded-full gap-3 cursor-pointer" size="sm">
 							Get Started
 							<ArrowUpRight />
 						</Button>
