@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react";
 import type { Metadata } from "next";
 
+import { ConvexClientProvider } from "@/components/providers/convex";
 import { geistMono, geistSans } from "@/lib/font";
 import { ClerkProvider } from "@clerk/nextjs";
 import { siteConfig } from "@/lib/config";
@@ -19,7 +20,7 @@ export default function RootLayout(props: PropsWithChildren) {
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
-					{props.children}
+					<ConvexClientProvider>{props.children}</ConvexClientProvider>
 				</body>
 			</html>
 		</ClerkProvider>
