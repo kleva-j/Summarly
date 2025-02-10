@@ -1,7 +1,7 @@
 import type { Doc } from "./_generated/dataModel";
 
-import { type QueryCtx, internalMutation } from "@/_generated/server";
-import { Users } from "@/schema";
+import { type QueryCtx, internalMutation } from "./_generated/server";
+import { Users } from "./schema";
 
 // USER MUTATIONS
 export const createOrUpdate = internalMutation({

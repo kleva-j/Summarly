@@ -1,10 +1,11 @@
 import type { WebhookEvent } from "@clerk/backend";
 
-import { type SessionStatus, getTokenId } from "@/utils";
-import { httpAction } from "@/_generated/server";
-import { internal } from "@/_generated/api";
 import { httpRouter } from "convex/server";
 import { Webhook } from "svix";
+
+import { type SessionStatus, getTokenId } from "./utils";
+import { httpAction } from "./_generated/server";
+import { internal } from "./_generated/api";
 
 function ensureEnvironmentVariable(name: string): string {
   const value = process.env[name];

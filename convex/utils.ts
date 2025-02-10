@@ -16,7 +16,7 @@ import {
   mutation,
   action,
   query,
-} from "@/_generated/server";
+} from "./_generated/server";
 
 type CustomCtxType = ActionCtx | QueryCtx;
 
