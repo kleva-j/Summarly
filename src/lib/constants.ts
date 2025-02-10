@@ -1,11 +1,22 @@
 import type {
+  SidebarNavDataType,
   NavItemMapType,
   NavItemType,
-  Product,
   UseCase,
+  Product,
 } from "@/lib/types";
 
-import { MessageCircle, BookOpenText, GitMerge, Mic } from "lucide-react";
+import {
+  MessageCircle,
+  BookOpenText,
+  LayoutGrid,
+  FolderOpen,
+  Settings2,
+  Videotape,
+  ChartPie,
+  GitMerge,
+  Mic,
+} from "lucide-react";
 
 export const products: Product[] = [
   {
@@ -79,3 +90,35 @@ export const NAV_ITEMS_MAP: NavItemMapType = {
   "use case": useCases,
   product: products,
 };
+
+export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: LayoutGrid,
+  },
+  {
+    title: "Notes",
+    url: "/notes",
+    icon: FolderOpen,
+    disabled: true
+  },
+  {
+    title: "Recordings",
+    url: "/recordings",
+    icon: Videotape,
+    disabled: true,
+  },
+  {
+    title: "Analytics",
+    url: "/analytics",
+    icon: ChartPie,
+    disabled: true
+  },
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: Settings2,
+    disabled: true
+  },
+];
