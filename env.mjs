@@ -5,11 +5,16 @@ export const env = createEnv({
   server: {
     CONVEX_DEPLOYMENT: z.string().min(10),
     CLERK_SECRET_KEY: z.string().min(10),
+    CLERK_WEBHOOK_SECRET: z.string().min(1).max(50),
     CLERK_ISSUER_URL: z.string().url("Must be a valid URL"),
+    CLERK_WEBHOOK_URL: z.string().url("Must be a valid URL"),
   },
   client: {
     NEXT_PUBLIC_CONVEX_URL: z.string().min(10),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(10),
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string(),
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string(),
+    NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string(),
   },
   runtimeEnv: {
     CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT,
@@ -17,7 +22,13 @@ export const env = createEnv({
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
     CLERK_ISSUER_URL: process.env.CLERK_ISSUER_URL,
+    CLERK_WEBHOOK_URL: process.env.CLERK_WEBHOOK_URL,
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
+    NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL:
+      process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
