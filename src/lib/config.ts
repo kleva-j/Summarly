@@ -2,6 +2,7 @@ import { NAV_ITEMS } from "@/lib/constants";
 
 export const siteConfig = {
   name: "Summarly",
+  version: "0.1.0",
   title: "Summarly",
   description: "When summary meets editing.",
   longDescription:
