@@ -11,6 +11,7 @@ import {
   BreadcrumbPage,
   Breadcrumb,
 } from "@/components/ui/breadcrumb";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 export const Header = () => {
   return (
@@ -30,6 +31,10 @@ export const Header = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      <div className="ml-auto flex items-center gap-2">
+        <ModeToggle />
+      </div>
     </header>
   )
 };
