@@ -29,3 +29,11 @@ export type SidebarNavDataType = {
   }[];
   disabled?: boolean;
 }[];
+
+export type ColorThemeOption = {
+  value: string;
+  label: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>> | LucideIcon;
+};
+
+export type Language = { label: string; value: string; icon?: LucideIcon };
