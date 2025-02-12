@@ -42,16 +42,21 @@ export const actionItems = Table("actionItems", {
   task: v.string(),
 });
 
+export const settings = Table("settings", {
+  userId: v.string(),
+  language: v.object({ value: v.string(), label: v.string() }),
+  theme: v.union(v.literal("light"), v.literal("dark")),
+});
+
 export default defineSchema({
   users: Users.table.index("by_token", ["tokenIdentifier"]),
   sessions: Sessions.table
     .index("by_user", ["userId"])
     .index("by_status", ["status"])
     .index("by_sess_id", ["sessionId"]),
-  notes: notes.table
-    .index("by_title", ["title"])
-    .index("by_user", ["userId"]),
+  notes: notes.table.index("by_title", ["title"]).index("by_user", ["userId"]),
   actionItems: actionItems.table
     .index("by_user", ["userId"])
     .index("by_note", ["noteId"]),
+  settings: settings.table.index("by_user", ["userId"]),
 });
