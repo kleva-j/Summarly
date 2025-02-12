@@ -4,15 +4,19 @@ import { SIDEBAR_NAV_DATA } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 
 import {
+	SidebarGroupLabel,
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarGroup,
 	SidebarMenu,
 } from "@/components/ui/sidebar";
 
+import Link from "next/link";
+
 export function NavMain() {
 	return (
 		<SidebarGroup>
+			<SidebarGroupLabel>Main Menu</SidebarGroupLabel>
 			<SidebarMenu>
 				{SIDEBAR_NAV_DATA.map((item) => (
 					<SidebarMenuItem key={item.title}>
@@ -21,7 +25,7 @@ export function NavMain() {
 							disabled={item.disabled}
 							asChild
 						>
-							<a href={item.url} className="">
+							<Link href={item.url}>
 								<item.icon />
 								<span>{item.title}</span>
 								{item.disabled && (
@@ -30,7 +34,7 @@ export function NavMain() {
 										Coming soon
 									</Badge>
 								)}
-							</a>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				))}
