@@ -6,15 +6,13 @@ const components = {
 };
 
 interface SettingsPageProps {
-	params: Awaited<{
-		slug: keyof typeof components;
-	}>;
+	params: Promise<{ slug: keyof typeof components }>;
 }
 
 export default async function SettingsPage({ params }: SettingsPageProps) {
 	const { slug } = await params;
-	
-  const Component = components[slug];
+
+	const Component = components[slug];
 
 	return (
 		<div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-0">
