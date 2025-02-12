@@ -1,4 +1,5 @@
 import { GalleryVerticalEnd, PanelLeftClose } from "lucide-react";
+import { NavSubMenu } from "@/components/nav-section";
 import { NavUser } from "@/components/nav-user";
 import { NavMain } from "@/components/nav-main";
 import { siteConfig } from "@/lib/config";
@@ -42,6 +43,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain />
+			</SidebarContent>
+			<SidebarContent>
+				<NavSubMenu />
 			</SidebarContent>
 			<SidebarFooter>
 				<div className="p-1">

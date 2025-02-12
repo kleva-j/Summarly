@@ -1,7 +1,9 @@
 import type {
   SidebarNavDataType,
+  ColorThemeOption,
   NavItemMapType,
   NavItemType,
+  Language,
   UseCase,
   Product,
 } from "@/lib/types";
@@ -11,11 +13,12 @@ import {
   BookOpenText,
   LayoutGrid,
   FolderOpen,
-  Settings2,
   Videotape,
   ChartPie,
   GitMerge,
+  Moon,
   Mic,
+  Sun,
 } from "lucide-react";
 
 export const products: Product[] = [
@@ -99,26 +102,29 @@ export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
   },
   {
     title: "Notes",
-    url: "/notes",
+    url: "/dashboard/notes",
     icon: FolderOpen,
     disabled: true
   },
   {
     title: "Recordings",
-    url: "/recordings",
+    url: "/dashboard/recordings",
     icon: Videotape,
     disabled: true,
   },
   {
     title: "Analytics",
-    url: "/analytics",
+    url: "/dashboard/analytics",
     icon: ChartPie,
     disabled: true
   },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings2,
-    disabled: true
-  },
 ];
+
+export const ColorThemes: ColorThemeOption[] = [
+  { value: "light", label: "Light", icon: Sun },
+	{ value: "dark", label: "Dark", icon: Moon },
+];
+
+export const Languages: Language[] = [
+  { value: "en", label: "English (UK)" },
+]
