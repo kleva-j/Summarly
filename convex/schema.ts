@@ -7,6 +7,7 @@ export const Users = Table("users", {
   email: v.string(),
   isVerified: v.boolean(),
   tokenIdentifier: v.string(),
+  image: v.optional(v.string()),
 });
 
 export const Sessions = Table("sessions", {
@@ -18,45 +19,45 @@ export const Sessions = Table("sessions", {
     v.literal("revoked")
   ),
   clientId: v.string(),
-  sessionId: v.string(),
   expireAt: v.number(),
+  sessionId: v.string(),
   lastActiveAt: v.number(),
 });
 
-export const notes = Table("notes", {
-  title: v.optional(v.string()),
+export const Notes = Table("notes", {
   userId: v.string(),
   audioFileId: v.string(),
   audioFileUrl: v.string(),
-  transcription: v.optional(v.string()),
-  summary: v.optional(v.string()),
-  embedding: v.optional(v.array(v.float64())),
-  generatingTranscript: v.boolean(),
   generatingTitle: v.boolean(),
+  title: v.optional(v.string()),
+  summary: v.optional(v.string()),
+  generatingTranscript: v.boolean(),
   generatingActionItems: v.boolean(),
+  transcription: v.optional(v.string()),
+  embedding: v.optional(v.array(v.float64())),
 });
 
-export const actionItems = Table("actionItems", {
-  noteId: v.id("notes"),
-  userId: v.string(),
+export const ActionItems = Table("actionItems", {
   task: v.string(),
+  userId: v.string(),
+  noteId: v.id("notes"),
 });
 
-export const settings = Table("settings", {
+export const Settings = Table("settings", {
   userId: v.string(),
-  language: v.object({ value: v.string(), label: v.string() }),
   theme: v.union(v.literal("light"), v.literal("dark")),
+  language: v.object({ value: v.string(), label: v.string() }),
 });
 
 export default defineSchema({
-  users: Users.table.index("by_token", ["tokenIdentifier"]),
+  actionItems: ActionItems.table
+    .index("by_user", ["userId"])
+    .index("by_note", ["noteId"]),
   sessions: Sessions.table
     .index("by_user", ["userId"])
     .index("by_status", ["status"])
     .index("by_sess_id", ["sessionId"]),
-  notes: notes.table.index("by_title", ["title"]).index("by_user", ["userId"]),
-  actionItems: actionItems.table
-    .index("by_user", ["userId"])
-    .index("by_note", ["noteId"]),
-  settings: settings.table.index("by_user", ["userId"]),
+  settings: Settings.table.index("by_user", ["userId"]),
+  users: Users.table.index("by_token", ["tokenIdentifier"]),
+  notes: Notes.table.index("by_title", ["title"]).index("by_user", ["userId"]),
 });
