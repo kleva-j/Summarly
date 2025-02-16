@@ -12,7 +12,7 @@ const { Hume_AI_Error } = ERRORS;
 export default async function DashboardLayout({ children }: PropsWithChildren) {
 	const accessToken = await getHumeAccessToken();
 
-	if (!accessToken) throw new Error(Hume_AI_Error.ACCESS_TOKEN);
+	if (!accessToken) console.error(Hume_AI_Error.ACCESS_TOKEN);
 
 	return (
 		<SidebarProvider>
@@ -24,7 +24,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
 			/>
 			<SidebarInset>
 				<Header />
-				<HumeClient accessToken={accessToken}>{children}</HumeClient>
+				<HumeClient accessToken={accessToken ?? ""}>{children}</HumeClient>
 			</SidebarInset>
 		</SidebarProvider>
 	);
