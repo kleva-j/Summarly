@@ -48,6 +48,42 @@ The `convex` directory contains configurations and generated code related to the
 
 These files ensure type safety and maintainability for the backend services.
 
+## Emphatic Voice Analysis
+
+The Emphatic Voice Analysis feature leverages the Hume AI platform to analyze voice interactions with a focus on emotional intelligence. This integration allows developers to create applications that can understand and respond to user emotions effectively.
+
+#### Key Features:
+- **Voice Recognition**: Utilizes Hume's voice recognition capabilities to convert speech to text.
+- **Emotion Detection**: Analyzes vocal tone and pitch to detect emotions such as happiness, sadness, anger, and more.
+- **Real-time Feedback**: Provides immediate feedback based on the emotional analysis of the user’s voice.
+
+#### Getting Started:
+1. **Environment Setup**:
+   - Ensure you have the following environment variables set in your `.env.local` file:
+     ```plaintext
+     HUME_API_KEY=your_api_key
+     HUME_SECRET_KEY=your_secret_key
+     ```
+
+2. **Usage**:
+   - Import the necessary components from the Hume integration:
+     ```javascript
+     import { HumeClient } from "@/components/hume/client";
+     ```
+   - Use the `HumeClient` component in your application to provide access to the voice analysis features.
+
+3. **Example**:
+   - Here’s a basic example of how to implement the Emphatic Voice Analysis in your application:
+     ```javascript
+     const App = () => {
+       return (
+         <HumeClient accessToken={yourAccessToken}>
+           {/* Your application components */}
+         </HumeClient>
+       );
+     };
+     ```
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request to contribute.
