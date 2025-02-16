@@ -1,10 +1,19 @@
 import type { PropsWithChildren } from "react";
 
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { getHumeAccessToken } from "@/lib/getHumeAccessToken";
 import { Header } from "@/app/(console)/dashboard/_header";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Client } from "@/components/hume/client";
+import { ERRORS } from "@/lib/error";
 
-export default function DashboardLayout({ children }: PropsWithChildren) {
+const { Hume_AI_Error } = ERRORS;
+
+export default async function DashboardLayout({ children }: PropsWithChildren) {
+	const accessToken = await getHumeAccessToken();
+
+	if (!accessToken) throw new Error(Hume_AI_Error.ACCESS_TOKEN);
+
 	return (
 		<SidebarProvider>
 			<AppSidebar
@@ -15,7 +24,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
 			/>
 			<SidebarInset>
 				<Header />
-				{children}
+				<Client accessToken={accessToken}>{children}</Client>
 			</SidebarInset>
 		</SidebarProvider>
 	);

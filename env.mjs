@@ -8,6 +8,8 @@ export const env = createEnv({
     CLERK_WEBHOOK_SECRET: z.string().min(1).max(50),
     CLERK_ISSUER_URL: z.string().url("Must be a valid URL"),
     CLERK_WEBHOOK_URL: z.string().url("Must be a valid URL"),
+    HUME_API_KEY: z.string().min(20),
+    HUME_SECRET_KEY: z.string().min(20),
   },
   client: {
     NEXT_PUBLIC_CONVEX_URL: z.string().min(10),
@@ -25,6 +27,8 @@ export const env = createEnv({
     CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
     CLERK_ISSUER_URL: process.env.CLERK_ISSUER_URL,
     CLERK_WEBHOOK_URL: process.env.CLERK_WEBHOOK_URL,
+    HUME_API_KEY: process.env.HUME_API_KEY,
+    HUME_SECRET_KEY: process.env.HUME_SECRET_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
     NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL:
