@@ -4,7 +4,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { getHumeAccessToken } from "@/lib/getHumeAccessToken";
 import { Header } from "@/app/(console)/dashboard/_header";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Client } from "@/components/hume/client";
+import { HumeClient } from "@/components/hume/client";
 import { ERRORS } from "@/lib/error";
 
 const { Hume_AI_Error } = ERRORS;
@@ -12,7 +12,7 @@ const { Hume_AI_Error } = ERRORS;
 export default async function DashboardLayout({ children }: PropsWithChildren) {
 	const accessToken = await getHumeAccessToken();
 
-	if (!accessToken) throw new Error(Hume_AI_Error.ACCESS_TOKEN);
+	if (!accessToken) console.error(Hume_AI_Error.ACCESS_TOKEN);
 
 	return (
 		<SidebarProvider>
@@ -24,7 +24,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
 			/>
 			<SidebarInset>
 				<Header />
-				<Client accessToken={accessToken}>{children}</Client>
+				<HumeClient accessToken={accessToken ?? ""}>{children}</HumeClient>
 			</SidebarInset>
 		</SidebarProvider>
 	);
