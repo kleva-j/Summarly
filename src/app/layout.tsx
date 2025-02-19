@@ -1,7 +1,9 @@
-import type { PropsWithChildren } from "react";
+import { Suspense, type PropsWithChildren } from "react";
 import type { Metadata } from "next";
 
 import { ConvexClientProvider } from "@/components/providers/convex";
+import { PostHogProvider } from "@/components/providers/posthog";
+import { PostHogPageView } from "@/components/posthog/pageview";
 import { ThemeProvider } from "@/components/providers/theme";
 import { geistMono, geistSans } from "@/lib/font";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -21,15 +23,21 @@ export default function RootLayout(props: PropsWithChildren) {
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-					>
-
-						<ConvexClientProvider>{props.children}</ConvexClientProvider>
-					</ThemeProvider>
+					<PostHogProvider>
+						<ThemeProvider
+							attribute="class"
+							defaultTheme="system"
+							enableSystem
+							disableTransitionOnChange
+						>
+							<ConvexClientProvider>
+								<Suspense fallback={null}>
+									<PostHogPageView />
+								</Suspense>
+								{props.children}
+							</ConvexClientProvider>
+						</ThemeProvider>
+					</PostHogProvider>
 				</body>
 			</html>
 		</ClerkProvider>
