@@ -104,7 +104,7 @@ export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
     title: "Notes",
     url: "/dashboard/notes",
     icon: FolderOpen,
-    disabled: true
+    disabled: true,
   },
   {
     title: "Recordings",
@@ -116,15 +116,22 @@ export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
     title: "Analytics",
     url: "/dashboard/analytics",
     icon: ChartPie,
-    disabled: true
+    disabled: true,
   },
 ];
 
-export const ColorThemes: ColorThemeOption[] = [
-  { value: "light", label: "Light", icon: Sun },
-	{ value: "dark", label: "Dark", icon: Moon },
-];
+export const ColorThemesMap: Map<string, ColorThemeOption> = new Map([
+  ["light", { value: "light", label: "Light", icon: Sun }],
+  ["dark", { value: "dark", label: "Dark", icon: Moon }],
+]);
 
-export const Languages: Language[] = [
-  { value: "en", label: "English (UK)" },
-]
+export const ColorThemes: ColorThemeOption[] = Array.from(
+  ColorThemesMap.values()
+);
+
+export const LanguagesMap: Map<string, Language> = new Map([
+  ["en", { value: "en", label: "English (UK)" }],
+  ["en-US", { value: "en-US", label: "English (US)" }],
+]);
+
+export const Languages: Language[] = Array.from(LanguagesMap.values());

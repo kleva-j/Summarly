@@ -1,11 +1,11 @@
 "use client";
 
-
 import { CardTitle, CardDescription } from "@/components/ui/card";
+import { AppStateContext } from "@/components/providers/app";
+import { Languages, LanguagesMap } from "@/lib/constants";
 import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/typography";
-import { Languages } from "@/lib/constants";
-import { useState } from "react";
+import { AppStateActions } from "@/model/types";
 
 import {
 	SelectTrigger,
@@ -17,8 +17,18 @@ import {
 	Select,
 } from "@/components/ui/select";
 
+const { SET_LANGUAGE } = AppStateActions;
+
 export const Advanced = () => {
-	const [value, setValue] = useState(Languages[0].value);
+	const { value } = AppStateContext.useSelector(({ context }) => context.language);
+	
+	const appStateActorRef = AppStateContext.useActorRef();
+	
+	const onValueChange = (label: string) => {
+		const language = LanguagesMap.get(label);
+		if (!language) return;
+		appStateActorRef.send({ type: SET_LANGUAGE, payload: language });
+	};
 
 	return (
 		<div>
@@ -43,7 +53,7 @@ export const Advanced = () => {
 						</Text>
 					</div>
 
-					<Select value={value} onValueChange={setValue}>
+					<Select value={value} onValueChange={onValueChange}>
 						<SelectTrigger className="w-[135px] mx-auto focus:ring-1 focus:ring-offset-1">
 							<div className="flex items-center gap-2 [&_svg]:h-4 [&_svg]:w-4 py-1 px-1">
 								<SelectValue placeholder="Select Language" />
