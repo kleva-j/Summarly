@@ -1,0 +1,67 @@
+export type NoteVersion = "v1" | "v2";
+export type AppStateVersion = "v1" | "v2";
+
+export type NoteStatus = "draft" | "published" | "archived";
+
+export type Note = {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  status: NoteStatus;
+  version: NoteVersion;
+};
+
+export type NoteState = {
+  loading: boolean;
+  notes: Map<string, Note>;
+  error: string | null;
+  selectedNote: Note | null;
+  activeNoteId: string | null;
+};
+
+export type AppState = {
+  loading: boolean;
+  error: string | null;
+  theme: "light" | "dark";
+  language: { value: string; label: string };
+};
+
+export type NoteStateContextType = NoteState & {};
+
+export enum NoteStateActions {
+  CREATE_NOTE = "CREATE_NOTE",
+  UPDATE_NOTE = "UPDATE_NOTE",
+  DELETE_NOTE = "DELETE_NOTE",
+  SELECT_NOTE = "SELECT_NOTE",
+  SET_LOADING = "SET_LOADING",
+  SET_ERROR = "SET_ERROR",
+  SET_ACTIVE_NOTE_ID = "SET_ACTIVE_NOTE_ID",
+}
+
+export type NoteStateEventsType =
+  | { type: NoteStateActions.CREATE_NOTE; payload: Note }
+  | { type: NoteStateActions.UPDATE_NOTE; payload: Note }
+  | { type: NoteStateActions.DELETE_NOTE; payload: string }
+  | { type: NoteStateActions.SELECT_NOTE; payload: string }
+  | { type: NoteStateActions.SET_LOADING; payload: boolean }
+  | { type: NoteStateActions.SET_ERROR; payload: string | null }
+  | { type: NoteStateActions.SET_ACTIVE_NOTE_ID; payload: string | null };
+
+export type NoteStateActionType = keyof typeof NoteStateActions;
+
+export enum AppStateActions {
+  SET_LOADING = "SET_LOADING",
+  SET_ERROR = "SET_ERROR",
+  SET_THEME = "SET_THEME",
+  SET_LANGUAGE = "SET_LANGUAGE",
+}
+
+export type AppStateActionType = keyof typeof AppStateActions;
+
+export type AppStateEvents =
+  | { type: AppStateActions.SET_LOADING; payload: boolean }
+  | { type: AppStateActions.SET_ERROR; payload: string | null }
+  | { type: AppStateActions.SET_THEME; payload: "light" | "dark" }
+  | { type: AppStateActions.SET_LANGUAGE; payload: { value: string; label: string } };
