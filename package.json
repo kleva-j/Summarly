@@ -43,6 +43,7 @@
     "posthog-node": "^4.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "replicate": "^1.0.1",
     "svix": "^1.45.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
