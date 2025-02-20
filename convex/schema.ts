@@ -1,3 +1,4 @@
+import { rateLimitTables } from "convex-helpers/server/rateLimit";
 import { Table } from "convex-helpers/server";
 import { defineSchema } from "convex/server";
 import { v } from "convex/values";
@@ -50,6 +51,7 @@ export const Settings = Table("settings", {
 });
 
 export default defineSchema({
+  ...rateLimitTables,
   actionItems: ActionItems.table
     .index("by_user", ["userId"])
     .index("by_note", ["noteId"]),
