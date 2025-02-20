@@ -1,4 +1,4 @@
-import type { PHEventType } from "@/lib/posthog/types";
+import type { PHEventType, PHFlagsType } from "@/lib/posthog/types";
 
 import { PostHogNodeClient } from "@/lib/posthog/node-client";
 
@@ -15,3 +15,16 @@ export const captureEvent =
     const posthog = PostHogNodeClient();
     posthog.capture({ distinctId: userId, event });
   };
+
+/**
+ * Retrieve all feature flags for a given user ID.
+ *
+ * @param {string} userId - The ID of the user to retrieve feature flags for.
+ * @returns {Promise<PHFlagsType>} A promise that resolves to an object
+ * containing the feature flags and their states.
+ */
+export async function getFeatureFlags(userId: string): Promise<PHFlagsType> {
+  const posthog = PostHogNodeClient();
+  const flags = await posthog.getAllFlags(userId);
+  return flags;
+}
