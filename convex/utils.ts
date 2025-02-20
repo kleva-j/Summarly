@@ -1,5 +1,6 @@
 import type { Auth } from "convex/server";
 
+import { defineRateLimits } from "convex-helpers/server/rateLimit";
 import { ConvexError } from "convex/values";
 import { pick, pickBy } from "lodash";
 
@@ -47,6 +48,8 @@ export const mutateWithUser = customMutation(
  * @param fields The fields to pick
  * @returns The object with the specified fields and undefined values removed.
  */
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const sanitizeInput = <T extends Record<string, any>>(
   input: T,
   fields: Array<keyof T>
@@ -56,3 +59,11 @@ export const sanitizeInput = <T extends Record<string, any>>(
     [K in keyof T as T[K] extends undefined ? never : K]: T[K];
   };
 };
+
+const SECOND = 1000; // ms
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+
+export const { checkRateLimit, rateLimit, resetRateLimit } = defineRateLimits({
+  whisper: { kind: "fixed window", rate: 100, period: HOUR },
+});
