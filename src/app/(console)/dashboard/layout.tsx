@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 
+import { DashboardContextProvider } from "@/components/providers/dashboard";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppContextProvider } from "@/components/providers/app";
 import { getHumeAccessToken } from "@/lib/getHumeAccessToken";
@@ -26,7 +27,9 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
 			<SidebarInset>
 				<Header />
 				<HumeClient accessToken={accessToken ?? ""}>
-					<AppContextProvider>{children}</AppContextProvider>
+					<AppContextProvider>
+						<DashboardContextProvider>{children}</DashboardContextProvider>
+					</AppContextProvider>
 				</HumeClient>
 			</SidebarInset>
 		</SidebarProvider>
