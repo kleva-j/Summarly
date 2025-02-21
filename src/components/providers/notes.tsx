@@ -8,9 +8,5 @@ import { createActorContext } from "@xstate/react";
 export const NoteStateContext = createActorContext(NotesStateMachine);
 
 export const NotesContextProvider = ({ children }: PropsWithChildren) => {
-  return (
-    <NoteStateContext.Provider>
-      {children}
-    </NoteStateContext.Provider>
-  );
+	return <NoteStateContext.Provider>{children}</NoteStateContext.Provider>;
 };

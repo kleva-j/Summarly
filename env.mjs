@@ -10,6 +10,8 @@ export const env = createEnv({
     CLERK_WEBHOOK_URL: z.string().url("Must be a valid URL"),
     HUME_API_KEY: z.string().min(20),
     HUME_SECRET_KEY: z.string().min(20),
+    REPLICATE_API_TOKEN: z.string().min(40),
+    TOGETHER_API_KEY: z.string().min(50),
   },
   client: {
     NEXT_PUBLIC_CONVEX_URL: z.string().min(10),
@@ -37,6 +39,8 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    REPLICATE_API_TOKEN: process.env.REPLICATE_API_TOKEN,
+    TOGETHER_API_KEY: process.env.TOGETHER_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

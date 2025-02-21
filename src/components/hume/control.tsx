@@ -18,5 +18,5 @@ export function Controls() {
 		return <Button onClick={() => disconnect()}>End Session</Button>;
 	}
 
-	return <Button onClick={startSession}>Start Session</Button>;
+	return <Button className="w-min" onClick={startSession}>Start Session</Button>;
 }
