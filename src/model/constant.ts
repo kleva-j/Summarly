@@ -1,9 +1,12 @@
-import type {
-  AppStateVersion,
-  NoteVersion,
-  NoteState,
-  AppState,
-  Note,
+import {
+  type AppStateVersion,
+  type DashboardState,
+  type NoteVersion,
+  type NoteState,
+  type AppState,
+  type Note,
+  DashboardTabs,
+  Themes
 } from "@/model/types";
 
 import { Languages } from "@/lib/constants";
@@ -22,6 +25,16 @@ export const NOTESTATE: NoteState = {
 export const APPSTATE: AppState = {
   loading: false,
   error: null,
-  theme: "light",
+  theme: Themes.LIGHT,
   language: Languages[0],
+};
+
+export const DASHBOARDSTATE: DashboardState = {
+  loading: false,
+  error: null,
+  dateRange: {
+    from: new Date(),
+    to: new Date()
+  },
+  activeTab: DashboardTabs.OVERVIEW
 };

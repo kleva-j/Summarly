@@ -1,12 +1,14 @@
 import type {
+  DashboardStateEvents,
   NoteStateContextType,
   NoteStateEventsType,
+  DashboardState,
   AppStateEvents,
   AppState,
   Note,
 } from "@/model/types";
 
-import { APPSTATE, NOTESTATE } from "@/model/constant";
+import { APPSTATE, DASHBOARDSTATE, NOTESTATE } from "@/model/constant";
 import { setup, assign } from "xstate";
 
 export const NotesStateMachine = setup({
@@ -72,5 +74,20 @@ export const AppStateMachine = setup({
     SET_LANGUAGE: {
       actions: assign({ language: ({ event }) => event.payload }),
     },
+  },
+});
+
+export const DashboardStateMachine = setup({
+  types: {
+    context: {} as DashboardState,
+    events: {} as DashboardStateEvents,
+  },
+}).createMachine({
+  context: DASHBOARDSTATE,
+  on: {
+    SET_ERROR: { actions: assign({ error: ({ event }) => event.payload }) },
+    SET_LOADING: { actions: assign({ loading: ({ event }) => event.payload }) },
+    SET_DATE_RANGE: { actions: assign({ dateRange: ({ event }) => event.payload }) },
+    SET_ACTIVE_TAB: { actions: assign({ activeTab: ({ event }) => event.payload }) },
   },
 });

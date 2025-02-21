@@ -1,7 +1,14 @@
+import type { DateRange } from "react-day-picker";
+
 export type NoteVersion = "v1" | "v2";
 export type AppStateVersion = "v1" | "v2";
 
 export type NoteStatus = "draft" | "published" | "archived";
+export type DashboardTabs =
+  | "overview"
+  | "recordings"
+  | "notes"
+  | "notifications";
 
 export type Note = {
   id: string;
@@ -26,6 +33,18 @@ export type AppState = {
   error: string | null;
   theme: "light" | "dark";
   language: { value: string; label: string };
+};
+
+export const Themes = {
+  LIGHT: "light",
+  DARK: "dark",
+} as const;
+
+export type DashboardState = {
+  loading: boolean;
+  error: string | null;
+  activeTab: DashboardTabs;
+  dateRange: DateRange | undefined;
 };
 
 export type NoteStateContextType = NoteState & {};
@@ -65,3 +84,23 @@ export type AppStateEvents =
   | { type: AppStateActions.SET_ERROR; payload: string | null }
   | { type: AppStateActions.SET_THEME; payload: "light" | "dark" }
   | { type: AppStateActions.SET_LANGUAGE; payload: { value: string; label: string } };
+
+export enum DashboardStateActions {
+  SET_LOADING = "SET_LOADING",
+  SET_ERROR = "SET_ERROR",
+  SET_DATE_RANGE = "SET_DATE_RANGE",
+  SET_ACTIVE_TAB = "SET_ACTIVE_TAB",
+}
+
+export const DashboardTabs = {
+  OVERVIEW: "overview",
+  RECORDINGS: "recordings",
+  NOTES: "notes",
+  NOTIFICATIONS: "notifications",
+} as const;
+
+export type DashboardStateEvents =
+  | { type: DashboardStateActions.SET_LOADING; payload: boolean }
+  | { type: DashboardStateActions.SET_ERROR; payload: string | null }
+  | { type: DashboardStateActions.SET_ACTIVE_TAB; payload: DashboardTabs }
+  | { type: DashboardStateActions.SET_DATE_RANGE; payload: DateRange | undefined };
