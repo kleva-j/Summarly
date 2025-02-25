@@ -14,6 +14,8 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as http from "../http.js";
+import type * as notes from "../notes.js";
+import type * as recording from "../recording.js";
 import type * as replicate from "../replicate.js";
 import type * as sessions from "../sessions.js";
 import type * as settings from "../settings.js";
@@ -30,6 +32,8 @@ import type * as utils from "../utils.js";
  */
 declare const fullApi: ApiFromModules<{
   http: typeof http;
+  notes: typeof notes;
+  recording: typeof recording;
   replicate: typeof replicate;
   sessions: typeof sessions;
   settings: typeof settings;
