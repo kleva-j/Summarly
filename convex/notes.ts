@@ -76,7 +76,7 @@ export const generateNote = internalMutation({
     userId: v.string(),
     audioFileId: v.string(),
     audioFileUrl: v.string(),
-    title: v.string(),
+    title: v.optional(v.string()),
   },
   handler: async ({ db }, { userId, title, audioFileId, audioFileUrl }) => {
     const existingNote = await db
