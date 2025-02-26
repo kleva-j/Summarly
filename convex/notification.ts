@@ -66,7 +66,9 @@ export const markAsRead = mutateWithUser({
 
     if (notif.userId !== userId) throw new ConvexError("Action Not Allowed");
 
-    await db.patch(id, { read: true });
+    const metadata = { ...notif.metadata, updatedAt: new Date().getTime() };
+
+    await db.patch(id, { read: true, metadata });
   },
 });
 
@@ -82,7 +84,9 @@ export const markManyAsRead = mutateWithUser({
 
       if (notif.userId !== userId) throw new ConvexError("Action Not Allowed");
 
-      await db.patch(id, { read: true });
+      const metadata = { ...notif.metadata, updatedAt: new Date().getTime() };
+
+      await db.patch(id, { read: true, metadata });
     }
   },
 });
@@ -99,7 +103,9 @@ export const toggleReadReceipt = mutateWithUser({
     if (notification.userId !== userId)
       throw new ConvexError("Action Not Allowed");
 
-    await db.patch(id, { read: !notification.read });
+    const metadata = { ...notification.metadata, updatedAt: new Date().getTime() };
+
+    await db.patch(id, { read: !notification.read, metadata });
   },
 });
 
