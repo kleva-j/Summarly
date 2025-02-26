@@ -50,6 +50,23 @@ export const Settings = Table("settings", {
   language: v.object({ value: v.string(), label: v.string() }),
 });
 
+export const Notifs = Table("notifs", {
+  userId: v.string(),
+  title: v.string(),
+  read: v.boolean(),
+  type: v.union(
+    v.literal("actionItems:started"),
+    v.literal("transcript:started"),
+    v.literal("actionItems:ended"),
+    v.literal("transcript:ended")
+  ),
+  metadata: v.object({
+    noteId: v.id("notes"),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }),
+});
+
 export default defineSchema({
   ...rateLimitTables,
   actionItems: ActionItems.table
@@ -59,6 +76,11 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_status", ["status"])
     .index("by_sess_id", ["sessionId"]),
+  notifs: Notifs.table
+    .index("by_read", ["read"])
+    .index("by_type", ["type"])
+    .index("by_user", ["userId"])
+    .index("by_node_id", ["metadata.noteId"]),
   settings: Settings.table.index("by_user", ["userId"]),
   users: Users.table.index("by_token", ["tokenIdentifier"]),
   notes: Notes.table.index("by_title", ["title"]).index("by_user", ["userId"]),
