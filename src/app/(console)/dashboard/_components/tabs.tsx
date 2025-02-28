@@ -1,26 +1,68 @@
-import type { DashboardTabs } from "@/model/types";
+"use client";
+
+import type { PropsWithChildren, ReactElement, ReactNode } from "react";
+
+import { type DashboardTabs, DashboardStateActions } from "@/model/types";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PanelsTopLeftIcon, HouseIcon, BellIcon, BoxIcon } from "lucide-react";
-
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { ScrollBar } from "@/components/ui/scroll-area";
+import { DashboardStateContext } from "@/components/providers/dashboard";
+import { ScrollBar, ScrollArea } from "@/components/ui/scroll-area";
+import { selectActiveTab } from "@/components/selectors/dashboard";
 import { Badge } from "@/components/ui/badge";
+import { Children, useMemo } from "react";
 
-import dynamic from "next/dynamic";
+const { SET_ACTIVE_TAB } = DashboardStateActions;
 
-const Notifications = dynamic(async () => (await import("./notification")).Notifications, { ssr: false });
-const Recordings = dynamic(async () => (await import("./recording")).Recording, { ssr: false });
-const Overview = dynamic(async () => (await import("./overview")).Overview, { ssr: false });
-const Notes = dynamic(async () => (await import("./notes")).Notes, { ssr: false });
+export type SharedProps = {
+	title: string;
+	count?: number;
+	icon: ReactElement;
+};
 
-interface TabularLayoutProps {
-	activeTab: DashboardTabs;
-	handleTabChange: (value: DashboardTabs | string) => void;
-}
+type TabChild = ReactElement<SharedProps & { children: ReactNode }>;
 
-export function TabularLayout(props: TabularLayoutProps) {
-	const { activeTab, handleTabChange } = props;
+interface TabularLayoutProps extends PropsWithChildren {}
+
+export function TabularLayout({ children }: TabularLayoutProps) {
+	const activeTab = DashboardStateContext.useSelector(selectActiveTab);
+
+	const actorRef = DashboardStateContext.useActorRef();
+
+	const handleTabChange = (value: DashboardTabs | string) => {
+		actorRef.send({ type: SET_ACTIVE_TAB, payload: value as DashboardTabs });
+	};
+
+	const TabContents = useMemo(
+		() =>
+			Children.map(children, (item) => {
+				const { props } = item as TabChild;
+
+				return (
+					<TabsContent key={props.title} value={props.title}>
+						{item}
+					</TabsContent>
+				);
+			}),
+		[children],
+	);
+
+	const TabPanels = useMemo(() => {
+		return Children.map(children, (item) => {
+			const { props } = item as TabChild;
+
+			return (
+				<TabsTrigger value={props.title} className="group capitalize">
+					{props.icon}
+					{props.title}
+					{props?.count && props.count > 0 ? (
+						<Badge variant="secondary" className="ml-1.5 min-w-5 px-1">
+							{props.count}
+						</Badge>
+					) : null}
+				</TabsTrigger>
+			);
+		});
+	}, [children]);
 
 	return (
 		<Tabs
@@ -29,63 +71,10 @@ export function TabularLayout(props: TabularLayoutProps) {
 			value={activeTab}
 		>
 			<ScrollArea>
-				<TabsList className="mb-3">
-					<TabsTrigger value="overview">
-						<HouseIcon
-							className="-ms-0.5 me-1.5 opacity-60"
-							size={16}
-							aria-hidden="true"
-						/>
-						Overview
-					</TabsTrigger>
-					<TabsTrigger value="recordings" className="group">
-						<PanelsTopLeftIcon
-							className="-ms-0.5 me-1.5 opacity-60"
-							size={16}
-							aria-hidden="true"
-						/>
-						Recordings
-						<Badge variant="secondary" className="ml-1.5 min-w-5 px-1">
-							3
-						</Badge>
-					</TabsTrigger>
-					<TabsTrigger value="notes" className="group">
-						<BoxIcon
-							className="-ms-0.5 me-1.5 opacity-60"
-							size={16}
-							aria-hidden="true"
-						/>
-						Notes
-						<Badge className="ms-1.5 transition-opacity group-data-[state=inactive]:opacity-50">
-							New
-						</Badge>
-					</TabsTrigger>
-					<TabsTrigger value="notifications" className="group">
-						<BellIcon
-							className="-ms-0.5 me-1.5 opacity-60"
-							size={16}
-							aria-hidden="true"
-						/>
-						Notifications
-						<Badge variant="secondary" className="ml-1.5 min-w-5 px-1">
-							3
-						</Badge>
-					</TabsTrigger>
-				</TabsList>
+				<TabsList className="mb-3">{TabPanels}</TabsList>
 				<ScrollBar orientation="horizontal" />
 			</ScrollArea>
-			<TabsContent value="overview">
-				<Overview />
-			</TabsContent>
-			<TabsContent value="recordings">
-				<Recordings />
-			</TabsContent>
-			<TabsContent value="notes">
-				<Notes />
-			</TabsContent>
-			<TabsContent value="notifications">
-				<Notifications />
-			</TabsContent>
+			{TabContents}
 		</Tabs>
 	);
 }

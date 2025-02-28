@@ -1,3 +1,6 @@
+import type { SharedProps } from "@/app/(console)/dashboard/_components/tabs";
+import type { Doc } from "convex/_generated/dataModel";
+
 import { Bell } from "lucide-react";
 import {
 	CardDescription,
@@ -6,7 +9,9 @@ import {
 	Card,
 } from "@/components/ui/card";
 
-export const Notifications = () => {
+type NotificationProps = SharedProps & { notifications: Doc<"notifs">[] };
+
+export const Notifications = ({ title, notifications }: NotificationProps) => {
 	return (
 		<Card className="col-span-4 lg:col-span-3">
 			<CardHeader>

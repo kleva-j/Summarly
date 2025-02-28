@@ -1,3 +1,5 @@
+import type { SharedProps } from "@/app/(console)/dashboard/_components/tabs";
+
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 
 import {
@@ -7,6 +9,8 @@ import {
 	InputIcon,
 	BellIcon,
 } from "@radix-ui/react-icons";
+
+type OverviewProps = SharedProps;
 
 const features = [
 	{
@@ -67,7 +71,7 @@ const features = [
 	},
 ];
 
-export function Overview() {
+export function Overview({ title }: OverviewProps) {
 	return (
 		<BentoGrid className="lg:grid-rows-3">
 			{features.map((feature) => (
