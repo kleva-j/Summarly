@@ -8,7 +8,7 @@ import { Notifs } from "./schema";
 
 export const getLatest = queryWithUser({
   args: {
-    limit: v.number(),
+    limit: v.optional(v.number()),
   },
   handler: async ({ db, identity }, { limit = 10 }) => {
     const { tokenIdentifier: userId } = identity;

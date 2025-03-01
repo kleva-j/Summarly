@@ -1,17 +1,33 @@
-import { Component } from "@/app/(console)/dashboard/_components";
+import { Header, Content } from "@/app/(console)/dashboard/_components";
+import { getAuthToken, getUserId } from "@/lib/auth";
 import { captureEvent } from "@/lib/posthog/utils";
-import { getUserId } from "@/lib/auth";
+import { preloadQuery } from "convex/nextjs";
 import { EVENTS } from "@/lib/posthog";
+
+import { api } from "@/convex/_generated/api";
 
 export default async function Page() {
 	const distinctId = (await getUserId()) ?? "";
+	const config = { token: await getAuthToken() };
+
+	const preloadedNotes = await preloadQuery(api.notes.getAllByUser, {}, config);
+	const preloadedRecordings = await preloadQuery(api.recording.getRecordings, {}, config);
+	const preloadedNotifications = await preloadQuery(api.notification.getLatest, {}, config);
 
 	captureEvent(distinctId)(EVENTS.PAGE_VIEW);
 
 	return (
 		<div className="flex flex-col">
 			<main className="flex min-h-[calc(100vh-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/50 p-4 md:gap-8 md:p-10">
-				<Component />
+				<div className="flex-1 space-y-4 md:px-8">
+					<Header />
+
+					<Content
+						preloadedNotes={preloadedNotes}
+						preloadedRecordings={preloadedRecordings}
+						preloadedNotifications={preloadedNotifications}
+					/>
+				</div>
 			</main>
 		</div>
 	);

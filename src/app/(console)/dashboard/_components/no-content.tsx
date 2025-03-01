@@ -5,8 +5,9 @@ import { PlusIcon } from "lucide-react";
 
 interface NoContentProps {
 	data: {
-		textHeading: string;
 		textBody: string;
+		actionLabel: string
+		textHeading: string;
 	};
 	handleCreate: () => void;
 }
@@ -17,11 +18,11 @@ export function NoContent({ handleCreate, data }: NoContentProps) {
 			<Text variant="h4" as="h4" className="">
 				{data.textHeading}
 			</Text>
-			<Text variant="p" as="span" className="!mt-1 text-sm mb-6">
+			<Text variant="p" as="span" className="!mt-1 text-base mb-6">
 				{data.textBody}
 			</Text>
 			<Button
-				className="aspect-square max-sm:p-0 w-min rounded-lg"
+				className="aspect-square max-sm:p-0 w-min rounded-lg cursor-pointer"
 				onClick={handleCreate}
 				variant="outline"
 			>
@@ -30,7 +31,7 @@ export function NoContent({ handleCreate, data }: NoContentProps) {
 					aria-hidden="true"
 					size={16}
 				/>
-				<span className="max-sm:sr-only">Create Note</span>
+				<span className="max-sm:sr-only">{data.actionLabel}</span>
 			</Button>
 		</Card>
 	);
