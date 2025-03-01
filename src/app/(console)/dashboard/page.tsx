@@ -2,8 +2,9 @@ import { Header, Content } from "@/app/(console)/dashboard/_components";
 import { getAuthToken, getUserId } from "@/lib/auth";
 import { captureEvent } from "@/lib/posthog/utils";
 import { preloadQuery } from "convex/nextjs";
-import { api } from "convex/_generated/api";
 import { EVENTS } from "@/lib/posthog";
+
+import { api } from "@/convex/_generated/api";
 
 export default async function Page() {
 	const distinctId = (await getUserId()) ?? "";
