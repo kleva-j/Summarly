@@ -1,4 +1,5 @@
 import type { SharedProps } from "@/app/(console)/dashboard/_components/tabs";
+import type { FC } from "react";
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 
@@ -10,8 +11,6 @@ import {
 	BellIcon,
 } from "@radix-ui/react-icons";
 
-type OverviewProps = SharedProps;
-
 const features = [
 	{
 		Icon: FileTextIcon,
@@ -19,9 +18,6 @@ const features = [
 		description: "We automatically save your files as you type.",
 		href: "/",
 		cta: "Learn more",
-		background: (
-			<img alt="background" className="absolute -right-20 -top-20 opacity-60" />
-		),
 		className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
 	},
 	{
@@ -30,9 +26,6 @@ const features = [
 		description: "Search through all your files in one place.",
 		href: "/",
 		cta: "Learn more",
-		background: (
-			<img alt="background" className="absolute -right-20 -top-20 opacity-60" />
-		),
 		className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
 	},
 	{
@@ -41,9 +34,6 @@ const features = [
 		description: "Supports 100+ languages and counting.",
 		href: "/",
 		cta: "Learn more",
-		background: (
-			<img alt="background" className="absolute -right-20 -top-20 opacity-60" />
-		),
 		className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
 	},
 	{
@@ -52,9 +42,6 @@ const features = [
 		description: "Use the calendar to filter your files by date.",
 		href: "/",
 		cta: "Learn more",
-		background: (
-			<img alt="background" className="absolute -right-20 -top-20 opacity-60" />
-		),
 		className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
 	},
 	{
@@ -64,14 +51,11 @@ const features = [
 			"Get notified when someone shares a file or mentions you in a comment.",
 		href: "/",
 		cta: "Learn more",
-		background: (
-			<img alt="background" className="absolute -right-20 -top-20 opacity-60" />
-		),
 		className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
 	},
 ];
 
-export function Overview({ title }: OverviewProps) {
+export const Overview: FC<SharedProps> = () => {
 	return (
 		<BentoGrid className="lg:grid-rows-3">
 			{features.map((feature) => (
@@ -79,4 +63,4 @@ export function Overview({ title }: OverviewProps) {
 			))}
 		</BentoGrid>
 	);
-}
+};

@@ -10,7 +10,7 @@ const textHeading = "You haven't created any Recording yet.";
 const textBody = "Make a new recording.";
 const actionLabel = "Add Recording";
 
-export const Recording = ({ title, recordings }: RecordingProps) => {
+export const Recording = ({ recordings }: RecordingProps) => {
 	const handleCreate = () => {
 		console.log("handleCreate");
 	};

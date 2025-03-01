@@ -21,9 +21,7 @@ export type SharedProps = {
 
 type TabChild = ReactElement<SharedProps & { children: ReactNode }>;
 
-interface TabularLayoutProps extends PropsWithChildren {}
-
-export function TabularLayout({ children }: TabularLayoutProps) {
+export function TabularLayout({ children }: PropsWithChildren) {
 	const activeTab = DashboardStateContext.useSelector(selectActiveTab);
 
 	const actorRef = DashboardStateContext.useActorRef();
