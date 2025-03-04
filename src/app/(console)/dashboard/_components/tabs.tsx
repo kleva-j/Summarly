@@ -44,23 +44,25 @@ export function TabularLayout({ children }: PropsWithChildren) {
 		[children],
 	);
 
-	const TabPanels = useMemo(() => {
-		return Children.map(children, (item) => {
-			const { props } = item as TabChild;
+	const TabPanels = useMemo(
+		() =>
+			Children.map(children, (item) => {
+				const { props } = item as TabChild;
 
-			return (
-				<TabsTrigger value={props.title} className="group capitalize">
-					{props.icon}
-					{props.title}
-					{props?.count && props.count > 0 ? (
-						<Badge variant="secondary" className="ml-1.5 min-w-5 px-1">
-							{props.count}
-						</Badge>
-					) : null}
-				</TabsTrigger>
-			);
-		});
-	}, [children]);
+				return (
+					<TabsTrigger value={props.title} className="group capitalize">
+						{props.icon}
+						{props.title}
+						{props?.count && props.count > 0 ? (
+							<Badge variant="secondary" className="ml-1.5 min-w-5 px-1">
+								{props.count}
+							</Badge>
+						) : null}
+					</TabsTrigger>
+				);
+			}),
+		[children],
+	);
 
 	return (
 		<Tabs
