@@ -1,6 +1,8 @@
 import type {
   SidebarNavDataType,
   ColorThemeOption,
+  StatsDataPoint,
+  RecentSaleType,
   NavItemMapType,
   NavItemType,
   Language,
@@ -135,3 +137,83 @@ export const LanguagesMap: Map<string, Language> = new Map([
 ]);
 
 export const Languages: Language[] = Array.from(LanguagesMap.values());
+
+export const MonthsShort: string[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const MonthsLong: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const dataPoints: StatsDataPoint[] = Array.from({ length: 12 }).map(
+  (_, index) => ({
+    name: MonthsShort[index],
+    total: Math.floor(Math.random() * 5000) + 1000,
+  })
+);
+
+export const recentSales: RecentSaleType[] = [
+  {
+    name: "Olivia Martin",
+    email: "olivia.martin@email.com",
+    amount: "+$1,999.00",
+    src: "/avatars/01.png",
+    alt: "Avatar",
+    fallback: "OM",
+  },
+  {
+    name: "Jackson Lee",
+    email: "jackson.lee@email.com",
+    amount: "+$39.00",
+    src: "/avatars/02.png",
+    alt: "Avatar",
+    fallback: "JL",
+  },
+  {
+    name: "Isabella Nguyen",
+    email: "isabella.nguyen@email.com",
+    amount: "+$299.00",
+    src: "/avatars/03.png",
+    alt: "Avatar",
+    fallback: "IN",
+  },
+  {
+    name: "William Kim",
+    email: "will@email.com",
+    amount: "+$99.00",
+    src: "/avatars/04.png",
+    alt: "Avatar",
+    fallback: "WK",
+  },
+  {
+    name: "Sofia Davis",
+    email: "sofia.davis@email.com",
+    amount: "+$39.00",
+    src: "/avatars/05.png",
+    alt: "Avatar",
+    fallback: "SD",
+  },
+];

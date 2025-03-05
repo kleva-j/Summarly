@@ -37,3 +37,14 @@ export type ColorThemeOption = {
 };
 
 export type Language = { label: string; value: string; icon?: LucideIcon };
+
+export type StatsDataPoint = { name: string; total: number };
+
+export type RecentSaleType = {
+  name: string;
+  email: string;
+  amount: string;
+  src: string;
+  alt: string;
+  fallback: string;
+};
