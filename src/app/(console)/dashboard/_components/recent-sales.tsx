@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { recentSales } from "@/lib/constants";
 
 export function RecentSales() {
@@ -7,7 +7,6 @@ export function RecentSales() {
 			{recentSales.map((item) => (
 				<div className="flex items-center gap-4" key={item.email}>
 					<Avatar className="h-9 w-9">
-						<AvatarImage src={item.src} alt={item.alt} />
 						<AvatarFallback>{item.fallback}</AvatarFallback>
 					</Avatar>
 					<div className="flex flex-1 flex-wrap items-center justify-between">

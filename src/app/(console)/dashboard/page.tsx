@@ -1,5 +1,3 @@
-import type { Preloaded } from "convex/react";
-
 import { Header, Content } from "@/app/(console)/dashboard/_components";
 import { getAuthToken, getUserId } from "@/lib/auth";
 import { captureEvent } from "@/lib/posthog/utils";
@@ -8,21 +6,21 @@ import { EVENTS } from "@/lib/posthog";
 
 import { api } from "@/convex/_generated/api";
 
+type AuthConfig = { token: string | undefined;};
+
 export default async function DashboardPage() {
 	const userId = await getUserId();
-
-	let preloadedNotes: Preloaded<typeof api.notes.getAllByUser> = [];
-	let preloadedRecordings: Preloaded<typeof api.recording.getRecordings> = [];
-	let preloadedNotifications: Preloaded<typeof api.notification.getLatest> = [];
+	const config: AuthConfig = { token: undefined };
 
 	try {
-		const config = { token: await getAuthToken() };
-		preloadedNotes = await preloadQuery(api.notes.getAllByUser, {}, config);
-		preloadedRecordings = await preloadQuery(api.recording.getRecordings, {}, config);
-		preloadedNotifications = await preloadQuery(api.notification.getLatest, {}, config);
+		config.token = await getAuthToken();
 	} catch (e) {
 		console.error(e);
 	}
+
+	const preloadedNotes = await preloadQuery(api.notes.getAllByUser, {}, config);
+	const preloadedRecordings = await preloadQuery(api.recording.getRecordings, {}, config);
+	const preloadedNotifications = await preloadQuery(api.notification.getLatest, {}, config);
 
 	captureEvent(userId ?? "")(EVENTS.PAGE_VIEW);
 
