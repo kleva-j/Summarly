@@ -1,11 +1,14 @@
-import type {
-  DashboardStateEvents,
-  NoteStateContextType,
-  NoteStateEventsType,
-  DashboardState,
-  AppStateEvents,
-  AppState,
-  Note,
+import {
+  type DashboardStateEvents,
+  type NoteStateContextType,
+  type NoteStateEventsType,
+  type DashboardState,
+  type AppStateEvents,
+  type AppState,
+  type Note,
+  DashboardStateActions,
+  NoteStateActions,
+  AppStateActions,
 } from "@/model/types";
 
 import { APPSTATE, DASHBOARDSTATE, NOTESTATE } from "@/model/constant";
@@ -19,7 +22,7 @@ export const NotesStateMachine = setup({
 }).createMachine({
   context: NOTESTATE,
   on: {
-    SELECT_NOTE: {
+    [NoteStateActions.SELECT_NOTE]: {
       actions: assign({
         selectedNote: ({ context, event }) =>
           context.notes.has(event.payload)
@@ -27,16 +30,16 @@ export const NotesStateMachine = setup({
             : null,
       }),
     },
-    CREATE_NOTE: {
+    [NoteStateActions.CREATE_NOTE]: {
       actions: assign({
         notes: ({ context, event }) =>
           context.notes.set(event.payload.id, event.payload),
       }),
     },
-    SET_ACTIVE_NOTE_ID: {
+    [NoteStateActions.SET_ACTIVE_NOTE_ID]: {
       actions: assign({ activeNoteId: ({ event }) => event.payload }),
     },
-    UPDATE_NOTE: {
+    [NoteStateActions.UPDATE_NOTE]: {
       actions: assign({
         notes: ({ context, event }) => {
           const note = context.notes.has(event.payload.id)
@@ -47,7 +50,7 @@ export const NotesStateMachine = setup({
         },
       }),
     },
-    DELETE_NOTE: {
+    [NoteStateActions.DELETE_NOTE]: {
       actions: assign({
         notes: ({ context, event }) => {
           context.notes.delete(event.payload);
@@ -55,8 +58,8 @@ export const NotesStateMachine = setup({
         },
       }),
     },
-    SET_LOADING: { actions: assign({ loading: ({ event }) => event.payload }) },
-    SET_ERROR: { actions: assign({ error: ({ event }) => event.payload }) },
+    [NoteStateActions.SET_LOADING]: { actions: assign({ loading: ({ event }) => event.payload }) },
+    [NoteStateActions.SET_ERROR]: { actions: assign({ error: ({ event }) => event.payload }) },
   },
 });
 
@@ -68,12 +71,10 @@ export const AppStateMachine = setup({
 }).createMachine({
   context: APPSTATE,
   on: {
-    SET_ERROR: { actions: assign({ error: ({ event }) => event.payload }) },
-    SET_THEME: { actions: assign({ theme: ({ event }) => event.payload }) },
-    SET_LOADING: { actions: assign({ loading: ({ event }) => event.payload }) },
-    SET_LANGUAGE: {
-      actions: assign({ language: ({ event }) => event.payload }),
-    },
+    [AppStateActions.SET_ERROR]: { actions: assign({ error: ({ event }) => event.payload }) },
+    [AppStateActions.SET_THEME]: { actions: assign({ theme: ({ event }) => event.payload }) },
+    [AppStateActions.SET_LOADING]: { actions: assign({ loading: ({ event }) => event.payload }) },
+    [AppStateActions.SET_LANGUAGE]: { actions: assign({ language: ({ event }) => event.payload }) },
   },
 });
 
@@ -85,9 +86,9 @@ export const DashboardStateMachine = setup({
 }).createMachine({
   context: DASHBOARDSTATE,
   on: {
-    SET_ERROR: { actions: assign({ error: ({ event }) => event.payload }) },
-    SET_LOADING: { actions: assign({ loading: ({ event }) => event.payload }) },
-    SET_DATE_RANGE: { actions: assign({ dateRange: ({ event }) => event.payload }) },
-    SET_ACTIVE_TAB: { actions: assign({ activeTab: ({ event }) => event.payload }) },
+    [DashboardStateActions.SET_ERROR]: { actions: assign({ error: ({ event }) => event.payload }) },
+    [DashboardStateActions.SET_LOADING]: { actions: assign({ loading: ({ event }) => event.payload }) },
+    [DashboardStateActions.SET_DATE_RANGE]: { actions: assign({ dateRange: ({ event }) => event.payload }) },
+    [DashboardStateActions.SET_ACTIVE_TAB]: { actions: assign({ activeTab: ({ event }) => event.payload }) },
   },
 });

@@ -6,15 +6,23 @@ import { EVENTS } from "@/lib/posthog";
 
 import { api } from "@/convex/_generated/api";
 
-export default async function Page() {
-	const distinctId = (await getUserId()) ?? "";
-	const config = { token: await getAuthToken() };
+type AuthConfig = { token: string | undefined;};
+
+export default async function DashboardPage() {
+	const userId = await getUserId();
+	const config: AuthConfig = { token: undefined };
+
+	try {
+		config.token = await getAuthToken();
+	} catch (e) {
+		console.error(e);
+	}
 
 	const preloadedNotes = await preloadQuery(api.notes.getAllByUser, {}, config);
 	const preloadedRecordings = await preloadQuery(api.recording.getRecordings, {}, config);
 	const preloadedNotifications = await preloadQuery(api.notification.getLatest, {}, config);
 
-	captureEvent(distinctId)(EVENTS.PAGE_VIEW);
+	captureEvent(userId ?? "")(EVENTS.PAGE_VIEW);
 
 	return (
 		<div className="flex flex-col">

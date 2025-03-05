@@ -7,8 +7,6 @@ import { createActorContext } from "@xstate/react";
 
 export const DashboardStateContext = createActorContext(DashboardStateMachine);
 
-export const DashboardContextProvider = ({ children }: PropsWithChildren) => {
-	return (
-		<DashboardStateContext.Provider>{children}</DashboardStateContext.Provider>
-	);
-};
+export const DashboardContextProvider = ({ children }: PropsWithChildren) => (
+	<DashboardStateContext.Provider>{children}</DashboardStateContext.Provider>
+);
