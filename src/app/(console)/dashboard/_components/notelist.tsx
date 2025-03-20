@@ -3,7 +3,6 @@ import type { Note, NoteId } from "@/model/types";
 import { NoteDetails } from "@/app/(console)/dashboard/_components/note-details";
 import { NoteItem } from "@/app/(console)/dashboard/_components/noteitem";
 import { AnimatePresence, motion } from "framer-motion";
-import { Separator } from "@/components/ui/separator";
 import { useCallback, useMemo } from "react";
 import { useQueryState } from "nuqs";
 import { cn } from "@/lib/utils";
@@ -26,10 +25,10 @@ export const NoteList = ({ notes = [] }: NoteListProps) => {
 	);
 
 	return (
-		<div className="flex gap-2 border rounded px-4">
+		<div className="flex gap-4">
 			<motion.section
 				className={cn(
-					"flex flex-col gap-2 w-full max-w-md mr-auto py-4",
+					"flex flex-col gap-2 w-full max-w-md py-4",
 					notes.length === 0 && "hidden",
 				)}
 			>
@@ -44,8 +43,9 @@ export const NoteList = ({ notes = [] }: NoteListProps) => {
 					))}
 				</AnimatePresence>
 			</motion.section>
-			<Separator orientation="vertical" className="h-full mx-2" />
-			<NoteDetails selectedNote={selectedNote} />
+			<div className="flex flex-1 px-4 rounded background-slate-300/30">
+				<NoteDetails selectedNote={selectedNote} />
+			</div>
 		</div>
 	);
 };

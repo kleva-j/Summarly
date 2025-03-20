@@ -36,19 +36,6 @@ export const Notes = ({ notes }: NotesProps) => {
 		console.log("handleCreate");
 	};
 
-	if (notes.length === 0) {
-		return (
-			<div className="bg-slate-100 dark:bg-zinc-950 rounded-md min-h-[calc(100vh_-_theme(spacing.64))] p-4 flex justify-center">
-				<div className="flex flex-col gap-3 w-full">
-					<NoContent
-						data={{ textHeading, textBody, actionLabel }}
-						handleCreate={handleCreate}
-					/>
-				</div>
-			</div>
-		);
-	}
-
 	const [filter, setFilter] = useQueryState("filter", filterOptions);
 
 	const handleFilterChange = useCallback(
@@ -66,33 +53,44 @@ export const Notes = ({ notes }: NotesProps) => {
 	return (
 		<div className="bg-slate-100 dark:bg-zinc-950 rounded-md min-h-[calc(100vh_-_theme(spacing.64))] p-4 flex justify-center">
 			<div className="flex flex-col gap-3 w-full">
-				<fieldset className="flex gap-2 h-fit items-center">
-					<span className="text-foreground text-sm leading-none font-medium flex">
-						Filter
-					</span>
-					<RadioGroup
-						onValueChange={handleFilterChange}
-						className="flex flex-wrap gap-2"
-						value={filter}
-					>
-						{lists.map((item) => (
-							<div
-								key={`${id}-${item.value}`}
-								className="relative flex flex-col items-start gap-2 p-1"
+				{notes.length > 0 ? (
+					<>
+						<fieldset className="flex gap-2 h-fit items-center">
+							<span className="text-foreground text-sm leading-none font-medium flex">
+								Filter
+							</span>
+							<RadioGroup
+								onValueChange={handleFilterChange}
+								className="flex flex-wrap gap-2"
+								value={filter}
 							>
-								<div className="flex items-center gap-2">
-									<RadioGroupItem
-										className="after:absolute after:inset-0 items-center justify-center size-3.5"
-										id={`${id}-${item.value}`}
-										value={item.value}
-									/>
-									<Label htmlFor={`${id}-${item.value}`}>{item.label}</Label>
-								</div>
-							</div>
-						))}
-					</RadioGroup>
-				</fieldset>
-				<NoteList notes={filteredNotes} />
+								{lists.map((item) => (
+									<div
+										key={`${id}-${item.value}`}
+										className="relative flex flex-col items-start gap-2 p-1"
+									>
+										<div className="flex items-center gap-2">
+											<RadioGroupItem
+												className="after:absolute after:inset-0 items-center justify-center size-3.5"
+												id={`${id}-${item.value}`}
+												value={item.value}
+											/>
+											<Label htmlFor={`${id}-${item.value}`}>
+												{item.label}
+											</Label>
+										</div>
+									</div>
+								))}
+							</RadioGroup>
+						</fieldset>
+						<NoteList notes={filteredNotes} />
+					</>
+				) : (
+					<NoContent
+						data={{ textHeading, textBody, actionLabel }}
+						handleCreate={handleCreate}
+					/>
+				)}
 			</div>
 		</div>
 	);

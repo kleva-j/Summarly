@@ -15,9 +15,9 @@ export const NoteItem = (props: NoteItemProps) => {
 	return (
 		<motion.div
 			layout
-			animate={{ opacity: 1, x: 0, scale: 1 }}
-			exit={{ opacity: 0, x: 200, scale: 1.2 }}
-			initial={{ opacity: 0, x: -300, scale: 0.5 }}
+			exit={{ opacity: 0, x: 50 }}
+			animate={{ opacity: 1, x: 0 }}
+			initial={{ opacity: 0, x: -50 }}
 			transition={{ duration: 0.6, type: "spring" }}
 			className={cn(
 				"relative flex flex-col py-2 px-4 gap-2 group rounded-md border bg-card text-card-foreground shadow-sm cursor-pointer",
