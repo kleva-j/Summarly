@@ -1,9 +1,14 @@
 import { paginationOptsValidator } from "convex/server";
 import { ConvexError, v } from "convex/values";
 
-import { internalQuery, internalMutation } from "./_generated/server";
 import { sanitizeInput, queryWithUser, mutateWithUser } from "./utils";
+import { internalQuery, internalMutation } from "./_generated/server";
 import { Notes } from "./schema";
+
+enum NoteStatusEnum {
+  DRAFT = "draft",
+  ARCHIVED = "archived",
+}
 
 export const getOneByUser = queryWithUser({
   args: { noteId: Notes._id, includeSubTasks: v.optional(v.boolean()) },
@@ -69,6 +74,7 @@ const templateNote = {
   generatingTitle: true,
   transcription: "",
   embedding: [],
+  status: NoteStatusEnum.DRAFT,
 };
 
 export const generateNote = internalMutation({

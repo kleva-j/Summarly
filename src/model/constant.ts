@@ -38,3 +38,9 @@ export const DASHBOARDSTATE: DashboardState = {
   },
   activeTab: DashboardTabs.OVERVIEW
 };
+
+export const FilterOptions = {
+	ALL: "all",
+	DRAFT: "draft",
+	ARCHIVED: "archived",
+} as const;
