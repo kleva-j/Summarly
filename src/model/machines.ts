@@ -12,15 +12,45 @@ import {
 } from "@/model/types";
 
 import { APPSTATE, DASHBOARDSTATE, NOTESTATE } from "@/model/constant";
-import { setup, assign } from "xstate";
+import { setup, assign, fromPromise } from "xstate";
 
 export const NotesStateMachine = setup({
   types: {
     context: {} as NoteStateContextType,
     events: {} as NoteStateEventsType,
   },
+  actors: {
+    fetchNotes: fromPromise(() => Promise.resolve(new Map())),
+  },
 }).createMachine({
+  initial: "idle",
   context: NOTESTATE,
+  states: {
+    idle: {
+      on: {
+        [NoteStateActions.FETCH_NOTES]: { target: "loading" },
+      },
+    },
+    loading: {
+      invoke: {
+        id: "fetchNotes",
+        src: "fetchNotes",
+        onDone: {
+          target: "success",
+          actions: assign({ notes: ({ event }) => event.output }),
+        },
+        onError: { target: "failure" },
+      },
+    },
+    success: {
+      entry: assign({ error: () => null, loading: () => false }),
+    },
+    failure: {
+      entry: assign({ error: () => "Error occurred.", loading: () => false }),
+      on: { [NoteStateActions.RETRY_FETCH]: { target: "loading" } },
+      exit: assign({ error: () => null }),
+    },
+  },
   on: {
     [NoteStateActions.SELECT_NOTE]: {
       actions: assign({
@@ -33,7 +63,7 @@ export const NotesStateMachine = setup({
     [NoteStateActions.CREATE_NOTE]: {
       actions: assign({
         notes: ({ context, event }) =>
-          context.notes.set(event.payload.id, event.payload),
+          context.notes.set(event.payload._id, event.payload),
       }),
     },
     [NoteStateActions.SET_ACTIVE_NOTE_ID]: {
@@ -42,11 +72,11 @@ export const NotesStateMachine = setup({
     [NoteStateActions.UPDATE_NOTE]: {
       actions: assign({
         notes: ({ context, event }) => {
-          const note = context.notes.has(event.payload.id)
-            ? (context.notes.get(event.payload.id) as Note)
+          const note = context.notes.has(event.payload._id)
+            ? (context.notes.get(event.payload._id) as Note)
             : null;
           if (!note) return context.notes;
-          return context.notes.set(note.id, event.payload);
+          return context.notes.set(note._id, event.payload);
         },
       }),
     },
@@ -58,8 +88,12 @@ export const NotesStateMachine = setup({
         },
       }),
     },
-    [NoteStateActions.SET_LOADING]: { actions: assign({ loading: ({ event }) => event.payload }) },
-    [NoteStateActions.SET_ERROR]: { actions: assign({ error: ({ event }) => event.payload }) },
+    [NoteStateActions.SET_LOADING]: {
+      actions: assign({ loading: ({ event }) => event.payload }),
+    },
+    [NoteStateActions.SET_ERROR]: {
+      actions: assign({ error: ({ event }) => event.payload }),
+    },
   },
 });
 
@@ -71,10 +105,18 @@ export const AppStateMachine = setup({
 }).createMachine({
   context: APPSTATE,
   on: {
-    [AppStateActions.SET_ERROR]: { actions: assign({ error: ({ event }) => event.payload }) },
-    [AppStateActions.SET_THEME]: { actions: assign({ theme: ({ event }) => event.payload }) },
-    [AppStateActions.SET_LOADING]: { actions: assign({ loading: ({ event }) => event.payload }) },
-    [AppStateActions.SET_LANGUAGE]: { actions: assign({ language: ({ event }) => event.payload }) },
+    [AppStateActions.SET_ERROR]: {
+      actions: assign({ error: ({ event }) => event.payload }),
+    },
+    [AppStateActions.SET_THEME]: {
+      actions: assign({ theme: ({ event }) => event.payload }),
+    },
+    [AppStateActions.SET_LOADING]: {
+      actions: assign({ loading: ({ event }) => event.payload }),
+    },
+    [AppStateActions.SET_LANGUAGE]: {
+      actions: assign({ language: ({ event }) => event.payload }),
+    },
   },
 });
 
@@ -86,9 +128,17 @@ export const DashboardStateMachine = setup({
 }).createMachine({
   context: DASHBOARDSTATE,
   on: {
-    [DashboardStateActions.SET_ERROR]: { actions: assign({ error: ({ event }) => event.payload }) },
-    [DashboardStateActions.SET_LOADING]: { actions: assign({ loading: ({ event }) => event.payload }) },
-    [DashboardStateActions.SET_DATE_RANGE]: { actions: assign({ dateRange: ({ event }) => event.payload }) },
-    [DashboardStateActions.SET_ACTIVE_TAB]: { actions: assign({ activeTab: ({ event }) => event.payload }) },
+    [DashboardStateActions.SET_ERROR]: {
+      actions: assign({ error: ({ event }) => event.payload }),
+    },
+    [DashboardStateActions.SET_LOADING]: {
+      actions: assign({ loading: ({ event }) => event.payload }),
+    },
+    [DashboardStateActions.SET_DATE_RANGE]: {
+      actions: assign({ dateRange: ({ event }) => event.payload }),
+    },
+    [DashboardStateActions.SET_ACTIVE_TAB]: {
+      actions: assign({ activeTab: ({ event }) => event.payload }),
+    },
   },
 });
