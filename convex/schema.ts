@@ -36,7 +36,11 @@ export const Notes = Table("notes", {
   generatingActionItems: v.boolean(),
   transcription: v.optional(v.string()),
   embedding: v.optional(v.array(v.float64())),
-  status: v.union(v.literal("draft"), v.literal("archived")),
+  status: v.union(
+    v.literal("draft"),
+    v.literal("archived"),
+    v.literal("published")
+  ),
 });
 
 export const ActionItems = Table("actionItems", {

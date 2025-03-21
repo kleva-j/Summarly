@@ -8,6 +8,7 @@ import { Notes } from "./schema";
 enum NoteStatusEnum {
   DRAFT = "draft",
   ARCHIVED = "archived",
+  PUBLISHED = "published",
 }
 
 export const getOneByUser = queryWithUser({
