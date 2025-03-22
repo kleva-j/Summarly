@@ -6,7 +6,7 @@ import {
   type AppState,
   type Note,
   DashboardTabs,
-  Themes
+  Themes,
 } from "@/model/types";
 
 import { Languages } from "@/lib/constants";
@@ -32,15 +32,13 @@ export const APPSTATE: AppState = {
 export const DASHBOARDSTATE: DashboardState = {
   loading: false,
   error: null,
-  dateRange: {
-    from: new Date(),
-    to: new Date()
-  },
-  activeTab: DashboardTabs.OVERVIEW
+  activeTab: DashboardTabs.OVERVIEW,
+  dateRange: { from: new Date(), to: new Date() },
 };
 
 export const FilterOptions = {
-	ALL: "all",
-	DRAFT: "draft",
-	ARCHIVED: "archived",
+  ALL: "all",
+  DRAFT: "draft",
+  ARCHIVED: "archived",
+  PUBLISHED: "published",
 } as const;

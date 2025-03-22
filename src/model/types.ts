@@ -5,8 +5,8 @@ import type { DateRange } from "react-day-picker";
 export type NoteVersion = "v1" | "v2";
 export type AppStateVersion = "v1" | "v2";
 
-export type NoteStatus = "draft" | "archived";
-export type NoteFilter = "all" | NoteStatus;
+export type NoteStatus = "draft" | "archived" | "published";
+export type NoteFilterList = "all" | NoteStatus;
 
 export type DashboardTabs =
   | "overview"

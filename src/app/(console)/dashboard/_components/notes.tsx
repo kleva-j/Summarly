@@ -15,6 +15,7 @@ const filterOptions = { defaultValue: FilterOptions.ALL };
 
 const lists = [
 	{ value: FilterOptions.ALL, label: "All" },
+	{ value: FilterOptions.PUBLISHED, label: "Published" },
 	{ value: FilterOptions.DRAFT, label: "Draft" },
 	{ value: FilterOptions.ARCHIVED, label: "Archived" },
 ];
@@ -24,6 +25,7 @@ const filterNotes = (status: NoteStatus) =>
 		all: (note: Note) => !!note,
 		draft: (note: Note) => note.status === FilterOptions.DRAFT,
 		archived: (note: Note) => note.status === FilterOptions.ARCHIVED,
+		published: (note: Note) => note.status === FilterOptions.PUBLISHED,
 	})[status];
 
 const textHeading = "You haven't created any notes yet.";
