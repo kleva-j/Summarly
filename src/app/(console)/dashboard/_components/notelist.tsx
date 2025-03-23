@@ -1,5 +1,6 @@
 import type { Note, NoteId } from "@/model/types";
 
+import { NoteTimeline } from "@/app/(console)/dashboard/_components/note-timeline";
 import { NoteDetails } from "@/app/(console)/dashboard/_components/note-details";
 import { NoteItem } from "@/app/(console)/dashboard/_components/noteitem";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,7 +26,7 @@ export const NoteList = ({ notes = [] }: NoteListProps) => {
 	);
 
 	return (
-		<div className="flex gap-4">
+		<div className="flex gap-2">
 			<motion.section
 				className={cn(
 					"flex flex-col gap-2 w-full max-w-md py-4",
@@ -43,8 +44,9 @@ export const NoteList = ({ notes = [] }: NoteListProps) => {
 					))}
 				</AnimatePresence>
 			</motion.section>
-			<div className="flex flex-1 px-4 rounded background-slate-300/30">
+			<div className="flex flex-1 px-4 gap-4 rounded background-slate-300/30">
 				<NoteDetails selectedNote={selectedNote} />
+				<NoteTimeline selectedNote={selectedNote} />
 			</div>
 		</div>
 	);
