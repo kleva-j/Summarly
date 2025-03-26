@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/timeline";
 
 import { Text } from "@/components/ui/typography";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
 
 const items = [
@@ -45,38 +46,46 @@ const items = [
 ];
 
 type NoteTimelineProps = {
-	selectedNote: Note | undefined;
+	selectedNote: Note;
 };
 
 export function NoteTimeline({ selectedNote }: NoteTimelineProps) {
-	if (!selectedNote) return null;
+	const isMobile = useIsMobile();
 
-	return (
+	return !isMobile ? (
 		<motion.div
-			className="flex flex-col gap-2 py-4 max-w-sm"
 			exit={{ opacity: 0, x: 30 }}
 			animate={{ opacity: 1, x: 0 }}
 			initial={{ opacity: 0, x: -30 }}
+			className="hidden flex-col gap-2 py-4 max-w-sm xl:flex"
 			transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
 		>
 			<Text as="h3" className="text-xs mb-2 font-medium text-muted-foreground">
 				Activity
 			</Text>
-			<Timeline defaultValue={3}>
-				{items.map((item) => (
-					<TimelineItem key={item.id} step={item.id}>
-						<TimelineHeader>
-							<TimelineSeparator />
-							<TimelineTitle className="-mt-0.5">{item.title}</TimelineTitle>
-							<TimelineIndicator />
-						</TimelineHeader>
-						<TimelineContent>
-							{item.description}
-							<TimelineDate className="mt-2 mb-0">{item.date}</TimelineDate>
-						</TimelineContent>
-					</TimelineItem>
-				))}
-			</Timeline>
+			<TimeLineComponent noteId={selectedNote?._id} />
 		</motion.div>
+	) : null;
+}
+
+export function TimeLineComponent({ noteId }: { noteId: Note["_id"] }) {
+	if (!noteId) return null;
+
+	return (
+		<Timeline defaultValue={3}>
+			{items.map((item) => (
+				<TimelineItem key={item.id} step={item.id}>
+					<TimelineHeader>
+						<TimelineSeparator />
+						<TimelineTitle className="-mt-0.5">{item.title}</TimelineTitle>
+						<TimelineIndicator />
+					</TimelineHeader>
+					<TimelineContent>
+						{item.description}
+						<TimelineDate className="mt-2 mb-0">{item.date}</TimelineDate>
+					</TimelineContent>
+				</TimelineItem>
+			))}
+		</Timeline>
 	);
 }

@@ -1,53 +1,72 @@
-import type { SharedProps } from "@/app/(console)/dashboard/_components/tabs";
-import type { Note, NoteStatus } from "@/model/types";
+import type { SharedProps } from "@/dashboard/_components/tabs";
 
-import { NoContent } from "@/app/(console)/dashboard/_components/no-content";
-import { NoteList } from "@/app/(console)/dashboard/_components/notelist";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import type {
+	NoteListGroup,
+	FilterOption,
+	NoteStatus,
+	NoteId,
+} from "@/model/types";
+
+import { NoteTimeline } from "@/dashboard/_components/note-timeline";
+import { NoteDetails } from "@/dashboard/_components/note-details";
+import { NoContent } from "@/dashboard/_components/no-content";
+import { NotesNav } from "@/dashboard/_components/notes-nav";
+import { NoteItem } from "@/dashboard/_components/noteitem";
+import { NoteList } from "@/dashboard/_components/notelist";
+
+import { parseAsStringEnum, useQueryState, parseAsStringLiteral } from "nuqs";
+import { filterLists, filterNotes, FilterOptions } from "@/model/constant";
 import { useCallback, useId, useMemo } from "react";
-import { FilterOptions } from "@/model/constant";
-import { Label } from "@/components/ui/label";
-import { useQueryState } from "nuqs";
+import { groupNotesById } from "@/lib/constants";
 
-type NotesProps = SharedProps & { notes: Note[] };
+import {
+	SelectTrigger,
+	SelectContent,
+	SelectValue,
+	SelectItem,
+	Select,
+} from "@/components/ui/select";
 
-const filterOptions = { defaultValue: FilterOptions.ALL };
+type NotesProps = SharedProps & { notes: NoteListGroup };
 
-const lists = [
-	{ value: FilterOptions.ALL, label: "All" },
-	{ value: FilterOptions.PUBLISHED, label: "Published" },
-	{ value: FilterOptions.DRAFT, label: "Draft" },
-	{ value: FilterOptions.ARCHIVED, label: "Archived" },
-];
-
-const filterNotes = (status: NoteStatus) =>
-	({
-		all: (note: Note) => !!note,
-		draft: (note: Note) => note.status === FilterOptions.DRAFT,
-		archived: (note: Note) => note.status === FilterOptions.ARCHIVED,
-		published: (note: Note) => note.status === FilterOptions.PUBLISHED,
-	})[status];
-
-const textHeading = "You haven't created any notes yet.";
-const textBody = "Start creating your first note.";
-const actionLabel = "Create note";
-
-// Notes Component
 export const Notes = ({ notes }: NotesProps) => {
+	const { ids, groups } = notes;
+
 	const handleCreate = () => {
 		console.log("handleCreate");
 	};
 
-	const [filter, setFilter] = useQueryState("filter", filterOptions);
+	const [filter, setFilter] = useQueryState(
+		"filter",
+		parseAsStringEnum<FilterOption>(Object.values(FilterOptions)).withDefault(
+			FilterOptions.ALL,
+		),
+	);
+
+	const [selectedId, setNoteId] = useQueryState(
+		"noteId",
+		parseAsStringLiteral<NoteId>(ids).withDefault(ids[0]),
+	);
 
 	const handleFilterChange = useCallback(
 		(filter: NoteStatus) => setFilter(filter),
 		[setFilter],
 	);
 
+	const handleNoteClick = useCallback(
+		(noteId: NoteId) => setNoteId(noteId),
+		[setNoteId],
+	);
+
 	const filteredNotes = useMemo(
-		() => notes.filter(filterNotes(filter as NoteStatus)),
-		[filter, notes],
+		() =>
+			groupNotesById(Array.from(groups.values()).filter(filterNotes(filter))),
+		[filter, groups],
+	);
+
+	const selectedNote = useMemo(
+		() => filteredNotes.groups.get(selectedId),
+		[filteredNotes, selectedId],
 	);
 
 	const id = useId();
@@ -55,41 +74,50 @@ export const Notes = ({ notes }: NotesProps) => {
 	return (
 		<div className="bg-slate-100 dark:bg-zinc-950 rounded-md min-h-[calc(100vh_-_theme(spacing.64))] p-4 flex justify-center">
 			<div className="flex flex-col gap-3 w-full">
-				{notes.length > 0 ? (
+				{ids.length > 0 ? (
 					<>
-						<fieldset className="flex gap-2 h-fit items-center">
-							<span className="text-foreground text-sm leading-none font-medium flex">
-								Filter
-							</span>
-							<RadioGroup
-								onValueChange={handleFilterChange}
-								className="flex flex-wrap gap-2"
-								value={filter}
-							>
-								{lists.map((item) => (
-									<div
-										key={`${id}-${item.value}`}
-										className="relative flex flex-col items-start gap-2 p-1"
-									>
-										<div className="flex items-center gap-2">
-											<RadioGroupItem
-												className="after:absolute after:inset-0 items-center justify-center size-3.5"
-												id={`${id}-${item.value}`}
-												value={item.value}
-											/>
-											<Label htmlFor={`${id}-${item.value}`}>
-												{item.label}
-											</Label>
-										</div>
-									</div>
-								))}
-							</RadioGroup>
-						</fieldset>
-						<NoteList notes={filteredNotes} />
+						<NotesNav noteId={selectedNote?._id}>
+							<Select defaultValue={filter} onValueChange={handleFilterChange}>
+								<SelectTrigger
+									id={id}
+									className="[&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0 focus:ring-1 focus:ring-offset-1"
+								>
+									<SelectValue placeholder="Select status" />
+								</SelectTrigger>
+								<SelectContent className="[&_*[role=option]>span>svg]:text-muted-foreground/80 [&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2 [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0">
+									{filterLists.map((item) => (
+										<SelectItem key={item.value} value={item.value}>
+											<span className="flex items-center gap-2">
+												<StatusDot className={item.className} />
+												<span className="truncate">{item.label}</span>
+											</span>
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</NotesNav>
+						<NoteList
+							items={Array.from(filteredNotes.groups.values())}
+							renderItems={(note) => (
+								<NoteItem
+									selected={note._id === selectedId}
+									onClick={handleNoteClick}
+									key={note._id}
+									{...note}
+								/>
+							)}
+						>
+							<NoteDetails selectedNote={selectedNote} />
+							{selectedNote && <NoteTimeline selectedNote={selectedNote} />}
+						</NoteList>
 					</>
 				) : (
 					<NoContent
-						data={{ textHeading, textBody, actionLabel }}
+						data={{
+							textHeading: "You haven't created any notes yet.",
+							textBody: "Start creating your first note.",
+							actionLabel: "Create note",
+						}}
 						handleCreate={handleCreate}
 					/>
 				)}
@@ -97,3 +125,19 @@ export const Notes = ({ notes }: NotesProps) => {
 		</div>
 	);
 };
+
+function StatusDot({ className }: { className?: string }) {
+	return (
+		<svg
+			width="8"
+			height="8"
+			viewBox="0 0 8 8"
+			aria-hidden="true"
+			fill="currentColor"
+			className={className}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<circle cx="4" cy="4" r="4" />
+		</svg>
+	);
+}

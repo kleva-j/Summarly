@@ -23,13 +23,20 @@ export type NoteDetail = Note & {
 
 export type NoteId = Note["_id"];
 
+export type NoteGroup = Map<NoteId, Note>;
+
 export type NoteState = {
   loading: boolean;
-  notes: Map<string, Note>;
+  notes: NoteGroup;
   error: string | null;
   selectedNote: Note | null;
   activeNoteId: string | null;
 };
+
+export interface NoteListGroup {
+  groups: NoteGroup;
+  ids: NoteId[];
+}
 
 export type AppState = {
   loading: boolean;

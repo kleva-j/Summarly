@@ -1,3 +1,5 @@
+import type { Note, NoteListGroup } from "@/model/types";
+
 import type {
   SidebarNavDataType,
   ColorThemeOption,
@@ -217,3 +219,14 @@ export const recentSales: RecentSaleType[] = [
     fallback: "SD",
   },
 ];
+
+export const groupNotesById = (notes: Note[]) => {
+  return notes.reduce<NoteListGroup>(
+    (acc, note) => {
+      acc.ids.push(note._id);
+      acc.groups.set(note._id, note);
+      return acc;
+    },
+    { groups: new Map(), ids: [] }
+  );
+};

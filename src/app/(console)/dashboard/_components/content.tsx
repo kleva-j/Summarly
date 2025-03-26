@@ -5,7 +5,9 @@ import type { api } from "convex/_generated/api";
 import { type Preloaded, usePreloadedQuery } from "convex/react";
 
 import { BellIcon, BoxIcon, HouseIcon, PanelsTopLeftIcon } from "lucide-react";
-import { TabularLayout } from "@/app/(console)/dashboard/_components/tabs";
+import { TabularLayout } from "@/dashboard/_components/tabs";
+import { groupNotesById } from "@/lib/constants";
+import { useMemo } from "react";
 
 const Notifications = dynamic(async () => (await import("./notification")).Notifications, { ssr: false });
 const Recordings = dynamic(async () => (await import("./recording")).Recording, { ssr: false });
@@ -27,6 +29,8 @@ export const Content = (props: TabularLayoutProps) => {
 	const recordings = usePreloadedQuery(preloadedRecordings);
 	const notifications = usePreloadedQuery(preloadedNotifications);
 
+	const formattedNotes = useMemo(() => groupNotesById(notes), [notes]);
+
 	return (
 		<TabularLayout>
 			<Overview
@@ -41,7 +45,7 @@ export const Content = (props: TabularLayoutProps) => {
 			/>
 			<Notes
 				count={notes.length}
-				notes={notes}
+				notes={formattedNotes}
 				title="notes"
 				icon={
 					<BoxIcon
