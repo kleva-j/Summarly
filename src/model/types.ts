@@ -74,8 +74,8 @@ export enum NoteStateActions {
 export type NoteStateEventsType =
   | { type: NoteStateActions.CREATE_NOTE; payload: Note }
   | { type: NoteStateActions.UPDATE_NOTE; payload: Note }
-  | { type: NoteStateActions.DELETE_NOTE; payload: string }
-  | { type: NoteStateActions.SELECT_NOTE; payload: string }
+  | { type: NoteStateActions.DELETE_NOTE; payload: NoteId }
+  | { type: NoteStateActions.SELECT_NOTE; payload: NoteId }
   | { type: NoteStateActions.SET_LOADING; payload: boolean }
   | { type: NoteStateActions.SET_ERROR; payload: string | null }
   | { type: NoteStateActions.SET_ACTIVE_NOTE_ID; payload: string | null }
