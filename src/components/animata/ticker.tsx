@@ -49,8 +49,8 @@ function NumberLabel(props: NumberProps) {
 
 	return (
 		<motion.div ref={numberRef} style={{ translateY: springValue }}>
-			{Array.from({ length: 10 }, () => genRandomRange(0, 500)).map((_, i) => (
-				<motion.div className={className} key={i.toString()}>
+			{Array.from({ length: 10 }, () => genRandomRange(0, 500)).map((val, i) => (
+				<motion.div className={className} key={val}>
 					{i}
 				</motion.div>
 			))}

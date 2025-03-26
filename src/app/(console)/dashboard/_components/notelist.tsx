@@ -1,54 +1,36 @@
-import type { Note, NoteId } from "@/model/types";
+import type { PropsWithChildren, ReactNode } from "react";
+import type { Note } from "@/model/types";
 
-import { NoteDetails } from "@/app/(console)/dashboard/_components/note-details";
-import { NoteItem } from "@/app/(console)/dashboard/_components/noteitem";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useMemo } from "react";
-import { useQueryState } from "nuqs";
+import { Children } from "react";
 import { cn } from "@/lib/utils";
 
-type NoteListProps = { notes: Note[] };
+interface NoteListProps<T> extends PropsWithChildren {
+	items: T[];
+	renderItems: (item: T) => ReactNode;
+}
 
-const noteOptions = { defaultValue: "" };
-
-export const NoteList = ({ notes = [] }: NoteListProps) => {
-	const [selectedId, setNoteId] = useQueryState("noteId", noteOptions);
-
-	const handleNoteClick = useCallback(
-		(noteId: NoteId) => setNoteId(noteId),
-		[setNoteId],
-	);
-
-	const selectedNote = useMemo(
-		() => notes.find((note) => note._id === selectedId),
-		[notes, selectedId],
-	);
+export function NoteList<T extends Note>(props: NoteListProps<T>) {
+	const { items = [], renderItems, children } = props;
 
 	return (
-		<div className="flex gap-4">
+		<div className="flex gap-2">
 			<motion.section
 				className={cn(
 					"flex flex-col gap-2 w-full max-w-md py-4",
-					notes.length === 0 && "hidden",
+					items.length === 0 && "hidden",
 				)}
 			>
 				<AnimatePresence mode="popLayout">
-					{notes.map((note) => (
-						<NoteItem
-							selected={note._id === selectedId}
-							onClick={handleNoteClick}
-							key={note._id}
-							{...note}
-						/>
-					))}
+					{items.map(renderItems)}
 				</AnimatePresence>
 			</motion.section>
-			<div className="flex flex-1 px-4 rounded background-slate-300/30">
-				<NoteDetails selectedNote={selectedNote} />
+			<div className="flex flex-1 px-4 gap-4 rounded background-slate-300/30">
+				{Children.map(children, (child) => child)}
 			</div>
 		</div>
 	);
-};
+}
 
 /**
  * Here are short content pieces for each of the topics:

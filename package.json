@@ -50,6 +50,7 @@
     "react": "^19.0.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^19.0.0",
+    "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.1",
     "replicate": "^1.0.1",
     "svix": "^1.45.1",
