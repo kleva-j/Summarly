@@ -7,6 +7,7 @@ import { PostHogPageView } from "@/components/posthog/pageview";
 import { ThemeProvider } from "@/components/providers/theme";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { geistMono, geistSans } from "@/lib/font";
+import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
 import { siteConfig } from "@/lib/config";
 import { Suspense } from "react";
@@ -40,6 +41,7 @@ export default function RootLayout(props: PropsWithChildren) {
 							</ConvexClientProvider>
 						</ThemeProvider>
 					</PostHogProvider>
+					<Toaster />
 				</body>
 			</html>
 		</ClerkProvider>
