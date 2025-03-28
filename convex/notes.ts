@@ -40,6 +40,24 @@ export const getAllByUser = queryWithUser({
   },
 });
 
+export const getNotesByUser = queryWithUser({
+  args: {},
+  handler: async ({ identity, db }) => {
+    const { tokenIdentifier: userId } = identity;
+
+    return db
+      .query("notes")
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("userId"), userId),
+          q.eq(q.field("generatingTitle"), false)
+        )
+      )
+      .order("desc")
+      .collect();
+  },
+});
+
 export const getPaginatedNotesByUser = queryWithUser({
   args: { paginationOpts: paginationOptsValidator },
   handler: async ({ db, identity }, { paginationOpts }) => {
