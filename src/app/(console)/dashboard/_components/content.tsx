@@ -17,7 +17,7 @@ const Notes = dynamic(async () => (await import("./notes")).Notes, { ssr: false 
 import dynamic from "next/dynamic";
 
 interface TabularLayoutProps {
-	preloadedNotes: Preloaded<typeof api.notes.getAllByUser>;
+	preloadedNotes: Preloaded<typeof api.notes.getNotesByUser>;
 	preloadedRecordings: Preloaded<typeof api.recording.getRecordings>;
 	preloadedNotifications: Preloaded<typeof api.notification.getLatest>;
 }
