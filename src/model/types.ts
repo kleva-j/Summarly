@@ -1,5 +1,7 @@
 import type { Doc } from "@/convex/_generated/dataModel";
+import type { FunctionReturnType } from "convex/server";
 import type { FilterOptions } from "@/model/constant";
+import type { api } from "@/convex/_generated/api";
 import type { DateRange } from "react-day-picker";
 
 export type NoteVersion = "v1" | "v2";
@@ -126,3 +128,14 @@ export type DashboardStateEvents =
     };
 
 export type FilterOption = (typeof FilterOptions)[keyof typeof FilterOptions];
+
+export type Recordings = FunctionReturnType<typeof api.recording.getRecordings>;
+
+export type Recording = Recordings[number];
+
+export type RecordingId = Recording["id"];
+
+export interface RecordingListGroup {
+  groups: Map<RecordingId, Recording>;
+  ids: RecordingId[];
+}

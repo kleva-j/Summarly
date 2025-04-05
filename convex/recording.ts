@@ -40,11 +40,35 @@ export const getRecordings = queryWithUser({
 
     for (const note of notes) {
       if (note.audioFileId && note.audioFileUrl) {
-        recordings.push({ id: note.audioFileId, url: note.audioFileUrl });
+        const { audioFileId, audioFileUrl, title, status } = note;
+        recordings.push({ id: audioFileId, url: audioFileUrl, title, status });
       }
     }
 
     return recordings;
+  },
+});
+
+export const getRecording = queryWithUser({
+  args: { audioFileId: v.id("_storage") },
+  handler: async ({ db, identity }, { audioFileId }) => {
+    const { tokenIdentifier: userId } = identity;
+
+    const note = await db
+      .query("notes")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("audioFileId"), audioFileId))
+      .unique();
+
+    if (!note) throw new ConvexError("Note not found");
+
+    const { audioFileUrl, title, status } = note;
+
+    if (note.userId !== userId) throw new ConvexError("Unauthorized");
+
+    if (!audioFileUrl) throw new ConvexError("Recording not found");
+
+    return { id: audioFileId, url: audioFileUrl, title, status };
   },
 });
 

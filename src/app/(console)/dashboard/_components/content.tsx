@@ -6,11 +6,11 @@ import { type Preloaded, usePreloadedQuery } from "convex/react";
 
 import { BellIcon, BoxIcon, HouseIcon, PanelsTopLeftIcon } from "lucide-react";
 import { TabularLayout } from "@/dashboard/_components/tabs";
-import { groupNotesById } from "@/lib/constants";
+import { groupNotesById, groupRecordingById } from "@/lib/constants";
 import { useMemo } from "react";
 
 const Notifications = dynamic(async () => (await import("./notification")).Notifications, { ssr: false });
-const Recordings = dynamic(async () => (await import("./recording")).Recording, { ssr: false });
+const RecordingsTab = dynamic(async () => (await import("./recording")).RecordingTab, { ssr: false });
 const Overview = dynamic(async () => (await import("./overview")).Overview, { ssr: false });
 const Notes = dynamic(async () => (await import("./notes")).Notes, { ssr: false });
 
@@ -30,6 +30,7 @@ export const Content = (props: TabularLayoutProps) => {
 	const notifications = usePreloadedQuery(preloadedNotifications);
 
 	const formattedNotes = useMemo(() => groupNotesById(notes), [notes]);
+	const formattedRecordings = useMemo(() => groupRecordingById(recordings), [recordings]);
 
 	return (
 		<TabularLayout>
@@ -55,9 +56,9 @@ export const Content = (props: TabularLayoutProps) => {
 					/>
 				}
 			/>
-			<Recordings
+			<RecordingsTab
 				count={recordings.length}
-				recordings={recordings}
+				recordings={formattedRecordings}
 				title="recordings"
 				icon={
 					<PanelsTopLeftIcon
