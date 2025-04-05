@@ -1,4 +1,4 @@
-import type { SharedProps } from "@/app/(console)/dashboard/_components/tabs";
+import type { SharedProps } from "@/dashboard/_components/tabs";
 import type { Doc } from "convex/_generated/dataModel";
 
 import { Bell } from "lucide-react";

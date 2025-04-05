@@ -1,28 +1,67 @@
-import type { SharedProps } from "@/app/(console)/dashboard/_components/tabs";
+import type { RecordingId, RecordingListGroup } from "@/model/types";
+import type { SharedProps } from "@/dashboard/_components/tabs";
 
-import { NoContent } from "@/app/(console)/dashboard/_components/no-content";
+import { CreateRecording } from "@/dashboard/_components/create-recording";
+import { RecordingList } from "@/dashboard/_components/recording-list";
+import { RecordingItem } from "@/dashboard/_components/recording-item";
+import { NoContent } from "@/dashboard/_components/no-content";
 
-type Recording = { id: string; url: string };
+import { useQueryState, parseAsStringLiteral } from "nuqs";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "lucide-react";
+import { useCallback } from "react";
 
-type RecordingProps = SharedProps & { recordings: Recording[] };
+type RecordingProps = SharedProps & { recordings: RecordingListGroup };
 
-const textHeading = "You haven't created any Recording yet.";
-const textBody = "Make a new recording.";
-const actionLabel = "Add Recording";
+export const RecordingTab = ({ recordings }: RecordingProps) => {
+	const { ids, groups } = recordings;
 
-export const Recording = ({ recordings }: RecordingProps) => {
-	const handleCreate = () => {
-		console.log("handleCreate");
-	};
+	const [selectedId, setRecordingId] = useQueryState(
+		"audiofile",
+		parseAsStringLiteral<RecordingId>(ids).withDefault(ids[0]),
+	);
+
+	const handleClick = useCallback(
+		(id: RecordingId) => setRecordingId(id),
+		[setRecordingId],
+	);
+
 	return (
 		<div className="bg-slate-100 dark:bg-zinc-950 rounded-md min-h-[calc(100vh_-_theme(spacing.64))] p-4 flex justify-center">
-			{recordings.length > 0 ? (
-				<div>Notes</div>
+			{ids.length > 0 ? (
+				<RecordingList
+					items={Array.from(groups.values())}
+					renderItems={(item) => (
+						<RecordingItem
+							selected={item.id === selectedId}
+							onClick={handleClick}
+							key={item.id}
+							{...item}
+						/>
+					)}
+				/>
 			) : (
 				<NoContent
-					data={{ textHeading, textBody, actionLabel }}
-					handleCreate={handleCreate}
-				/>
+					data={{
+						textHeading: "You haven't created any recordings yet.",
+						textBody: "Start creating your first recording.",
+						actionLabel: "Create recording",
+					}}
+				>
+					<CreateRecording>
+						<Button
+							className="aspect-square max-sm:p-0 w-min rounded-lg cursor-pointer"
+							variant="outline"
+						>
+							<PlusIcon
+								className="opacity-60 sm:-ms-1"
+								aria-hidden="true"
+								size={16}
+							/>
+							<span className="max-sm:sr-only">Create recording</span>
+						</Button>
+					</CreateRecording>
+				</NoContent>
 			)}
 		</div>
 	);

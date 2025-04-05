@@ -1,10 +1,9 @@
-import { Header, Content } from "@/app/(console)/dashboard/_components";
+import { Header, Content } from "@/dashboard/_components";
 import { getAuthToken, getUserId } from "@/lib/auth";
 import { captureEvent } from "@/lib/posthog/utils";
+import { api } from "@/convex/_generated/api";
 import { preloadQuery } from "convex/nextjs";
 import { EVENTS } from "@/lib/posthog";
-
-import { api } from "@/convex/_generated/api";
 
 type AuthConfig = { token: string | undefined;};
 

@@ -1,4 +1,9 @@
-import type { Note, NoteListGroup } from "@/model/types";
+import type {
+  RecordingListGroup,
+  NoteListGroup,
+  Recordings,
+  Note,
+} from "@/model/types";
 
 import type {
   SidebarNavDataType,
@@ -225,6 +230,17 @@ export const groupNotesById = (notes: Note[]) => {
     (acc, note) => {
       acc.ids.push(note._id);
       acc.groups.set(note._id, note);
+      return acc;
+    },
+    { groups: new Map(), ids: [] }
+  );
+};
+
+export const groupRecordingById = (recordings: Recordings) => {
+  return recordings.reduce<RecordingListGroup>(
+    (acc, recording) => {
+      acc.ids.push(recording.id);
+      acc.groups.set(recording.id, recording);
       return acc;
     },
     { groups: new Map(), ids: [] }

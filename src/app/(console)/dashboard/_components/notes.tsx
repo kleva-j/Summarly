@@ -80,7 +80,7 @@ export const Notes = ({ notes }: NotesProps) => {
 							<Select defaultValue={filter} onValueChange={handleFilterChange}>
 								<SelectTrigger
 									id={id}
-									className="[&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0 focus:ring-1 focus:ring-offset-1"
+									className="[&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0 focus:ring-1 focus:ring-offset-1 w-fit"
 								>
 									<SelectValue placeholder="Select status" />
 								</SelectTrigger>
