@@ -33,7 +33,7 @@ export const DashboardHeader = () => {
 			</Text>
 			<div className="flex gap-2 items-center xs:items-center max-xs:space-y-4 xs:space-x-2 xs:flex-row">
 				<CreateRecording>
-					<Button className="p-2 size-10 rounded-md cursor-pointer">
+					<Button className="p-2 size-10 rounded-full cursor-pointer">
 						<MicIcon aria-hidden="true" size={24} />
 					</Button>
 				</CreateRecording>
