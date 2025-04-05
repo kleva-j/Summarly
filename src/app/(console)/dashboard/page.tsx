@@ -17,7 +17,6 @@ export default async function DashboardPage() {
 		console.error(e);
 	}
 
-	const preloadedNotes = await preloadQuery(api.notes.getAllByUser, {}, config);
 	const preloadedRecordings = await preloadQuery(api.recording.getRecordings, {}, config);
 	const preloadedNotifications = await preloadQuery(api.notification.getLatest, {}, config);
 
@@ -30,7 +29,6 @@ export default async function DashboardPage() {
 					<Header />
 
 					<Content
-						preloadedNotes={preloadedNotes}
 						preloadedRecordings={preloadedRecordings}
 						preloadedNotifications={preloadedNotifications}
 					/>

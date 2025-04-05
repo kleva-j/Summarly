@@ -113,7 +113,6 @@ export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
     title: "Notes",
     url: "/dashboard/notes",
     icon: FolderOpen,
-    disabled: true,
   },
   {
     title: "Recordings",
