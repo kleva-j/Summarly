@@ -52,12 +52,13 @@ export const useAudio = (options: optionsType) => {
 			options.onEnded?.(e);
 
 			// Play again the audio after the end if loop is true
-			options.loop ? audio.play() : setIsplaying(false);
+			if (options.loop) audio.play();
+			else setIsplaying(false);
 		});
 
 		// Cleanup
 		return () => {
-			!options.loop &&
+			if (!options.loop)
 				audio.removeEventListener("ended", () => setIsplaying(false));
 		};
 	}, [audio, options]);

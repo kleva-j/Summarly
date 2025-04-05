@@ -54,7 +54,7 @@ export const AudioVisualizer = ({
 	audioOptions = {},
 }: AudioInputVisualizerProps) => {
 	const audio = useMemo(() => new Audio(audioOptions.src), [audioOptions.src]);
-	
+
 	audio.crossOrigin = "anonymous";
 
 	const [isPlaying, setIsplaying] = useState(false);
@@ -99,12 +99,13 @@ export const AudioVisualizer = ({
 			audioOptions.onEnded?.(e);
 
 			// Play again the audio after the end if loop is true
-			audioOptions.loop ? audio.play() : setIsplaying(false);
+			if (audioOptions.loop) audio.play();
+			else setIsplaying(false);
 		});
 
 		// Cleanup
 		return () => {
-			!audioOptions.loop &&
+			if (!audioOptions.loop)
 				audio.removeEventListener("ended", () => setIsplaying(false));
 		};
 	}, [audio, audioOptions]);
