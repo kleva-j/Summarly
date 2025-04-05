@@ -5,8 +5,8 @@ import type { api } from "convex/_generated/api";
 import { type Preloaded, usePreloadedQuery } from "convex/react";
 
 import { BellIcon, BoxIcon, HouseIcon, PanelsTopLeftIcon } from "lucide-react";
-import { TabularLayout } from "@/dashboard/_components/tabs";
 import { groupNotesById, groupRecordingById } from "@/lib/constants";
+import { TabularLayout } from "@/dashboard/_components/tabs";
 import { useMemo } from "react";
 
 const Notifications = dynamic(async () => (await import("./notification")).Notifications, { ssr: false });

@@ -5,9 +5,9 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { NotesContextProvider } from "@/components/providers/notes";
 import { AppContextProvider } from "@/components/providers/app";
 import { getHumeAccessToken } from "@/lib/getHumeAccessToken";
-import { Header } from "@/app/(console)/dashboard/_header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { HumeClient } from "@/components/hume/client";
+import { Header } from "@/dashboard/_header";
 import { ERRORS } from "@/lib/error";
 
 const { Hume_AI_Error } = ERRORS;
