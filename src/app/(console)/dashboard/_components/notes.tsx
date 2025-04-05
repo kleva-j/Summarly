@@ -133,19 +133,3 @@ export const Notes = ({ notes }: NotesProps) => {
     </div>
   );
 };
-
-function StatusDot({ className }: { className?: string }) {
-  return (
-    <svg
-      width="8"
-      height="8"
-      viewBox="0 0 8 8"
-      aria-hidden="true"
-      fill="currentColor"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="4" cy="4" r="4" />
-    </svg>
-  );
-}
