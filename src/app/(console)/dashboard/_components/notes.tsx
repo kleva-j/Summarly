@@ -5,15 +5,11 @@ import type {
   NoteId,
 } from "@/model/types";
 
-import { NoteTimeline } from "@/dashboard/_components/note-timeline";
-import { NoteDetails } from "@/dashboard/_components/note-details";
-import { NoContent } from "@/dashboard/_components/no-content";
-import { NotesNav } from "@/dashboard/_components/notes-nav";
-import { NoteItem } from "@/dashboard/_components/noteitem";
-import { NoteList } from "@/dashboard/_components/notelist";
-
 import { parseAsStringEnum, useQueryState, parseAsStringLiteral } from "nuqs";
 import { filterLists, filterNotes, FilterOptions } from "@/model/constant";
+import { NoContent } from "@/dashboard/_components/no-content";
+import { NoteItem } from "@/dashboard/_components/noteitem";
+import { NoteList } from "@/dashboard/_components/notelist";
 import { useCallback, useId, useMemo } from "react";
 import { groupNotesById } from "@/lib/constants";
 
@@ -62,10 +58,9 @@ export const Notes = ({ notes }: NotesProps) => {
     [filter, groups]
   );
 
-  const selectedNote = useMemo(
-    () => filteredNotes.groups.get(selectedId),
-    [filteredNotes, selectedId]
-  );
+  const handleDelete = useCallback(() => {
+    console.log("handleDelete");
+  }, []);
 
   const id = useId();
 
@@ -74,7 +69,7 @@ export const Notes = ({ notes }: NotesProps) => {
       <div className="flex flex-col gap-3 w-full">
         {ids.length > 0 ? (
           <>
-            <NotesNav noteId={selectedNote?._id}>
+            <nav className="flex gap-2 justify-between">
               <Select defaultValue={filter} onValueChange={handleFilterChange}>
                 <SelectTrigger
                   id={id}
@@ -103,21 +98,19 @@ export const Notes = ({ notes }: NotesProps) => {
                   ))}
                 </SelectContent>
               </Select>
-            </NotesNav>
+            </nav>
             <NoteList
               items={Array.from(filteredNotes.groups.values())}
               renderItems={(note) => (
                 <NoteItem
                   selected={note._id === selectedId}
                   onClick={handleNoteClick}
+                  handleDelete={handleDelete}
                   key={note._id}
                   {...note}
                 />
               )}
-            >
-              <NoteDetails selectedNote={selectedNote} />
-              {selectedNote && <NoteTimeline selectedNote={selectedNote} />}
-            </NoteList>
+            />
           </>
         ) : (
           <NoContent

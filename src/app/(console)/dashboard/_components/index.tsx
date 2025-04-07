@@ -13,7 +13,6 @@ export { RecentSales } from "./recent-sales";
 export { RecordingTab } from "./recording";
 export { NoContent } from "./no-content";
 export { StatsCard } from "./stats-card";
-export { NotesNav } from "./notes-nav";
 export { NoteList } from "./notelist";
 export { Overview } from "./overview";
 export { NoteItem } from "./noteitem";
