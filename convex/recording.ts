@@ -19,9 +19,19 @@ export const analyseRecording = mutateWithUser({
     if (!fileUrl) throw new ConvexError("File not found");
 
     const payload = { userId, audioFileId, audioFileUrl: fileUrl };
-    await ctx.runMutation(internal.notes.generateNote, payload);
+    const noteId = await ctx.runMutation(internal.notes.generateNote, payload);
 
-    await ctx.scheduler.runAfter(0, internal.replicate.whisper, { fileUrl });
+    const transcription = await ctx.scheduler.runAfter(
+      0,
+      internal.replicate.whisper,
+      { fileUrl }
+    );
+
+    await ctx.runMutation(internal.notes.updateGeneratedNote, {
+      userId,
+      id: noteId,
+      data: { transcription, generatingTranscript: false },
+    });
   },
 });
 

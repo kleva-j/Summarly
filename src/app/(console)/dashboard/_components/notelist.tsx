@@ -1,35 +1,29 @@
-import type { PropsWithChildren, ReactNode } from "react";
 import type { Note } from "@/model/types";
+import type { ReactNode } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Children } from "react";
 import { cn } from "@/lib/utils";
 
-interface NoteListProps<T> extends PropsWithChildren {
-	items: T[];
-	renderItems: (item: T) => ReactNode;
+interface NoteListProps<T> {
+  items: T[];
+  renderItems: (item: T) => ReactNode;
 }
 
 export function NoteList<T extends Note>(props: NoteListProps<T>) {
-	const { items = [], renderItems, children } = props;
+  const { items = [], renderItems } = props;
 
-	return (
-		<div className="flex gap-2">
-			<motion.section
-				className={cn(
-					"flex flex-col gap-2 w-full max-w-md py-4",
-					items.length === 0 && "hidden",
-				)}
-			>
-				<AnimatePresence mode="popLayout">
-					{items.map(renderItems)}
-				</AnimatePresence>
-			</motion.section>
-			<div className="flex flex-1 px-4 gap-4 rounded background-slate-300/30">
-				{Children.map(children, (child) => child)}
-			</div>
-		</div>
-	);
+  return (
+    <motion.section
+      className={cn(
+        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-2 w-full h-min",
+        items.length === 0 && "hidden"
+      )}
+    >
+      <AnimatePresence mode="popLayout">
+        {items.map(renderItems)}
+      </AnimatePresence>
+    </motion.section>
+  );
 }
 
 /**

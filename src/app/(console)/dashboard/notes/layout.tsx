@@ -5,7 +5,7 @@ import { Text } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { MicIcon } from "lucide-react";
 
-export default async function NotesLayout({ children }: PropsWithChildren) {
+export default function NotesLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex flex-col">
       <main className="flex min-h-[calc(100vh-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/50 p-4 md:gap-8 md:p-10">

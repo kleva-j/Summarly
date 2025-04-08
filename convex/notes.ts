@@ -23,7 +23,15 @@ export const getOneByUser = queryWithUser({
       )
       .unique();
 
-    return note;
+    if (!note) throw new ConvexError("Note not found");
+
+    const actionItems = await db
+      .query("actionItems")
+      .withIndex("by_note", (q) => q.eq("noteId", note._id))
+      .order("desc")
+      .collect();
+
+    return { ...note, actionItems };
   },
 });
 
@@ -32,11 +40,25 @@ export const getAllByUser = queryWithUser({
   handler: async ({ identity, db }) => {
     const { tokenIdentifier: userId } = identity;
 
-    return db
+    const notes = await db
       .query("notes")
       .filter((q) => q.eq(q.field("userId"), userId))
       .order("desc")
       .collect();
+
+    const notesWithActionItems = [];
+
+    for (const note of notes) {
+      const actionItems = await db
+        .query("actionItems")
+        .withIndex("by_note", (q) => q.eq("noteId", note._id))
+        .order("desc")
+        .collect();
+
+      notesWithActionItems.push({ ...note, actionItems });
+    }
+
+    return notesWithActionItems;
   },
 });
 
@@ -45,7 +67,7 @@ export const getNotesByUser = queryWithUser({
   handler: async ({ identity, db }) => {
     const { tokenIdentifier: userId } = identity;
 
-    return db
+    const notes = await db
       .query("notes")
       .filter((q) =>
         q.and(
@@ -55,6 +77,20 @@ export const getNotesByUser = queryWithUser({
       )
       .order("desc")
       .collect();
+
+    const notesWithActionItems = [];
+
+    for (const note of notes) {
+      const actionItems = await db
+        .query("actionItems")
+        .withIndex("by_note", (q) => q.eq("noteId", note._id))
+        .order("desc")
+        .collect();
+
+      notesWithActionItems.push({ ...note, actionItems });
+    }
+
+    return notesWithActionItems;
   },
 });
 
@@ -133,11 +169,11 @@ export const updateGeneratedNote = internalMutation({
     userId: v.string(),
     data: v.object({
       title: v.optional(v.string()),
-      transcription: v.string(),
-      summary: v.string(),
-      generatingActionItems: v.boolean(),
-      generatingTranscript: v.boolean(),
-      generatingTitle: v.boolean(),
+      transcription: v.optional(v.string()),
+      summary: v.optional(v.string()),
+      generatingActionItems: v.optional(v.boolean()),
+      generatingTranscript: v.optional(v.boolean()),
+      generatingTitle: v.optional(v.boolean()),
       embedding: v.optional(v.array(v.float64())),
     }),
   },
