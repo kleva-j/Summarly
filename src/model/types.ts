@@ -139,3 +139,10 @@ export interface RecordingListGroup {
   groups: Map<RecordingId, Recording>;
   ids: RecordingId[];
 }
+
+export type NoteTimelineType = {
+  id: number;
+  date: string;
+  title: string;
+  description: string;
+}

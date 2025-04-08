@@ -2,10 +2,9 @@
 
 import type { Recording } from "@/model/types";
 
-import { DeleteAlert } from "@/dashboard/_components/alert-deletion";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { AudioLines, Play, Pause, Trash2 } from "lucide-react";
 import { Text } from "@/components/ui/typography";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAudio } from "@/hooks/use-audio";
 import { motion } from "framer-motion";
@@ -17,6 +16,18 @@ import {
   TooltipContent,
   Tooltip,
 } from "@/components/ui/tooltip";
+
+import {
+  AlertDialogDescription,
+  AlertDialogContent,
+  AlertDialogAction,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogCancel,
+  AlertDialogTitle,
+  AlertDialog,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type Props = Recording & {
   onClick: (id: string) => void;
@@ -92,12 +103,35 @@ export const RecordingItem = ({ id, title, selected, url, status }: Props) => {
             {status}
           </Badge>
         </div>
-        <DeleteAlert
-          onConfirm={() => {}}
-          message="Are you sure you want to delete this recording?"
-        >
-          <Trash2 className="size-7 rounded-full p-1.5 ml-auto text-red-400 mr-1 hover:bg-muted" />
-        </DeleteAlert>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Trash2 className="size-7 rounded-full p-1.5 ml-auto text-red-400 mr-1 hover:bg-muted" />
+          </AlertDialogTrigger>
+          <AlertDialogContent className="w-[350px] p-4">
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to delete this recording?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Take a moment to review the details provided to ensure you
+                understand the implications.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="cursor-pointer">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className={cn(
+                  buttonVariants({ variant: "destructive" }),
+                  "cursor-pointer"
+                )}
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </motion.div>
   );
