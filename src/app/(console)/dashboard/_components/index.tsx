@@ -1,14 +1,10 @@
 export { TabularLayout, type SharedProps } from "./tabs";
 export { DashboardHeader as Header } from "./header";
 export { CreateRecording } from "./create-recording";
-export { MobileTimeline } from "./mobile-timeline";
 export { RecordingList } from "./recording-list";
 export { RecordingItem } from "./recording-item";
 export { Notifications } from "./notification";
-export { NoteTimeline } from "./note-timeline";
-export { DeleteAlert } from "./alert-deletion";
 export { UsageOverview } from "./usage-chart";
-export { NoteDetails } from "./note-details";
 export { RecentSales } from "./recent-sales";
 export { RecordingTab } from "./recording";
 export { NoContent } from "./no-content";
