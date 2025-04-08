@@ -1,8 +1,15 @@
 import type { Note } from "@/model/types";
 
-import { Headset, ReceiptText, ScanText, TableOfContents } from "lucide-react";
 import { sampleNoteTimeline } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+
+import {
+  TableOfContents,
+  GitPullRequest,
+  ReceiptText,
+  ScanText,
+  Headset,
+} from "lucide-react";
 
 import {
   AccordionTrigger,
@@ -22,14 +29,14 @@ import {
 } from "@/components/ui/sheet";
 
 import {
-	TimelineSeparator,
-	TimelineIndicator,
-	TimelineContent,
-	TimelineHeader,
-	TimelineTitle,
-	TimelineItem,
-	TimelineDate,
-	Timeline,
+  TimelineSeparator,
+  TimelineIndicator,
+  TimelineContent,
+  TimelineHeader,
+  TimelineTitle,
+  TimelineItem,
+  TimelineDate,
+  Timeline,
 } from "@/components/ui/timeline";
 
 import MediaThemeTailwindAudio from "player.style/tailwind-audio/react";
@@ -133,7 +140,7 @@ export function NoteDetails({ isOpen, selectedNote, close }: Props) {
           >
             <AccordionTrigger className="py-2 text-[15px] leading-6 hover:no-underline">
               <span className="flex items-center gap-3">
-                <Headset
+                <GitPullRequest
                   size={16}
                   className="shrink-0 opacity-60"
                   aria-hidden="true"
