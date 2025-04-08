@@ -1,6 +1,7 @@
 import type { Note } from "@/model/types";
 
 import { Headset, ReceiptText, ScanText, TableOfContents } from "lucide-react";
+import { sampleNoteTimeline } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -19,6 +20,17 @@ import {
   SheetTitle,
   Sheet,
 } from "@/components/ui/sheet";
+
+import {
+	TimelineSeparator,
+	TimelineIndicator,
+	TimelineContent,
+	TimelineHeader,
+	TimelineTitle,
+	TimelineItem,
+	TimelineDate,
+	Timeline,
+} from "@/components/ui/timeline";
 
 import MediaThemeTailwindAudio from "player.style/tailwind-audio/react";
 
@@ -114,6 +126,44 @@ export function NoteDetails({ isOpen, selectedNote, close }: Props) {
               )}
             </AccordionContent>
           </AccordionItem>
+
+          <AccordionItem
+            value="timeline"
+            className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 py-1 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"
+          >
+            <AccordionTrigger className="py-2 text-[15px] leading-6 hover:no-underline">
+              <span className="flex items-center gap-3">
+                <Headset
+                  size={16}
+                  className="shrink-0 opacity-60"
+                  aria-hidden="true"
+                />
+                <span>Note Timeline</span>
+              </span>
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground ps-7 pb-2">
+              <Timeline defaultValue={3}>
+                {sampleNoteTimeline.map((item) => (
+                  <TimelineItem key={item.id} step={item.id}>
+                    <TimelineHeader>
+                      <TimelineSeparator />
+                      <TimelineTitle className="-mt-0.5">
+                        {item.title}
+                      </TimelineTitle>
+                      <TimelineIndicator />
+                    </TimelineHeader>
+                    <TimelineContent>
+                      {item.description}
+                      <TimelineDate className="mt-2 mb-0">
+                        {item.date}
+                      </TimelineDate>
+                    </TimelineContent>
+                  </TimelineItem>
+                ))}
+              </Timeline>
+            </AccordionContent>
+          </AccordionItem>
+
           <AccordionItem
             value="actionItems"
             className="bg-background has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative border px-4 py-1 outline-none first:rounded-t-md last:rounded-b-md last:border-b has-focus-visible:z-10 has-focus-visible:ring-[3px]"

@@ -1,5 +1,6 @@
 import type {
   RecordingListGroup,
+  NoteTimelineType,
   NoteListGroup,
   Recordings,
   Note,
@@ -245,3 +246,34 @@ export const groupRecordingById = (recordings: Recordings) => {
     { groups: new Map(), ids: [] }
   );
 };
+
+export const sampleNoteTimeline: NoteTimelineType[] = [
+	{
+		id: 1,
+		date: "15 minutes ago",
+		title: "Pull Request Submitted",
+		description:
+			"Submitted PR #342 with new feature implementation. Waiting for code review from team leads.",
+	},
+	{
+		id: 2,
+		date: "10 minutes ago",
+		title: "CI Pipeline Started",
+		description:
+			"Automated tests and build process initiated. Running unit tests and code quality checks.",
+	},
+	{
+		id: 3,
+		date: "5 minutes ago",
+		title: "Code Review Feedback",
+		description:
+			"Received comments on PR. Minor adjustments needed in error handling and documentation.",
+	},
+	{
+		id: 4,
+		date: "2 minutes ago",
+		title: "Changes Pushed",
+		description:
+			"Implemented requested changes and pushed updates to feature branch. Awaiting final approval.",
+	},
+];
