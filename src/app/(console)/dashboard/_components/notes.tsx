@@ -5,11 +5,12 @@ import type {
   NoteId,
 } from "@/model/types";
 
-import { parseAsStringEnum, useQueryState, parseAsStringLiteral } from "nuqs";
 import { filterLists, filterNotes, FilterOptions } from "@/model/constant";
+import { NoteDetails } from "@/dashboard/notes/_components/note-details";
 import { NoContent } from "@/dashboard/_components/no-content";
 import { NoteItem } from "@/dashboard/_components/noteitem";
 import { NoteList } from "@/dashboard/_components/notelist";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useCallback, useId, useMemo } from "react";
 import { groupNotesById } from "@/lib/constants";
 
@@ -38,8 +39,7 @@ export const Notes = ({ notes }: NotesProps) => {
   );
 
   const [selectedId, setNoteId] = useQueryState(
-    "noteId",
-    parseAsStringLiteral<NoteId>(ids).withDefault(ids[0])
+    "noteId"
   );
 
   const handleFilterChange = useCallback(
@@ -52,6 +52,8 @@ export const Notes = ({ notes }: NotesProps) => {
     [setNoteId]
   );
 
+  const removeSelectedNote = useCallback(() => setNoteId(null), [setNoteId]);
+
   const filteredNotes = useMemo(
     () =>
       groupNotesById(Array.from(groups.values()).filter(filterNotes(filter))),
@@ -63,6 +65,11 @@ export const Notes = ({ notes }: NotesProps) => {
   }, []);
 
   const id = useId();
+
+  const selectedNote = useMemo(
+    () => groups.get((selectedId ?? "") as NoteId),
+    [selectedId, groups]
+  );
 
   return (
     <div className="bg-slate-100 dark:bg-zinc-950 rounded-md min-h-[calc(100vh_-_theme(spacing.64))] p-4 flex justify-center">
@@ -110,6 +117,11 @@ export const Notes = ({ notes }: NotesProps) => {
                   {...note}
                 />
               )}
+            />
+            <NoteDetails
+              isOpen={!!selectedId}
+              close={removeSelectedNote}
+              selectedNote={selectedNote}
             />
           </>
         ) : (
