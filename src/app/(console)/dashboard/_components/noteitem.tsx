@@ -35,7 +35,7 @@ type NoteItemProps = Note & {
 };
 
 export const NoteItem = (props: NoteItemProps) => {
-  const { _id, title, onClick, selected, handleDelete, status } = props;
+  const { _id, title, onClick, selected, status } = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
