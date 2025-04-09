@@ -18,9 +18,8 @@ export const getOneByUser = queryWithUser({
 
     const note = await db
       .query("notes")
-      .filter((q) =>
-        q.and(q.eq(q.field("_id"), noteId), q.eq(q.field("userId"), userId))
-      )
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("_id"), noteId))
       .unique();
 
     if (!note) throw new ConvexError("Note not found");
@@ -42,7 +41,7 @@ export const getAllByUser = queryWithUser({
 
     const notes = await db
       .query("notes")
-      .filter((q) => q.eq(q.field("userId"), userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .order("desc")
       .collect();
 
@@ -69,12 +68,8 @@ export const getNotesByUser = queryWithUser({
 
     const notes = await db
       .query("notes")
-      .filter((q) =>
-        q.and(
-          q.eq(q.field("userId"), userId),
-          q.eq(q.field("generatingTitle"), false)
-        )
-      )
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("generatingTitle"), false))
       .order("desc")
       .collect();
 
@@ -101,7 +96,7 @@ export const getPaginatedNotesByUser = queryWithUser({
 
     const paginatedNotes = await db
       .query("notes")
-      .filter((q) => q.eq(q.field("userId"), userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .order("desc")
       .paginate(paginationOpts);
 
