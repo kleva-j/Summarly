@@ -55,8 +55,8 @@ export const filterNotes = (status: NoteFilterList) =>
   }[status]);
 
 export const filterLists: { value: FilterOption; label: string; className: string }[] = [
-  { value: FilterOptions.ALL, label: "All", className: "text-emerald-600" },
-  { value: FilterOptions.PUBLISHED, label: "Published", className: "text-blue-500" },
+  { value: FilterOptions.ALL, label: "All", className: "text-blue-500" },
+  { value: FilterOptions.PUBLISHED, label: "Published", className: "text-emerald-600" },
   { value: FilterOptions.DRAFT, label: "Draft", className: "text-amber-500" },
   { value: FilterOptions.ARCHIVED, label: "Archived", className: "text-gray-500" },
 ];

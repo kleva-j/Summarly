@@ -41,7 +41,7 @@ import {
 
 import MediaThemeTailwindAudio from "player.style/tailwind-audio/react";
 
-export interface Props {
+interface Props {
   isOpen: boolean;
   selectedNote: Note | undefined;
   close: (isOpen: boolean) => void;

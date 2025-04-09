@@ -27,10 +27,6 @@ type NotesProps = { notes: NoteListGroup };
 export const Notes = ({ notes }: NotesProps) => {
   const { ids, groups } = notes;
 
-  const handleCreate = () => {
-    console.log("handleCreate");
-  };
-
   const [filter, setFilter] = useQueryState(
     "filter",
     parseAsStringEnum<FilterOption>(Object.values(FilterOptions)).withDefault(
@@ -38,9 +34,7 @@ export const Notes = ({ notes }: NotesProps) => {
     )
   );
 
-  const [selectedId, setNoteId] = useQueryState(
-    "noteId"
-  );
+  const [selectedId, setNoteId] = useQueryState("noteId");
 
   const handleFilterChange = useCallback(
     (filter: NoteStatus) => setFilter(filter),
@@ -129,9 +123,7 @@ export const Notes = ({ notes }: NotesProps) => {
             data={{
               textHeading: "You haven't created any notes yet.",
               textBody: "Start creating your first note.",
-              actionLabel: "Create note",
             }}
-            handleCreate={handleCreate}
           />
         )}
       </div>
