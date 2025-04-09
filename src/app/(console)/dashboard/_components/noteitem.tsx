@@ -2,8 +2,8 @@
 
 import type { Note, NoteId } from "@/model/types";
 
-import { MoreVertical, Notebook, Trash2, Pen } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { MoreVertical, Notebook, Trash2 } from "lucide-react";
 import { Text } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
@@ -28,16 +28,35 @@ import {
   AlertDialog,
 } from "@/components/ui/alert-dialog";
 
+import { FilterOptions } from "@/model/constant";
+
 type NoteItemProps = Note & {
   selected: boolean;
   handleDelete: () => void;
   onClick: (noteId: NoteId) => void;
 };
 
+const StatusColorMap = {
+  [FilterOptions.DRAFT]: {
+    cls: "bg-amber-500/10 dark:bg-amber-500/20 hover:bg-amber-500/10 text-amber-500",
+    bgColor: "bg-amber-500",
+  },
+  [FilterOptions.ARCHIVED]: {
+    cls: "bg-gray-500/10 dark:bg-gray-500/20 hover:bg-gray-500/10 text-gray-500",
+    bgColor: "bg-gray-500",
+  },
+  [FilterOptions.PUBLISHED]: {
+    cls: "bg-emerald-500/10 dark:bg-emerald-500/20 hover:bg-emerald-500/10 text-emerald-500",
+    bgColor: "bg-emerald-500",
+  },
+};
+
 export const NoteItem = (props: NoteItemProps) => {
   const { _id, title, onClick, selected, status } = props;
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const { cls, bgColor } = StatusColorMap[status];
 
   return (
     <motion.div
@@ -61,10 +80,6 @@ export const NoteItem = (props: NoteItemProps) => {
             <MoreVertical className="text-gray-500 size-4 cursor-pointer" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuItem className="cursor-pointer">
-              <Pen className="size-4 text-gray-400" />
-              Edit
-            </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={() => setIsOpen(true)}
@@ -93,8 +108,8 @@ export const NoteItem = (props: NoteItemProps) => {
       </Text>
 
       <div className="flex items-center justify-between gap-2 mt-2">
-        <Badge className="bg-amber-600/10 dark:bg-amber-600/20 hover:bg-amber-600/10 text-amber-500 shadow-none rounded-full capitalize">
-          <div className="size-1.5 rounded-full bg-amber-500 mr-2" />
+        <Badge className={cn("shadow-none rounded-full capitalize", cls)}>
+          <div className={cn("size-1.5 rounded-full mr-2", bgColor)} />
           {status}
         </Badge>
         <small className="cursor-pointer text-xs text-muted-foreground">
