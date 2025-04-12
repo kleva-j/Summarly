@@ -38,16 +38,19 @@ type NoteItemProps = Note & {
 
 const StatusColorMap = {
   [FilterOptions.DRAFT]: {
-    cls: "bg-amber-500/10 dark:bg-amber-500/20 hover:bg-amber-500/10 text-amber-500",
+    cls: "bg-amber-500/10 dark:bg-amber-500/20 text-amber-500",
     bgColor: "bg-amber-500",
+    hoverCls: "hover:bg-amber-500/5",
   },
   [FilterOptions.ARCHIVED]: {
-    cls: "bg-gray-500/10 dark:bg-gray-500/20 hover:bg-gray-500/10 text-gray-500",
+    cls: "bg-gray-500/10 dark:bg-gray-500/20 text-gray-500",
     bgColor: "bg-gray-500",
+    hoverCls: "hover:bg-gray-500/5",
   },
   [FilterOptions.PUBLISHED]: {
-    cls: "bg-emerald-500/10 dark:bg-emerald-500/20 hover:bg-emerald-500/10 text-emerald-500",
+    cls: "bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-500",
     bgColor: "bg-emerald-500",
+    hoverCls: "hover:bg-emerald-500/5",
   },
 };
 
@@ -56,7 +59,7 @@ export const NoteItem = (props: NoteItemProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const { cls, bgColor } = StatusColorMap[status];
+  const { cls, bgColor, hoverCls } = StatusColorMap[status];
 
   return (
     <motion.div
@@ -66,7 +69,8 @@ export const NoteItem = (props: NoteItemProps) => {
       initial={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.6, type: "spring" }}
       className={cn(
-        "relative flex flex-col p-4 gap-2 group rounded-xl border bg-card text-card-foreground shadow-sm cursor-pointer h-min max-w-sm min-w-[280px] hover:bg-sky-400/5",
+        "relative flex flex-col p-4 gap-2 group rounded-xl border bg-card text-card-foreground shadow-sm cursor-pointer h-min max-w-sm min-w-[280px]",
+        hoverCls,
         selected && "border-blue-800/50"
       )}
       onClick={() => onClick(_id)}
