@@ -121,6 +121,7 @@ export function NoteDetails({ isOpen, selectedNote, close }: Props) {
             <AccordionContent className="text-muted-foreground ps-7 pb-2">
               {audioFileUrl ? (
                 <MediaThemeTailwindAudio style={{ width: "100%" }}>
+                  {/* biome-ignore lint/a11y/useMediaCaption: <explanation> */}
                   <audio
                     slot="media"
                     src={audioFileUrl}

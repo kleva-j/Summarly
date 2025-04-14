@@ -1,8 +1,10 @@
 "use client";
 
-import { Preloaded, usePreloadedQuery } from "convex/react";
+import type { api } from "@/convex/_generated/api";
+
+import { type Preloaded, usePreloadedQuery } from "convex/react";
+
 import { groupNotesById } from "@/lib/constants";
-import { api } from "@/convex/_generated/api";
 import { useMemo } from "react";
 
 import dynamic from "next/dynamic";
