@@ -1,3 +1,5 @@
+import { HumeLogo } from "@/components/logos/hume";
+
 import type {
   RecordingListGroup,
   NoteTimelineType,
@@ -24,7 +26,6 @@ import {
   LayoutGrid,
   FolderOpen,
   Videotape,
-  ChartPie,
   GitMerge,
   Moon,
   Mic,
@@ -122,10 +123,9 @@ export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
     disabled: true,
   },
   {
-    title: "Analytics",
-    url: "/dashboard/analytics",
-    icon: ChartPie,
-    disabled: true,
+    title: "Hume Chat",
+    url: "/dashboard/hume",
+    icon: HumeLogo,
   },
 ];
 

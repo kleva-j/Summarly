@@ -1,22 +1,64 @@
-"use client";
-
-import { useVoice, VoiceReadyState } from "@humeai/voice-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { MicFFT } from "@/components/hume/mic-fft";
+import { Mic, MicOff, Phone } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
+import { useVoice } from "@humeai/voice-react";
+import { cn } from "@/lib/utils";
 
 export function Controls() {
-	const { connect, disconnect, readyState } = useVoice();
+  const { disconnect, status, isMuted, unmute, mute, micFft } = useVoice();
 
-	const startSession = async () => {
-		try {
-			await connect();
-		} catch (error) {
-			console.error(error);
-		}
-	};
+  return (
+    <div
+      className={cn(
+        "fixed bottom-0 left-0 w-full p-4 flex items-center justify-center",
+        "bg-gradient-to-t from-card via-card/90 to-card/0"
+      )}
+    >
+      <AnimatePresence>
+        {status.value === "connected" ? (
+          <motion.div
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "100%", opacity: 0 }}
+            className="p-4 bg-card border border-border rounded-lg shadow-sm flex items-center gap-4"
+          >
+            <Toggle
+              pressed={!isMuted}
+              onPressedChange={() => {
+                if (isMuted) unmute();
+                else mute();
+              }}
+            >
+              {isMuted ? (
+                <MicOff className="size-4" />
+              ) : (
+                <Mic className="size-4" />
+              )}
+            </Toggle>
 
-	if (readyState === VoiceReadyState.OPEN) {
-		return <Button onClick={() => disconnect()}>End Session</Button>;
-	}
+            <div className="relative grid h-8 w-48 shrink grow-0">
+              <MicFFT fft={micFft} className="fill-current" />
+            </div>
 
-	return <Button className="w-min" onClick={startSession}>Start Session</Button>;
+            <Button
+              className="flex items-center gap-1"
+              onClick={() => disconnect()}
+              variant="destructive"
+            >
+              <span>
+                <Phone
+                  className="size-4 opacity-50"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                />
+              </span>
+              <span>End Call</span>
+            </Button>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
 }

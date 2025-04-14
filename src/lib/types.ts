@@ -21,7 +21,7 @@ export type NavItemMapType = Record<NavTitleType, (Product | UseCase)[]>;
 export type SidebarNavDataType = {
   title: string;
   url: string;
-  icon: LucideIcon;
+  icon: LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>;
   isActive?: boolean;
   items?: {
     title: string;
