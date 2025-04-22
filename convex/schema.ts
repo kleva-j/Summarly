@@ -25,6 +25,31 @@ export const Sessions = Table("sessions", {
   lastActiveAt: v.number(),
 });
 
+export const TranscriptionSchema = v.union(
+  v.string(),
+  v.object({
+    language_code: v.string(),
+    language_probability: v.number(),
+    text: v.string(),
+    words: v.array(
+      v.object({
+        text: v.string(),
+        type: v.string(),
+        start: v.number(),
+        end: v.number(),
+        speaker_id: v.string(),
+        characters: v.array(
+          v.object({
+            text: v.string(),
+            start: v.number(),
+            end: v.number(),
+          })
+        ),
+      })
+    ),
+  })
+);
+
 export const Notes = Table("notes", {
   userId: v.string(),
   audioFileId: v.string(),
@@ -34,7 +59,7 @@ export const Notes = Table("notes", {
   summary: v.optional(v.string()),
   generatingTranscript: v.boolean(),
   generatingActionItems: v.boolean(),
-  transcription: v.optional(v.string()),
+  transcription: v.optional(TranscriptionSchema),
   embedding: v.optional(v.array(v.float64())),
   status: v.union(
     v.literal("draft"),

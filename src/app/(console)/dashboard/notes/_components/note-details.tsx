@@ -100,7 +100,7 @@ export function NoteDetails({ isOpen, selectedNote, close }: Props) {
               </span>
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground ps-7 pb-2">
-              {transcription || "No Transcription generated"}
+              {JSON.stringify(transcription) || "No Transcription generated"}
             </AccordionContent>
           </AccordionItem>
 

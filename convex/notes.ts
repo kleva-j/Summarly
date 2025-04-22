@@ -3,7 +3,7 @@ import { ConvexError, v } from "convex/values";
 
 import { sanitizeInput, queryWithUser, mutateWithUser } from "./utils";
 import { internalQuery, internalMutation } from "./_generated/server";
-import { Notes } from "./schema";
+import { Notes, TranscriptionSchema } from "./schema";
 
 enum NoteStatusEnum {
   DRAFT = "draft",
@@ -122,7 +122,6 @@ const templateNote = {
   audioFileId: "",
   audioFileUrl: "",
   generatingTitle: true,
-  transcription: "",
   embedding: [],
   status: NoteStatusEnum.DRAFT,
 };
@@ -164,7 +163,7 @@ export const updateGeneratedNote = internalMutation({
     userId: v.string(),
     data: v.object({
       title: v.optional(v.string()),
-      transcription: v.optional(v.string()),
+      transcription: v.optional(TranscriptionSchema),
       summary: v.optional(v.string()),
       generatingActionItems: v.optional(v.boolean()),
       generatingTranscript: v.optional(v.boolean()),
@@ -195,10 +194,30 @@ export const updateGeneratedNote = internalMutation({
   },
 });
 
+export const saveTranscription = mutateWithUser({
+  args: {
+    noteId: Notes._id,
+    transcription: TranscriptionSchema,
+  },
+  handler: async ({ db, identity }, { noteId, transcription }) => {
+    const { tokenIdentifier: userId } = identity;
+
+    const note = await db
+      .query("notes")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("_id"), noteId))
+      .unique();
+
+    if (!note) throw new ConvexError("Note not found");
+
+    return db.patch(note._id, { transcription });
+  },
+});
+
 export const remove = mutateWithUser({
   args: { id: Notes._id },
   handler: async ({ db, identity }, { id }) => {
-    const userId = identity.tokenIdentifier;
+    const { tokenIdentifier: userId } = identity;
 
     const note = await db
       .query("notes")

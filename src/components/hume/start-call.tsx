@@ -1,7 +1,20 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useVoice } from "@humeai/voice-react";
 import { Button } from "@/components/ui/button";
+import { useVoice } from "@humeai/voice-react";
 import { Phone } from "lucide-react";
+
+const variant = {
+  scale: {
+    initial: { scale: 0.5 },
+    enter: { scale: 1 },
+    exit: { scale: 0.5 },
+  },
+  opacity: {
+    initial: { opacity: 0 },
+    enter: { opacity: 1 },
+    exit: { opacity: 0 },
+  },
+};
 
 export function StartCall() {
   const { status, connect } = useVoice();
@@ -14,20 +27,15 @@ export function StartCall() {
           initial="initial"
           animate="enter"
           exit="exit"
-          variants={{
-            initial: { opacity: 0 },
-            enter: { opacity: 1 },
-            exit: { opacity: 0 },
-          }}
+          variants={variant.opacity}
         >
           <AnimatePresence>
             {status.value === "error" ? (
               <motion.div
-                variants={{
-                  initial: { scale: 0.5 },
-                  enter: { scale: 1 },
-                  exit: { scale: 0.5 },
-                }}
+                variants={variant.scale}
+                initial="initial"
+                animate="enter"
+                exit="exit"
               >
                 <div className="text-center">
                   <div className="text-lg font-semibold">Connection Error</div>
@@ -38,20 +46,14 @@ export function StartCall() {
               </motion.div>
             ) : (
               <motion.div
-                variants={{
-                  initial: { scale: 0.5 },
-                  enter: { scale: 1 },
-                  exit: { scale: 0.5 },
-                }}
+                variants={variant.scale}
+                initial="initial"
+                animate="enter"
+                exit="exit"
               >
                 <Button
                   className="z-50 flex items-center gap-1.5"
-                  onClick={() => {
-                    connect()
-                      .then(() => {})
-                      .catch(() => {})
-                      .finally(() => {});
-                  }}
+                  onClick={() => connect().then().catch().finally()}
                 >
                   <span>
                     <Phone

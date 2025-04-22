@@ -10,7 +10,7 @@ export default async function HumeChatPage() {
   if (!accessToken) console.error(Hume_AI_Error.ACCESS_TOKEN);
 
   return (
-    <div className={"grow flex flex-col"}>
+    <div className="grow flex flex-col">
       <HumeClient accessToken={accessToken ?? ""} />
     </div>
   );

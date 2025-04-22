@@ -12,6 +12,7 @@ export const env = createEnv({
     HUME_SECRET_KEY: z.string().min(20),
     REPLICATE_API_TOKEN: z.string().min(40),
     TOGETHER_API_KEY: z.string().min(50),
+    ELEVENLABS_API_KEY: z.string().min(50),
   },
   client: {
     NEXT_PUBLIC_CONVEX_URL: z.string().min(10),
@@ -21,6 +22,7 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string(),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(10),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().url("Must be a valid URL"),
+    NEXT_PUBLIC_DEFAULT_ELEVENLABS_AGENT_ID: z.string().min(10),
   },
   runtimeEnv: {
     CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT,
@@ -41,6 +43,9 @@ export const env = createEnv({
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
     REPLICATE_API_TOKEN: process.env.REPLICATE_API_TOKEN,
     TOGETHER_API_KEY: process.env.TOGETHER_API_KEY,
+    ELEVENLABS_API_KEY: process.env.ELEVENLABS_API_KEY,
+    NEXT_PUBLIC_DEFAULT_ELEVENLABS_AGENT_ID:
+      process.env.NEXT_PUBLIC_DEFAULT_ELEVENLABS_AGENT_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
