@@ -27,6 +27,7 @@ import {
   FolderOpen,
   Videotape,
   GitMerge,
+  Pause,
   Moon,
   Mic,
   Sun,
@@ -126,6 +127,11 @@ export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
     title: "Hume Chat",
     url: "/dashboard/hume",
     icon: HumeLogo,
+  },
+  {
+    title: "ElevenLabs Chat",
+    url: "/dashboard/elevenlabs",
+    icon: Pause,
   },
 ];
 
