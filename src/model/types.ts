@@ -3,6 +3,7 @@ import type { FunctionReturnType } from "convex/server";
 import type { FilterOptions } from "@/model/constant";
 import type { api } from "@/convex/_generated/api";
 import type { DateRange } from "react-day-picker";
+import type { Voice } from "elevenlabs/api";
 
 export type NoteVersion = "v1" | "v2";
 export type AppStateVersion = "v1" | "v2";
@@ -145,4 +146,31 @@ export type NoteTimelineType = {
   date: string;
   title: string;
   description: string;
+};
+
+export type ElevenLabsTTSstate = {
+  error: string | null;
+  voices: Voice[];
+  status: string;
+  audio: Buffer<ArrayBufferLike> | null;
+};
+
+export enum ElevenLabsTTSStateActions {
+  SUBMIT_AUDIO = "SUBMIT_AUDIO",
+  CHANGE_VOICE = "CHANGE_VOICE",
+  RETRY_FETCH = "RETRY_FETCH",
+  SET_VOICES = "SET_VOICES",
+  SET_ERROR = "SET_ERROR",
+  EDIT_TEXT = "EDIT_TEXT",
 }
+
+export type ElevenLabTTSStateEvents =
+  | { type: ElevenLabsTTSStateActions.SET_ERROR; payload: string | null }
+  | { type: ElevenLabsTTSStateActions.CHANGE_VOICE; payload: string }
+  | { type: ElevenLabsTTSStateActions.SET_VOICES; payload: Voice[] }
+  | { type: ElevenLabsTTSStateActions.EDIT_TEXT; payload: string }
+  | { type: ElevenLabsTTSStateActions.RETRY_FETCH }
+  | {
+      type: ElevenLabsTTSStateActions.SUBMIT_AUDIO;
+      payload: { text: string; voice: string };
+    };

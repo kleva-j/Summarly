@@ -1,16 +1,20 @@
 import {
+  type ElevenLabTTSStateEvents,
   type DashboardStateEvents,
   type NoteStateContextType,
   type NoteStateEventsType,
+  type ElevenLabsTTSstate,
   type DashboardState,
   type AppStateEvents,
   type AppState,
   type Note,
+  ElevenLabsTTSStateActions,
   DashboardStateActions,
   NoteStateActions,
   AppStateActions,
 } from "@/model/types";
 
+import { createAudioStreamFromText, getVoices } from "@/utils/elevenlabs";
 import { APPSTATE, DASHBOARDSTATE, NOTESTATE } from "@/model/constant";
 import { setup, assign, fromPromise } from "xstate";
 
@@ -139,6 +143,85 @@ export const DashboardStateMachine = setup({
     },
     [DashboardStateActions.SET_ACTIVE_TAB]: {
       actions: assign({ activeTab: ({ event }) => event.payload }),
+    },
+  },
+});
+
+export const ElevenLabsTTSMachine = setup({
+  types: {
+    context: {} as ElevenLabsTTSstate,
+    events: {} as ElevenLabTTSStateEvents,
+  },
+  actors: {
+    fetchVoices: fromPromise(getVoices),
+    submitAudio: fromPromise(
+      ({ input }: { input: { text: string; voice: string } }) =>
+        createAudioStreamFromText(input.text, input.voice)
+    ),
+  },
+}).createMachine({
+  id: "elevenlabs-tts",
+  initial: "idle",
+  context: {
+    error: null,
+    audio: null,
+    status: "",
+    voices: [],
+    voice: "",
+    text: "",
+  },
+  states: {
+    idle: {
+      on: {
+        [ElevenLabsTTSStateActions.SUBMIT_AUDIO]: {
+          target: "loading",
+          actions: assign({ status: () => "Analysing Text" }),
+          guard: ({ context, event }) => {
+            const { text, voice } = event.payload;
+            const { voices } = context;
+
+            return (
+              text.length > 0 &&
+              voices.find((item) => item.voice_id === voice) !== undefined
+            );
+          },
+        },
+        [ElevenLabsTTSStateActions.SET_VOICES]: {
+          actions: assign({ voices: ({ event }) => event.payload }),
+        },
+      },
+    },
+    loading: {
+      invoke: {
+        id: "submitAudio",
+        src: "submitAudio",
+        input: ({ event }) => {
+          const { payload } = event as {
+            payload: { text: string; voice: string };
+          };
+          return { text: payload.text, voice: payload.voice };
+        },
+        onDone: {
+          target: "success",
+          actions: assign({
+            audio: ({ event }) => event.output,
+            status: "Success",
+          }),
+        },
+        onError: {
+          target: "failure",
+          actions: assign({
+            error: "Failed to create audio stream",
+            status: "Error",
+          }),
+        },
+      },
+    },
+    success: {},
+    failure: {
+      on: {
+        [ElevenLabsTTSStateActions.RETRY_FETCH]: { target: "loading" },
+      },
     },
   },
 });
