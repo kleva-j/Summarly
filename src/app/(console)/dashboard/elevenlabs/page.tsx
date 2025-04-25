@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { TextToSpeech } from "@/components/elevenlabs/text-to-speech";
+import { TextToSpeech } from "@/components/elevenlabs/text-to-speech";
 import { Conversation } from "@/components/elevenlabs/conversation";
 import { Text } from "@/components/ui/typography";
 
@@ -30,9 +30,9 @@ export default async function ElevenLabsChatPage() {
           <TabsContent value="conversation" className="py-6">
             <Conversation />
           </TabsContent>
-          {/* <TabsContent value="text-to-speech" className="py-2 px-4">
+          <TabsContent value="text-to-speech" className="py-2 px-4">
             <TextToSpeech />
-          </TabsContent> */}
+          </TabsContent>
         </div>
       </Tabs>
     </section>
