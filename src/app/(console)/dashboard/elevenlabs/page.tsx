@@ -3,6 +3,14 @@ import { TextToSpeech } from "@/components/elevenlabs/text-to-speech";
 import { Conversation } from "@/components/elevenlabs/conversation";
 import { Text } from "@/components/ui/typography";
 
+const tabs = [
+  { value: "conversation", label: "Conversational AI", disabled: false },
+  { value: "text-to-speech", label: "Text to Speech", disabled: false },
+  { value: "voice-isolator", label: "Voice Isolator", disabled: true },
+  { value: "voice-changer", label: "Voice Changer", disabled: true },
+  { value: "audio-dubbing", label: "Audio Dubbing", disabled: true },
+];
+
 export default async function ElevenLabsChatPage() {
   return (
     <section className="max-w-5xl mx-auto w-full p-4">
@@ -13,18 +21,16 @@ export default async function ElevenLabsChatPage() {
         className="w-full flex h-max gap-2"
       >
         <TabsList className="flex-col gap-1 bg-transparent py-0 h-max">
-          <TabsTrigger
-            value="conversation"
-            className="data-[state=active]:bg-muted w-full justify-start data-[state=active]:shadow-none"
-          >
-            Conversational AI
-          </TabsTrigger>
-          <TabsTrigger
-            value="text-to-speech"
-            className="data-[state=active]:bg-muted w-full justify-start data-[state=active]:shadow-none"
-          >
-            Text to Speech
-          </TabsTrigger>
+          {tabs.map((tab) => (
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              disabled={tab.disabled}
+              className="data-[state=active]:bg-muted w-full justify-start data-[state=active]:shadow-none"
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
         <div className="grow rounded-md border text-start">
           <TabsContent value="conversation" className="py-6">

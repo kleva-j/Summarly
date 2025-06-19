@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { ElevenLabsTTSStateActions } from "@/model/types";
+import { ElevenLabsSampleTTSText } from "@/lib/constants";
 import { ElevenLabsTTSMachine } from "@/model/machines";
 import { Textarea } from "@/components/ui/textarea";
 import { Text } from "@/components/ui/typography";
@@ -26,6 +27,7 @@ import {
   SelectItem,
   Select,
 } from "@/components/ui/select";
+
 import {
   TooltipProvider,
   TooltipContent,
@@ -44,7 +46,7 @@ export function TextToSpeech() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [{ context, value }, send] = useMachine(ElevenLabsTTSMachine);
-  const { voices, audio: audioBuffer } = context;
+  const { voices, audio: audioBuffer, status } = context;
 
   const audioElement = new Audio();
 
@@ -115,6 +117,7 @@ export function TextToSpeech() {
       <div className="[--ring:var(--color-indigo-300)] *:not-first:mt-2 in-[.dark]:[--ring:var(--color-indigo-900)]">
         <Textarea
           placeholder="Enter text here to convert to speech"
+          defaultValue={ElevenLabsSampleTTSText}
           className="text-gray-600"
           ref={textRef}
         />
@@ -165,6 +168,7 @@ export function TextToSpeech() {
               </Tooltip>
             </TooltipProvider>
           )}
+          <small className="text-muted-foreground">{status}</small>
         </div>
 
         <div className="flex gap-2 ml-auto">
@@ -187,7 +191,8 @@ export function TextToSpeech() {
               !textRef.current?.value?.length ||
               !voice ||
               !voices.length ||
-              value === "loading"
+              value === "loading" ||
+              (!!status && status !== "idle")
             }
             onClick={submitAudio}
           >

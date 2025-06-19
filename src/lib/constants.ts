@@ -254,32 +254,42 @@ export const groupRecordingById = (recordings: Recordings) => {
 };
 
 export const sampleNoteTimeline: NoteTimelineType[] = [
-	{
-		id: 1,
-		date: "15 minutes ago",
-		title: "Pull Request Submitted",
-		description:
-			"Submitted PR #342 with new feature implementation. Waiting for code review from team leads.",
-	},
-	{
-		id: 2,
-		date: "10 minutes ago",
-		title: "CI Pipeline Started",
-		description:
-			"Automated tests and build process initiated. Running unit tests and code quality checks.",
-	},
-	{
-		id: 3,
-		date: "5 minutes ago",
-		title: "Code Review Feedback",
-		description:
-			"Received comments on PR. Minor adjustments needed in error handling and documentation.",
-	},
-	{
-		id: 4,
-		date: "2 minutes ago",
-		title: "Changes Pushed",
-		description:
-			"Implemented requested changes and pushed updates to feature branch. Awaiting final approval.",
-	},
+  {
+    id: 1,
+    date: "15 minutes ago",
+    title: "Pull Request Submitted",
+    description:
+      "Submitted PR #342 with new feature implementation. Waiting for code review from team leads.",
+  },
+  {
+    id: 2,
+    date: "10 minutes ago",
+    title: "CI Pipeline Started",
+    description:
+      "Automated tests and build process initiated. Running unit tests and code quality checks.",
+  },
+  {
+    id: 3,
+    date: "5 minutes ago",
+    title: "Code Review Feedback",
+    description:
+      "Received comments on PR. Minor adjustments needed in error handling and documentation.",
+  },
+  {
+    id: 4,
+    date: "2 minutes ago",
+    title: "Changes Pushed",
+    description:
+      "Implemented requested changes and pushed updates to feature branch. Awaiting final approval.",
+  },
 ];
+
+export const ElevenLabsSampleTTSText = `Once upon a time, in a small village, there lived a young boy named Max. Max had always dreamed of playing the guitar, but his family couldn't afford one.
+
+One day, while exploring the village, Max stumbled upon a small, mysterious shop. The shop owner, an old man with a kind smile, noticed Max's fascination with a guitar on display.
+
+The old man handed Max the guitar and said, "Play from the heart, and it will be yours." Max's fingers danced on the strings, and the most beautiful music filled the air.
+
+The old man was so moved by Max's talent and passion that he gave him the guitar. Max's music brought joy to the entire village, and he became known as the village's young maestro.
+
+Years later, Max returned to the shop to thank the old man, only to find that it had vanished. But in its place was a note that read: "The music was always yours, I just helped you find it." Max smiled, knowing that the old man's kindness had changed his life forever.`;
