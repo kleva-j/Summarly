@@ -13,4 +13,3 @@ export { NoteList } from "./notelist";
 export { Overview } from "./overview";
 export { NoteItem } from "./noteitem";
 export { Content } from "./content";
-export { Notes } from "./notes";
