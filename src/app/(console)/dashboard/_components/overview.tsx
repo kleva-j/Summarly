@@ -1,9 +1,9 @@
-import type { SharedProps } from "@/_components/tabs";
+import type { SharedProps } from "@/dashboard/_components/tabs";
 import type { FC } from "react";
 
-import { stats, StatsCard } from "@/_components/stats-card";
-import { UsageOverview } from "@/_components/usage-chart";
-import { RecentSales } from "@/_components/recent-sales";
+import { stats, StatsCard } from "@/dashboard/_components/stats-card";
+import { UsageOverview } from "@/dashboard/_components/usage-chart";
+import { RecentSales } from "@/dashboard/_components/recent-sales";
 
 import {
   CardDescription,
