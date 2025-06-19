@@ -2,10 +2,10 @@
 
 import type { DateRange } from "react-day-picker";
 
+import { CreateRecording } from "@/dashboard/_components/create-recording";
 import { DashboardStateContext } from "@/components/providers/dashboard";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { selectDateRange } from "@/components/selectors/dashboard";
-import { CreateRecording } from "@/_components/create-recording";
 import { DashboardStateActions } from "@/model/types";
 import { Text } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";

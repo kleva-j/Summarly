@@ -20,7 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*", "./src/components/*", "./src/app/dashboard/*"],
+      "@/*": ["./src/*", "./src/components/*", "./src/app/(console)/*"],
       "@/convex/*": ["./convex/*"]
     }
   },

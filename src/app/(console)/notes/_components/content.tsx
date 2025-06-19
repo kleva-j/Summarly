@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 
 const Notes = dynamic(
-  async () => (await import("../../_components/notes")).Notes,
+  async () => (await import("../_components/notes")).Notes,
   { ssr: false }
 );
 

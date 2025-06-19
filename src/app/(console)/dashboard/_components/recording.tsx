@@ -1,11 +1,11 @@
 import type { RecordingId, RecordingListGroup } from "@/model/types";
-import type { SharedProps } from "@/_components/tabs";
+import type { SharedProps } from "@/dashboard/_components/tabs";
 
-import { CreateRecording } from "@/_components/create-recording";
-import { RecordingList } from "@/_components/recording-list";
-import { RecordingItem } from "@/_components/recording-item";
+import { CreateRecording } from "@/dashboard/_components/create-recording";
+import { RecordingList } from "@/dashboard/_components/recording-list";
+import { RecordingItem } from "@/dashboard/_components/recording-item";
+import { NoContent } from "@/dashboard/_components/no-content";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
-import { NoContent } from "@/_components/no-content";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { useCallback } from "react";

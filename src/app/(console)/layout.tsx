@@ -5,22 +5,26 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { NotesContextProvider } from "@/components/providers/notes";
 import { AppContextProvider } from "@/components/providers/app";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Header } from "@/_header";
+import { SiteHeader } from "@/components/site-header";
 
-export default async function DashboardLayout({ children }: PropsWithChildren) {
+export default async function ConsoleLayout({ children }: PropsWithChildren) {
   return (
-    <SidebarProvider>
-      <AppSidebar
-        className="max-w-[16rem]"
-        collapsible="offcanvas"
-        variant="floating"
-        side="left"
-      />
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
       <SidebarInset>
-        <Header />
         <AppContextProvider>
           <DashboardContextProvider>
-            <NotesContextProvider>{children}</NotesContextProvider>
+            <NotesContextProvider>
+              <SiteHeader />
+              {children}
+            </NotesContextProvider>
           </DashboardContextProvider>
         </AppContextProvider>
       </SidebarInset>
