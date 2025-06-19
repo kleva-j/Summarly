@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-import { CreateRecording } from "@/dashboard/_components/create-recording";
+import { CreateRecording } from "@/_components/create-recording";
 import { Text } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { MicIcon } from "lucide-react";

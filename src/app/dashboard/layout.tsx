@@ -5,7 +5,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { NotesContextProvider } from "@/components/providers/notes";
 import { AppContextProvider } from "@/components/providers/app";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Header } from "@/dashboard/_header";
+import { Header } from "@/_header";
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
   return (

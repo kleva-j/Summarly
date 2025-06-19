@@ -6,12 +6,12 @@ import type {
 } from "@/model/types";
 
 import { filterLists, filterNotes, FilterOptions } from "@/model/constant";
-import { NoteDetails } from "@/dashboard/notes/_components/note-details";
-import { NoContent } from "@/dashboard/_components/no-content";
-import { NoteItem } from "@/dashboard/_components/noteitem";
-import { NoteList } from "@/dashboard/_components/notelist";
+import { NoteDetails } from "@/notes/_components/note-details";
 import { parseAsStringEnum, useQueryState } from "nuqs";
+import { NoContent } from "@/_components/no-content";
 import { useCallback, useId, useMemo } from "react";
+import { NoteItem } from "@/_components/noteitem";
+import { NoteList } from "@/_components/notelist";
 import { groupNotesById } from "@/lib/constants";
 
 import {

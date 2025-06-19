@@ -1,6 +1,6 @@
-import { Header, Content } from "@/dashboard/_components";
 import { getAuthToken, getUserId } from "@/lib/auth";
 import { captureEvent } from "@/lib/posthog/utils";
+import { Header, Content } from "@/_components";
 import { api } from "@/convex/_generated/api";
 import { preloadQuery } from "convex/nextjs";
 import { EVENTS } from "@/lib/posthog";
