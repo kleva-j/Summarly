@@ -1,4 +1,4 @@
-import { NoteContent } from "@/dashboard/notes/_components/content";
+import { NoteContent } from "@/notes/_components/content";
 import { api } from "@/convex/_generated/api";
 import { preloadQuery } from "convex/nextjs";
 import { getAuthToken } from "@/lib/auth";

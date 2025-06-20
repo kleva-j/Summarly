@@ -167,8 +167,6 @@ export const ElevenLabsTTSMachine = setup({
     audio: null,
     status: "",
     voices: [],
-    voice: "",
-    text: "",
   },
   states: {
     idle: {
