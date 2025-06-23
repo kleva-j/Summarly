@@ -110,6 +110,93 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@theme {
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  --animate-slide-in-out: slide-in-out 0.3s ease-in-out;
+  --animate-slide-in: slide-in 0.3s ease-in-out;
+  --animate-slide-out: slide-out 0.3s ease-in-out;
+  --animate-fade-in: fade-in 0.3s ease-in-out;
+  --animate-fade-out: fade-out 0.3s ease-in-out;
+  --animate-fade-in-out: fade-in-out 0.3s ease-in-out;
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+
+  @keyframes slide-in {
+    0% {
+      transform: translateY(-5%);
+      opacity: 0;
+    }
+    80%, 100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-out {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-5%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-in-out {
+    0% {
+      transform: translateY(-5%);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(5%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in-out {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

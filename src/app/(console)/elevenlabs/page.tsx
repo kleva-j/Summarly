@@ -13,14 +13,14 @@ const tabs = [
 
 export default async function ElevenLabsChatPage() {
   return (
-    <section className="max-w-5xl mx-auto w-full p-4">
-      <Text className="text-2xl font-semibold mb-8">ElevenLabs</Text>
+    <section className="w-full p-6 flex flex-col gap-8 max-w-5xl">
+      <Text className="text-3xl font-bold tracking-tight">ElevenLabs</Text>
       <Tabs
         defaultValue="conversation"
         orientation="horizontal"
-        className="w-full flex h-max gap-2"
+        className="w-full flex flex-row gap-2"
       >
-        <TabsList className="flex-col gap-1 bg-transparent py-0 h-max">
+        <TabsList className="flex-col gap-2 bg-transparent py-0 h-max">
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.value}
@@ -32,11 +32,17 @@ export default async function ElevenLabsChatPage() {
             </TabsTrigger>
           ))}
         </TabsList>
-        <div className="grow rounded-md border text-start">
-          <TabsContent value="conversation" className="py-6">
+        <div className="text-start grow">
+          <TabsContent
+            className="py-6 h-full border rounded-md animate-slide-in"
+            value="conversation"
+          >
             <Conversation />
           </TabsContent>
-          <TabsContent value="text-to-speech" className="py-2 px-4">
+          <TabsContent
+            value="text-to-speech"
+            className="py-2 px-4 animate-slide-in"
+          >
             <TextToSpeech />
           </TabsContent>
         </div>

@@ -7,9 +7,9 @@ import { MicIcon } from "lucide-react";
 
 export default function NotesLayout({ children }: PropsWithChildren) {
   return (
-    <div className="flex flex-col">
-      <main className="flex min-h-[calc(100vh-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/50 p-4 md:gap-8 md:p-10">
-        <div className="flex-1 space-y-4 md:px-4">
+    <div className="flex flex-col p-4">
+      <main className="flex flex-1 flex-col gap-4 md:gap-8">
+        <div className="flex-1 space-y-4 md:px-2">
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4">
             <Text as="h2" className="text-3xl font-bold tracking-tight">
               Notes

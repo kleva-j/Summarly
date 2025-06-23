@@ -4,8 +4,10 @@ import type { ComponentProps } from "react";
 
 import { NavDocuments } from "@/components/nav-documents";
 import { NavSecondary } from "@/components/nav-secondary";
+import { HumeLogo } from "@/components/logos/hume";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
+import { Pause } from "lucide-react";
 
 import {
   IconFileDescription,
@@ -15,13 +17,10 @@ import {
   IconFileWord,
   IconDatabase,
   IconSettings,
-  IconChartBar,
   IconFileAi,
   IconReport,
   IconCamera,
-  IconFolder,
   IconSearch,
-  IconUsers,
   IconHelp,
 } from "@tabler/icons-react";
 
@@ -43,10 +42,9 @@ const data = {
   },
   navMain: [
     { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
-    { title: "Lifecycle", url: "#", icon: IconListDetails },
-    { title: "Analytics", url: "#", icon: IconChartBar },
-    { title: "Projects", url: "#", icon: IconFolder },
-    { title: "Team", url: "#", icon: IconUsers },
+    { title: "Notes", url: "/notes", icon: IconListDetails },
+    { title: "Hume AI", url: "/hume", icon: HumeLogo },
+    { title: "ElevenLabs AI", url: "/elevenlabs", icon: Pause },
   ],
   navClouds: [
     {

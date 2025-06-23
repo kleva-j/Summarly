@@ -11,12 +11,13 @@ import {
   SidebarGroup,
   SidebarMenu,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export interface NavMainProps {
   items: {
     title: string;
     url: string;
-    icon?: Icon;
+    icon?: Icon | React.FC<React.SVGProps<SVGSVGElement>>;
   }[];
 }
 
@@ -46,9 +47,11 @@ export function NavMain({ items }: NavMainProps) {
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
+              <SidebarMenuButton tooltip={item.title} asChild>
+                <Link href={item.url}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

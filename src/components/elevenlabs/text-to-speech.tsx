@@ -118,7 +118,7 @@ export function TextToSpeech() {
         <Textarea
           placeholder="Enter text here to convert to speech"
           defaultValue={ElevenLabsSampleTTSText}
-          className="text-gray-600"
+          className="text-muted-foreground"
           ref={textRef}
         />
       </div>

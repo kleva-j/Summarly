@@ -66,7 +66,7 @@ export const Notes = ({ notes }: NotesProps) => {
   );
 
   return (
-    <div className="bg-slate-100 dark:bg-zinc-950 rounded-md min-h-[calc(100vh_-_theme(spacing.64))] p-4 flex justify-center">
+    <div className="rounded-md flex justify-center">
       <div className="flex flex-col gap-3 w-full">
         {ids.length > 0 ? (
           <>

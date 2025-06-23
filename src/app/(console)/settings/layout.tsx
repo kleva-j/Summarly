@@ -4,7 +4,7 @@ import { Text } from "@/components/ui/typography";
 
 export default async function SettingsLayout({ children }: PropsWithChildren) {
   return (
-    <div className="flex flex-1 p-6">
+    <div className="flex flex-1 p-4">
       <div className="w-full max-w-2xl">
         <div className="flex flex-col [&>p]:mt-0! mb-7 mt-2">
           <Text variant="h3" as="h1">
