@@ -15,6 +15,7 @@ import type {
   RecentSaleType,
   NavItemMapType,
   NavItemType,
+  PathGroup,
   Language,
   UseCase,
   Product,
@@ -390,3 +391,15 @@ export const chartData = [
 
 export const COOKIE_NAME = "active-theme";
 export const DEFAULT_THEME = "default";
+
+export const pathGroup: PathGroup = {
+  dashboard: { label: "Dashboard", hasChildRoute: true, path: "dashboard" },
+  notes: { label: "Notes", hasChildRoute: true, path: "notes" },
+  hume: { label: "Hume AI", hasChildRoute: false, path: "hume" },
+  elevenlabs: {
+    label: "ElevenLabs AI",
+    hasChildRoute: false,
+    path: "elevenlabs",
+  },
+  settings: { label: "Settings", hasChildRoute: true, path: "settings" },
+};

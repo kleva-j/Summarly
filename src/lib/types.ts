@@ -48,3 +48,7 @@ export type RecentSaleType = {
   alt: string;
   fallback: string;
 };
+
+export type PathGroup = {
+  [key: string]: { label: string; hasChildRoute: boolean; path: string };
+};
