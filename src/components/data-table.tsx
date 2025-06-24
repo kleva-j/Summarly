@@ -196,7 +196,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         {row.original.status === "Done" ? (
           <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
         ) : (
-          <IconLoader />
+          <IconLoader className="animate-spin text-yellow-500" />
         )}
         {row.original.status}
       </Badge>
