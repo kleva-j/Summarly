@@ -30,7 +30,6 @@ const META_THEME_COLORS = {
   light: "#ffffff",
   dark: "#09090b",
 };
-COOKIE_NAME;
 
 export const viewport: Viewport = {
   themeColor: META_THEME_COLORS.light,
@@ -60,7 +59,7 @@ export default async function RootLayout(props: PropsWithChildren) {
         </head>
         <body
           className={cn(
-            "bg-background overscroll-none font-sans antialiased",
+            // "bg-background overscroll-none font-sans antialiased",
             activeThemeValue ? `theme-${activeThemeValue}` : "",
             isScaled ? "theme-scaled" : "",
             fontVariables
