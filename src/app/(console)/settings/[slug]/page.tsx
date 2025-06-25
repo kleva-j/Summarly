@@ -2,11 +2,11 @@ import type { LucideIcon } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Paintbrush, Settings } from "lucide-react";
-
-import { Appearance } from "@/settings/[slug]/_appearance";
-import { Advanced } from "@/settings/[slug]/_advanced";
+import { Appearance } from "@/settings/_appearance";
+import { Advanced } from "@/settings/_advanced";
 
 import Link from "next/link";
+
 interface NavItem {
   name: string;
   icon: LucideIcon;
@@ -43,7 +43,7 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
           <TabsTrigger
             key={tab.name}
             value={tab.name}
-            className="rounded-sm bg-transparent h-full data-[state=active]:shadow-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 capitalize"
+            className="rounded-sm bg-transparent h-full data-[state=active]:shadow-none data-[state=active]:bg-primary dark:data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 capitalize"
             asChild
           >
             <Link href={tab.href}>
