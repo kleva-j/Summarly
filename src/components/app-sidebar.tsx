@@ -77,7 +77,7 @@ const data = {
     },
   ],
   navSecondary: [
-    { title: "Settings", url: "/settings/appearance", icon: IconSettings },
+    { title: "Settings", url: "/settings", icon: IconSettings },
     { title: "Get Help", url: "#", icon: IconHelp },
     { title: "Search", url: "#", icon: IconSearch },
   ],
@@ -98,7 +98,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <a href="/dashboard">
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">Acme Inc.</span>
               </a>
