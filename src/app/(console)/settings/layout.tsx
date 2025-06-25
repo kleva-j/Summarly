@@ -15,7 +15,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
             Manage your account settings
           </Text>
         </div>
-        <Separator className="mt-2 my-4 max-w-sm" />
+        <Separator className="mt-1 my-5 max-w-sm" />
         {children}
       </div>
     </div>
