@@ -4,6 +4,8 @@ import { ThemeSelector } from "@/components/theme/theme-selector";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
+import { IconPhone } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { pathGroup } from "@/lib/constants";
 import { Fragment } from "react";
@@ -55,6 +57,10 @@ export function SiteHeader() {
           </Breadcrumb>
         )}
         <div className="ml-auto flex items-center gap-2">
+          <Button size="sm" className="hidden h-7 sm:flex" variant="outline">
+            <IconPhone />
+            <span>Quick Recording</span>
+          </Button>
           <ModeToggle />
           <ThemeSelector />
         </div>
