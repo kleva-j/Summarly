@@ -9,7 +9,6 @@ import type {
 } from "@/model/types";
 
 import type {
-  SidebarNavDataType,
   ColorThemeOption,
   StatsDataPoint,
   RecentSaleType,
@@ -24,15 +23,21 @@ import type {
 import {
   MessageCircle,
   BookOpenText,
-  LayoutGrid,
-  FolderOpen,
-  Videotape,
   GitMerge,
   Pause,
   Moon,
   Mic,
   Sun,
 } from "lucide-react";
+
+import {
+  IconFileDescription,
+  IconListDetails,
+  IconDashboard,
+  IconSettings,
+  IconFileAi,
+  IconCamera,
+} from "@tabler/icons-react";
 
 export const products: Product[] = [
   {
@@ -106,35 +111,6 @@ export const NAV_ITEMS_MAP: NavItemMapType = {
   "use case": useCases,
   product: products,
 };
-
-export const SIDEBAR_NAV_DATA: SidebarNavDataType = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutGrid,
-  },
-  {
-    title: "Notes",
-    url: "/dashboard/notes",
-    icon: FolderOpen,
-  },
-  {
-    title: "Recordings",
-    url: "/dashboard/recordings",
-    icon: Videotape,
-    disabled: true,
-  },
-  {
-    title: "Hume Chat",
-    url: "/dashboard/hume",
-    icon: HumeLogo,
-  },
-  {
-    title: "ElevenLabs Chat",
-    url: "/dashboard/elevenlabs",
-    icon: Pause,
-  },
-];
 
 export const ColorThemesMap: Map<string, ColorThemeOption> = new Map([
   ["light", { value: "light", label: "Light", icon: Sun }],
@@ -402,4 +378,52 @@ export const pathGroup: PathGroup = {
     path: "elevenlabs",
   },
   settings: { label: "Settings", hasChildRoute: true, path: "settings" },
+};
+
+export const SIDEBAR_NAV_DATA = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  navMain: [
+    { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
+    { title: "Notes", url: "/notes", icon: IconListDetails },
+  ],
+  navPlayground: [
+    { title: "Playground", url: "/playground", icon: IconFileAi, name: "playground" },
+    { title: "Hume AI", url: "/hume", icon: HumeLogo, name: "hume" },
+    { title: "ElevenLabs AI", url: "/elevenlabs", icon: Pause, name: "elevenlabs" },
+  ],
+  navClouds: [
+    {
+      title: "Capture",
+      icon: IconCamera,
+      isActive: true,
+      url: "#",
+      items: [
+        { title: "Active Proposals", url: "#" },
+        { title: "Archived", url: "#" },
+      ],
+    },
+    {
+      title: "Proposal",
+      icon: IconFileDescription,
+      url: "#",
+      items: [
+        { title: "Active Proposals", url: "#" },
+        { title: "Archived", url: "#" },
+      ],
+    },
+    {
+      title: "Prompts",
+      icon: IconFileAi,
+      url: "#",
+      items: [
+        { title: "Active Proposals", url: "#" },
+        { title: "Archived", url: "#" },
+      ],
+    },
+  ],
+  navSecondary: [{ title: "Settings", url: "/settings", icon: IconSettings }],
 };

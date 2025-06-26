@@ -2,93 +2,30 @@
 
 import type { ComponentProps } from "react";
 
-import { NavDocuments } from "@/components/nav-documents";
-import { NavSecondary } from "@/components/nav-secondary";
-import { HumeLogo } from "@/components/logos/hume";
-import { NavMain } from "@/components/nav-main";
+import { IconInnerShadowTop } from "@tabler/icons-react";
+import { SIDEBAR_NAV_DATA } from "@/lib/constants";
 import { NavUser } from "@/components/nav-user";
-import { Pause } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 import {
-  IconFileDescription,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconDashboard,
-  IconFileWord,
-  IconDatabase,
-  IconSettings,
-  IconFileAi,
-  IconReport,
-  IconCamera,
-  IconSearch,
-  IconHelp,
-} from "@tabler/icons-react";
-
-import {
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarGroup,
   SidebarMenu,
   Sidebar,
 } from "@/components/ui/sidebar";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
-    { title: "Notes", url: "/notes", icon: IconListDetails },
-    { title: "Hume AI", url: "/hume", icon: HumeLogo },
-    { title: "ElevenLabs AI", url: "/elevenlabs", icon: Pause },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        { title: "Active Proposals", url: "#" },
-        { title: "Archived", url: "#" },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        { title: "Active Proposals", url: "#" },
-        { title: "Archived", url: "#" },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        { title: "Active Proposals", url: "#" },
-        { title: "Archived", url: "#" },
-      ],
-    },
-  ],
-  navSecondary: [
-    { title: "Settings", url: "/settings", icon: IconSettings },
-    { title: "Get Help", url: "#", icon: IconHelp },
-    { title: "Search", url: "#", icon: IconSearch },
-  ],
-  documents: [
-    { name: "Word Assistant", url: "#", icon: IconFileWord },
-    { name: "Data Library", url: "#", icon: IconDatabase },
-    { name: "Reports", url: "#", icon: IconReport },
-  ],
-};
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+  const basePath = pathname.split("/").filter(Boolean)[0].toLowerCase();
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -98,21 +35,90 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/dashboard">
+              <Link href="/dashboard">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+                <span className="text-base font-semibold">Summarly.AI</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* Sidebar Main */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupContent className="flex flex-col gap-2">
+            <SidebarMenu>
+              {SIDEBAR_NAV_DATA.navMain.map((item) => {
+                const isActive = basePath === item.title.toLowerCase();
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      isActive={isActive}
+                      asChild
+                    >
+                      <Link href={item.url}>
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        {/* Sidebar Features */}
+        <SidebarGroup>
+          <SidebarGroupLabel>AI Playground</SidebarGroupLabel>
+          <SidebarGroupContent className="flex flex-col gap-2">
+            <SidebarMenu>
+              {SIDEBAR_NAV_DATA.navPlayground.map((item) => {
+                const isActive = basePath === item.name.toLowerCase();
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      asChild
+                      isActive={isActive}
+                    >
+                      <Link href={item.url}>
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        {/* Sidebar Secondary */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {SIDEBAR_NAV_DATA.navSecondary.map((item) => {
+                const isActive = basePath === item.title.toLowerCase();
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={isActive}>
+                      <a href={item.url}>
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* Sidebar User */}
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );
