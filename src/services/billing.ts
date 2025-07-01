@@ -1,12 +1,7 @@
 "use server";
 
+import type { BillingService, UsageRecord, UserCredits } from "@/types/billing";
 import type { FeatureResponse as Feature } from "@/types/billing";
-import type {
-  BillingService,
-  UsageRecord,
-  UserCredits,
-  CreditType,
-} from "@/types/billing";
 
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
@@ -27,24 +22,20 @@ export class BillingServiceImpl implements BillingService {
   }
 
   async getUserCredits(): Promise<UserCredits> {
-    const { planId, ...rest } = await fetchQuery(
+    const userCredits = await fetchQuery(
       api.subscription_plans.getUserCredits
     );
 
-    return { ...rest, features: this.features, usageHistory: [] };
+    return { ...userCredits, features: this.features, usageHistory: [] };
   }
 
-  async deductCredits(_featureId: string, _amount: number) {}
+  async useCredits() {}
 
-  async addCredits(
-    _userId: string,
-    _amount: number,
-    _source: CreditType["source"]
-  ): Promise<CreditType> {
-    return {} as Promise<CreditType>;
-  }
+  async deductCredits() {}
 
-  async getUsageHistory(_userId: string): Promise<UsageRecord[]> {
+  async addCredits() {}
+
+  async getUsageHistory(): Promise<UsageRecord[]> {
     return [];
   }
 

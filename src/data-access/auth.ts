@@ -18,11 +18,9 @@ export async function checkDataAccess(): Promise<AuthConfig> {
 }
 
 export async function checkUserPermissions(
-  userId: string,
-  requiredPermissions: string[]
 ): Promise<boolean> {
   try {
-    const { token } = await checkDataAccess();
+    await checkDataAccess();
     // TODO: Implement actual permission checking logic using Convex
     // This would typically involve checking user roles and permissions
     return true; // Placeholder until actual implementation

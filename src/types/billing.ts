@@ -70,7 +70,7 @@ export interface BillingService {
     userId: string,
     amount: number,
     source: CreditType["source"]
-  ): Promise<CreditType>;
+  ): void;
   getUsageHistory(userId: string): Promise<UsageRecord[]>;
   checkFeatureAccess(userId: string, featureId: string): Promise<boolean>;
   getFeaturePrice(featureId: string): Promise<number>;

@@ -9,6 +9,17 @@ export function useCredits(user: UserResource | null) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const useFeatureCredits = async (): Promise<boolean> => {
+    if (!user) return false;
+    try {
+      await billingService.useCredits();
+      return true;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to use credits");
+      return false;
+    }
+  };
+
   useEffect(() => {
     if (!user) return;
 
@@ -28,14 +39,7 @@ export function useCredits(user: UserResource | null) {
 
   const checkFeatureAccess = async (featureId: string): Promise<boolean> => {
     if (!user) return false;
-    try {
-      return await billingService.checkFeatureAccess(featureId);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to check feature access"
-      );
-      return false;
-    }
+    return credits?.features.some((f) => f.name === featureId) ?? false;
   };
 
   return {
@@ -43,5 +47,6 @@ export function useCredits(user: UserResource | null) {
     isLoading,
     error,
     checkFeatureAccess,
+    useCredits: useFeatureCredits,
   };
 }

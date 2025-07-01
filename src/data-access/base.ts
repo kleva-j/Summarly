@@ -24,15 +24,9 @@ export abstract class BaseDataAccess {
     }
   }
 
-  protected async validateAction(
-    userId: string,
-    requiredPermissions: string[]
-  ): Promise<boolean> {
+  protected async validateAction(): Promise<boolean> {
     try {
-      const hasPermission = await checkUserPermissions(
-        userId,
-        requiredPermissions
-      );
+      const hasPermission = await checkUserPermissions();
       return hasPermission;
     } catch (error) {
       if (error instanceof PermissionError) throw error;
@@ -41,15 +35,10 @@ export abstract class BaseDataAccess {
   }
 
   protected async validateAndExecute<T>(
-    userId: string,
-    requiredPermissions: string[],
     action: () => Promise<T>
   ): Promise<Result<T>> {
     try {
-      const hasPermission = await this.validateAction(
-        userId,
-        requiredPermissions
-      );
+      const hasPermission = await this.validateAction();
       if (!hasPermission) {
         throw new PermissionError("Insufficient permissions for this action");
       }

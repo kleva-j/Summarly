@@ -1,8 +1,7 @@
 "use client";
 
+import type { FunctionReturnType } from "convex/server";
 import type { api } from "@/convex/_generated/api";
-
-import { type Preloaded, usePreloadedQuery } from "convex/react";
 
 import { groupNotesById } from "@/lib/constants";
 import { useMemo } from "react";
@@ -15,12 +14,10 @@ const Notes = dynamic(
 );
 
 interface NoteContentProps {
-  preloadedNotes: Preloaded<typeof api.notes.getNotesByUser>;
+  notes: FunctionReturnType<typeof api.notes.getAllByUser>;
 }
 
-export function NoteContent({ preloadedNotes }: NoteContentProps) {
-  const notes = usePreloadedQuery(preloadedNotes);
-
+export function NoteContent({ notes }: NoteContentProps) {
   const formattedNotes = useMemo(() => groupNotesById(notes), [notes]);
 
   return <Notes notes={formattedNotes} />;

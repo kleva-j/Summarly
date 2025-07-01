@@ -7,15 +7,15 @@ import { BaseDataAccess } from "@/data-access/base";
 import { api } from "@/convex/_generated/api";
 
 export class NotesDataAccess extends BaseDataAccess {
-  async deleteNote(userId: string, noteId: NoteId): Promise<Result<void>> {
-    return this.validateAndExecute(userId, ["delete_note"], async () => {
+  async deleteNote(noteId: NoteId): Promise<Result<void>> {
+    return this.validateAndExecute(async () => {
       await fetchMutation(api.notes.remove, { id: noteId }, this.authConfig);
       return undefined;
     });
   }
 
-  async getNote(userId: string, noteId: NoteId): Promise<Result<Note>> {
-    return this.validateAndExecute(userId, ["read_notes"], async () => {
+  async getNote(noteId: NoteId): Promise<Result<Note>> {
+    return this.validateAndExecute(async () => {
       const note = await fetchQuery(
         api.notes.getOneByUser,
         { noteId },
@@ -25,10 +25,10 @@ export class NotesDataAccess extends BaseDataAccess {
     });
   }
 
-  async preloadNotes(
-    userId: string
-  ): Promise<Result<Preloaded<typeof api.notes.getAllByUser>>> {
-    return this.validateAndExecute(userId, ["read_notes"], async () => {
+  async preloadNotes(): Promise<
+    Result<Preloaded<typeof api.notes.getAllByUser>>
+  > {
+    return this.validateAndExecute(async () => {
       const notes = await preloadQuery(
         api.notes.getAllByUser,
         {},
@@ -38,11 +38,11 @@ export class NotesDataAccess extends BaseDataAccess {
     });
   }
 
-  async preloadPaginatedNotes(
-    userId: string,
-    pagination?: { initialNumItems?: number; cursor?: string }
-  ): Promise<Result<Preloaded<typeof api.notes.getPaginatedNotesByUser>>> {
-    return this.validateAndExecute(userId, ["read_notes"], async () => {
+  async preloadPaginatedNotes(pagination?: {
+    initialNumItems?: number;
+    cursor?: string;
+  }): Promise<Result<Preloaded<typeof api.notes.getPaginatedNotesByUser>>> {
+    return this.validateAndExecute(async () => {
       const result = await preloadQuery(
         api.notes.getPaginatedNotesByUser,
         {
@@ -57,10 +57,10 @@ export class NotesDataAccess extends BaseDataAccess {
     });
   }
 
-  async getAllNotes(
-    userId: string
-  ): Promise<Result<FunctionReturnType<typeof api.notes.getAllByUser>>> {
-    return this.validateAndExecute(userId, ["read_notes"], async () => {
+  async getAllNotes(): Promise<
+    Result<FunctionReturnType<typeof api.notes.getAllByUser>>
+  > {
+    return this.validateAndExecute(async () => {
       const notes = await fetchQuery(
         api.notes.getAllByUser,
         {},
@@ -70,13 +70,13 @@ export class NotesDataAccess extends BaseDataAccess {
     });
   }
 
-  async getPaginatedNotes(
-    userId: string,
-    pagination?: { initialNumItems?: number; cursor?: string }
-  ): Promise<
+  async getPaginatedNotes(pagination?: {
+    initialNumItems?: number;
+    cursor?: string;
+  }): Promise<
     Result<FunctionReturnType<typeof api.notes.getPaginatedNotesByUser>>
   > {
-    return this.validateAndExecute(userId, ["read_notes"], async () => {
+    return this.validateAndExecute(async () => {
       const result = await fetchQuery(
         api.notes.getPaginatedNotesByUser,
         {
