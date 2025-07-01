@@ -105,17 +105,17 @@ export const Notes = ({ notes }: NotesProps) => {
               renderItems={(note) => (
                 <NoteItem
                   selected={note._id === selectedId}
-                  onClick={handleNoteClick}
                   handleDelete={handleDelete}
+                  onClick={handleNoteClick}
                   key={note._id}
                   {...note}
                 />
               )}
             />
             <NoteDetails
-              isOpen={!!selectedId}
-              close={removeSelectedNote}
               selectedNote={selectedNote}
+              close={removeSelectedNote}
+              isOpen={!!selectedId}
             />
           </>
         ) : (

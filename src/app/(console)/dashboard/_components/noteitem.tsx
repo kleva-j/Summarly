@@ -5,6 +5,7 @@ import type { Note, NoteId } from "@/model/types";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { MoreVertical, Notebook, Trash2 } from "lucide-react";
 import { Text } from "@/components/ui/typography";
+import { FilterOptions } from "@/model/constant";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -27,8 +28,6 @@ import {
   AlertDialogTitle,
   AlertDialog,
 } from "@/components/ui/alert-dialog";
-
-import { FilterOptions } from "@/model/constant";
 
 type NoteItemProps = Note & {
   selected: boolean;

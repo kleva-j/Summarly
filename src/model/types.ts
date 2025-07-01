@@ -189,3 +189,5 @@ export const Ok = <T>(value?: T extends void ? undefined : T): Ok<T> => {
 };
 
 export const Err = <E>(error: E): Err<E> => ({ ok: false, error });
+
+export type AuthConfig = { token: string | undefined };

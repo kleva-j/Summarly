@@ -10,6 +10,8 @@ export const Users = Table("users", {
   tokenIdentifier: v.string(),
   image: v.optional(v.string()),
   planId: v.id("subscription_plans"),
+  // usedCredit: v.optional(v.number()),  To be implemented
+  // availableCredits: v.optional(v.number()),  To be implemented
 });
 
 export const Sessions = Table("sessions", {
@@ -111,7 +113,7 @@ export const Credits = Table("credits", {
   metadata: v.optional(v.object({})),
 });
 
-export const UsageHistory = Table("usageHistory", {
+export const UsageHistory = Table("usage_history", {
   userId: v.string(),
   featureId: v.string(),
   creditsUsed: v.number(),
