@@ -1,20 +1,19 @@
 import { NoteContent } from "@/notes/_components/content";
-import { api } from "@/convex/_generated/api";
-import { preloadQuery } from "convex/nextjs";
-import { getAuthToken } from "@/lib/auth";
-
-type AuthConfig = { token: string | undefined };
+import { NotesDataAccess } from "@/data-access/notes";
+import { toast } from "sonner";
 
 export default async function NotesPage() {
-  const config: AuthConfig = { token: undefined };
+  const noteAccess = new NotesDataAccess();
 
-  try {
-    config.token = await getAuthToken();
-  } catch (e) {
-    console.error(e);
+  const notes = await noteAccess.getAllNotes();
+
+  const { ok } = notes;
+
+  if (!ok) {
+    console.error("Failed to preload notes", notes.error);
+    toast.error("Failed to preload notes");
+    return;
   }
 
-  const preloadedNotes = await preloadQuery(api.notes.getAllByUser, {}, config);
-
-  return <NoteContent preloadedNotes={preloadedNotes} />;
+  return <NoteContent notes={notes.value} />;
 }

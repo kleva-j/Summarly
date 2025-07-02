@@ -1,7 +1,7 @@
 "use client";
 
 import { AvatarFallback, AvatarImage, Avatar } from "@/components/ui/avatar";
-import { useUser } from "@clerk/nextjs";
+import { useUser, useClerk } from "@clerk/nextjs";
 
 import {
   IconDotsVertical,
@@ -47,8 +47,10 @@ export function NavUser() {
     imageUrl = "",
   } = signedInUser || {};
 
-  const [firstName] = fullName?.split(" ") ?? [];
+  const [firstName = ""] = fullName?.split(" ") ?? [];
   const [{ emailAddress } = { emailAddress: "" }] = emailAddresses;
+
+  const { signOut } = useClerk();
 
   return (
     <SidebarMenu>
@@ -108,7 +110,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut({ redirectUrl: "/" })}>
               <IconLogout />
               Log out
             </DropdownMenuItem>

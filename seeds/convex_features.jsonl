@@ -1,0 +1,3 @@
+{"name": "transcript", "description": "Generate a transcript of your meeting.", "creditCost": 10, "category": "", "isActive": true}
+{"name": "action-items", "description": "Generate action items from your meeting.", "creditCost": 10, "category": "", "isActive": true}
+{"name": "summary", "description": "Generate a summary of your meeting.", "creditCost": 10, "category": "", "isActive": true}

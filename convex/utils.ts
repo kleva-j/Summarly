@@ -23,6 +23,12 @@ type CustomCtxType = ActionCtx | QueryCtx;
 
 export type SessionStatus = "active" | "ended" | "removed" | "revoked";
 
+export enum Plan {
+  Free = "free",
+  Basic = "basic",
+  Pro = "pro",
+}
+
 export const getTokenId = (id: string) =>
   `${process.env.CLERK_ISSUER_URL}|${id}`;
 

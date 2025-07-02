@@ -9,6 +9,9 @@ export const Users = Table("users", {
   isVerified: v.boolean(),
   tokenIdentifier: v.string(),
   image: v.optional(v.string()),
+  planId: v.id("subscription_plans"),
+  // usedCredit: v.optional(v.number()),  To be implemented
+  // availableCredits: v.optional(v.number()),  To be implemented
 });
 
 export const Sessions = Table("sessions", {
@@ -97,6 +100,45 @@ export const Notifs = Table("notifs", {
   }),
 });
 
+export const Credits = Table("credits", {
+  userId: v.string(),
+  amount: v.number(),
+  expiresAt: v.number(),
+  status: v.union(v.literal("active"), v.literal("expired"), v.literal("used")),
+  source: v.union(
+    v.literal("subscription"),
+    v.literal("purchase"),
+    v.literal("free")
+  ),
+  metadata: v.optional(v.object({})),
+});
+
+export const UsageHistory = Table("usage_history", {
+  userId: v.string(),
+  featureId: v.string(),
+  creditsUsed: v.number(),
+  timestamp: v.number(),
+  metadata: v.optional(v.object({})),
+});
+
+export const Features = Table("features", {
+  name: v.string(),
+  description: v.string(),
+  creditCost: v.number(),
+  category: v.string(), // To be defined in the future
+  isActive: v.boolean(),
+  metadata: v.optional(v.object({})),
+});
+
+export const SubscriptionPlans = Table("subscription_plans", {
+  name: v.union(v.literal("free"), v.literal("basic"), v.literal("pro")),
+  description: v.string(),
+  price: v.number(),
+  initialCredits: v.number(),
+  monthlyCredits: v.number(),
+  accessFeatures: v.array(v.id("features")),
+});
+
 export default defineSchema({
   ...rateLimitTables,
   actionItems: ActionItems.table
@@ -111,7 +153,26 @@ export default defineSchema({
     .index("by_type", ["type"])
     .index("by_user", ["userId"])
     .index("by_node_id", ["metadata.noteId"]),
+  users: Users.table
+    .index("by_token", ["tokenIdentifier"])
+    .index("by_plan", ["planId"]),
+  notes: Notes.table
+    .index("by_title", ["title"])
+    .index("by_user", ["userId"])
+    .index("by_status", ["status"]),
+  credits: Credits.table
+    .index("by_user", ["userId"])
+    .index("by_source", ["source"])
+    .index("by_status", ["status"]),
+  usageHistory: UsageHistory.table
+    .index("by_user", ["userId"])
+    .index("by_feature", ["featureId"]),
+  features: Features.table
+    .index("by_name", ["name"])
+    .index("by_category", ["category"])
+    .index("by_is_active", ["isActive"]),
+  subscription_plans: SubscriptionPlans.table
+    .index("by_name", ["name"])
+    .index("by_price", ["price"]),
   settings: Settings.table.index("by_user", ["userId"]),
-  users: Users.table.index("by_token", ["tokenIdentifier"]),
-  notes: Notes.table.index("by_title", ["title"]).index("by_user", ["userId"]),
 });

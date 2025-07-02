@@ -1,0 +1,3 @@
+{"name": "free", "description": "Free plan with limited features.", "price": 0, "initialCredits": 100, "monthlyCredits": 100, "accessFeatures": []}
+{"name": "basic", "description": "Basic plan with more features.", "price": 10, "initialCredits": 100, "monthlyCredits": 100, "accessFeatures": []}
+{"name": "pro", "description": "Pro plan with all features.", "price": 20, "initialCredits": 100, "monthlyCredits": 100, "accessFeatures": []}

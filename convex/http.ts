@@ -1,11 +1,12 @@
 import type { WebhookEvent } from "@clerk/backend";
+import type { SessionStatus } from "./utils";
 
 import { httpRouter } from "convex/server";
 import { Webhook } from "svix";
 
-import { type SessionStatus, getTokenId } from "./utils";
 import { httpAction } from "./_generated/server";
 import { internal } from "./_generated/api";
+import { getTokenId, Plan } from "./utils";
 
 function ensureEnvironmentVariable(name: string): string {
   const value = process.env[name];
@@ -24,17 +25,30 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
   }
 
   switch (event.type) {
-    case "user.created": // intentional fallthrough
-    case "user.updated": {
+    case "user.created": {
       const { first_name, last_name, id, email_addresses } = event.data;
 
       if (email_addresses && email_addresses.length > 0) {
         const { email_address, verification } = email_addresses[0];
-        await ctx.runMutation(internal.users.createOrUpdate, {
+        await ctx.runMutation(internal.users.createUser, {
           isVerified: verification?.status === "verified",
           name: `${first_name} ${last_name}`,
           tokenIdentifier: getTokenId(id),
           email: email_address,
+        });
+
+        const freePlan = await ctx.runQuery(
+          internal.subscription_plans.getSubscriptionPlans,
+          { name: Plan.Free }
+        );
+
+        if (!freePlan) {
+          return new Response(`${Plan.Free} plan not found`, { status: 400 });
+        }
+
+        await ctx.runAction(internal.clerk.updateMetadata, {
+          id,
+          metadata: { planId: freePlan._id },
         });
       } else {
         return new Response("No email addresses found", { status: 400 });
@@ -42,9 +56,20 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
 
       break;
     }
+    case "user.updated": {
+      const { first_name, last_name, id } = event.data;
+
+      await ctx.runMutation(internal.users.updateUser, {
+        tokenIdentifier: getTokenId(id),
+        name: `${first_name} ${last_name}`,
+      });
+      break;
+    }
     case "user.deleted": {
-      // Clerk docs say this is required, but the types say optional?
-      const id = getTokenId(event.data.id!);
+      if (!event.data.id) {
+        return new Response("Missing user ID in event data", { status: 400 });
+      }
+      const id = getTokenId(event.data.id);
       await ctx.runMutation(internal.users.deleteUser, { id });
       break;
     }
@@ -83,10 +108,19 @@ async function validateRequest(
 ): Promise<WebhookEvent | undefined> {
   const payloadString = await req.text();
 
+  const svixId = req.headers.get("svix-id");
+  const svixTimestamp = req.headers.get("svix-timestamp");
+  const svixSignature = req.headers.get("svix-signature");
+
+  if (!svixId || !svixTimestamp || !svixSignature) {
+    console.error("Missing required webhook headers");
+    return;
+  }
+
   const svixHeaders = {
-    "svix-id": req.headers.get("svix-id")!,
-    "svix-timestamp": req.headers.get("svix-timestamp")!,
-    "svix-signature": req.headers.get("svix-signature")!,
+    "svix-id": svixId,
+    "svix-timestamp": svixTimestamp,
+    "svix-signature": svixSignature,
   };
   const wh = new Webhook(webhookSecret);
   let evt: Event | null = null;
